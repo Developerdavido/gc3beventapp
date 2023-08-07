@@ -1,0 +1,37 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gc3bapp/constants/colors.dart';
+
+class CustomButton extends StatelessWidget {
+  final VoidCallback onTap;
+  const CustomButton({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 379,
+        height: 65,
+        decoration: ShapeDecoration(
+          color: AppColors.primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22.r),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            'Register',
+            style: TextStyle(
+              color: AppColors.onPrimaryColor,
+              fontSize: 20.sp,
+              fontFamily: 'Outfit',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
