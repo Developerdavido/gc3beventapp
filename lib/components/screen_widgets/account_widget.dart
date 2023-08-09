@@ -34,12 +34,12 @@ class AccountWidget extends StatelessWidget {
               ),
             ),
             const CircleAvatar(
-                backgroundColor: AppColors.grey,
+                backgroundColor: AppColors.lightGrey,
                 radius: 35,
                 child:
                 // user!.user?.avatar == null?
                 Center(
-                  child: Icon(Icons.person, size: 48, color: AppColors.primaryColor,),
+                  child: Icon(Icons.person, size: 48, color: AppColors.grey,),
                 ),
                     // : CircleAvatar(
                     // radius: 35,

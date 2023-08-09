@@ -5,7 +5,8 @@ import 'package:gc3bapp/constants/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
-  const CustomButton({Key? key, required this.onTap}) : super(key: key);
+  final String? btnText;
+  const CustomButton({Key? key, required this.onTap, this.btnText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Register',
+            btnText!,
             style: TextStyle(
               color: AppColors.onPrimaryColor,
               fontSize: 20.sp,

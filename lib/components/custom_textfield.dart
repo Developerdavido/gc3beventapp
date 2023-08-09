@@ -22,7 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType,
     this.controller,
     this.hintText,
-    this.enabled = false,
+    this.enabled = true,
     this.suffix,
   }) : super(key: key);
 
@@ -31,68 +31,61 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  bool _obscureText = false;
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const outlineBorder = OutlineInputBorder(
-      borderSide: BorderSide(
+    var outlineBorder = OutlineInputBorder(
+      borderSide: const BorderSide(
         color:Colors.transparent,
-      ),
+      ), borderRadius: BorderRadius.circular(22.r)
     );
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(22.r),
-        color: AppColors.lightGrey,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 1.sw,
-            child: TextFormField(
-              textInputAction: widget.inputAction,
-              autofocus: false,
-              focusNode: widget.focusNode,
-              validator: widget.validator,
-              decoration: InputDecoration(
-                isDense: false,
-                filled: true,
-                fillColor: AppColors.lightGrey,
-                errorMaxLines: 4,
-                hintStyle: theme.textTheme.headlineMedium!.copyWith(
-                    fontSize: 16.sp,
-                    color: AppColors.grey
-                ),
-                hintText: widget.hintText,
-                focusedBorder: outlineBorder,
-                disabledBorder: outlineBorder,
-                enabledBorder: outlineBorder,
-                border: outlineBorder,
-                suffix: widget.isPasswordField!
-                    ? _buildPasswordFieldVisibilityToggle()
-                    : widget.suffix,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 16.h,
-                  horizontal: 16.w,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 1.sw,
+          child: TextFormField(
+            textInputAction: widget.inputAction,
+            autofocus: false,
+            focusNode: widget.focusNode,
+            validator: widget.validator,
+            decoration: InputDecoration(
+              isDense: false,
+              filled: true,
+              fillColor: AppColors.lightGrey,
+              errorMaxLines: 2,
+              hintStyle: theme.textTheme.headlineMedium!.copyWith(
+                  fontSize: 16.sp,
+                  color: AppColors.grey
               ),
-              keyboardType: widget.keyboardType,
-              style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.black,
-                  fontSize: 16.sp
+              hintText: widget.hintText,
+              focusedBorder: outlineBorder,
+              disabledBorder: outlineBorder,
+              enabledBorder: outlineBorder,
+              border: outlineBorder,
+              suffix: widget.isPasswordField!
+                  ? _buildPasswordFieldVisibilityToggle()
+                  : widget.suffix,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 16.h,
+                horizontal: 16.w,
               ),
-              cursorColor: AppColors.black,
-              obscureText: widget.isPasswordField! ? _obscureText : false,
-              controller: widget.controller,
-              enabled: widget.enabled,
             ),
+            keyboardType: widget.keyboardType,
+            style: theme.textTheme.bodyLarge!.copyWith(
+                fontWeight: FontWeight.normal,
+                color: AppColors.black,
+                fontSize: 16.sp
+            ),
+            cursorColor: AppColors.black,
+            obscureText: widget.isPasswordField! ? _obscureText : false,
+            controller: widget.controller,
+            enabled: widget.enabled,
           ),
-          Utils.verticalPadding(space: 12.h),
-        ],
-      ),
+        ),
+        Utils.verticalPadding(space: 12.h),
+      ],
     );
   }
   Widget _buildPasswordFieldVisibilityToggle() {

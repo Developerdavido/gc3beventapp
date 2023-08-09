@@ -10,7 +10,9 @@ class UserRegistrationAccountWidget extends StatelessWidget {
   final Color? circleAndIconColor;
   final Color? titleColor;
   final String? title;
-  const UserRegistrationAccountWidget({Key? key, this.label, this.title, this.titleColor, this.labelColor, this.circleAndIconColor}) : super(key: key);
+  final Color? containerColor;
+  final VoidCallback? onTap;
+  const UserRegistrationAccountWidget({Key? key, this.onTap, this.label, this.title, this.containerColor, this.titleColor, this.labelColor, this.circleAndIconColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class UserRegistrationAccountWidget extends StatelessWidget {
       width: 376.w,
       height: 182.h,
       decoration: ShapeDecoration(
-        color: AppColors.primaryColor,
+        color: containerColor ?? AppColors.lightGrey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(31.r),
         ),
@@ -29,32 +31,33 @@ class UserRegistrationAccountWidget extends StatelessWidget {
           Positioned(
               right: 6.w,
               top: 5.h,
-              child: Container(
-                height: 45.h,
-                width: 45.h,
-                padding: EdgeInsets.all(11.w),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8, color: circleAndIconColor!),
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  height: 45.h,
+                  width: 45.h,
+                  padding: EdgeInsets.all(11.w),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 0.8, color: circleAndIconColor!),
+                    shape: BoxShape.circle
+                  ),
+                  child: Icon(
+                    CupertinoIcons.arrow_up_right,
+                    color: circleAndIconColor,
+                    size: 24.w,
+                  )
                 ),
-                child: Icon(
-                  CupertinoIcons.arrow_up_right,
-                  color: circleAndIconColor,
-                  size: 24.w,
-                )
               )),
           Positioned(
             top: 17.h,
             left: 24.w,
-            child: SizedBox(
-              width: 147.w,
-              child: Text(
-                label!,
-                style: theme.textTheme.bodyMedium!.copyWith(
-                  color: labelColor,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400
-                )
-              ),
+            child: Text(
+              label!,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                color: labelColor,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400
+              )
             ),
           ),
           Positioned(
@@ -62,7 +65,7 @@ class UserRegistrationAccountWidget extends StatelessWidget {
             left: 24.w,
             child: Text(
                 title!,
-                style: theme.textTheme.titleLarge!.copyWith(
+                style: theme.textTheme.headlineSmall!.copyWith(
                     color: titleColor,
                     fontSize: 36.sp,
                     fontWeight: FontWeight.w400

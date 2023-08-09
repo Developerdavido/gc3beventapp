@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/config/locator.dart';
+import 'package:gc3bapp/config/providers.dart';
 import 'package:gc3bapp/config/router.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  setUpLocator();
   runApp(const MyApp());
 }
 
@@ -21,13 +24,16 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(428, 926),
         builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'CSA app',
-            theme: theme,
-            onGenerateRoute: generateRoute,
-            initialRoute: AppRoute.userRegistrationRoute,
-            navigatorKey: locator<RouterService>().navigatorKey,
+          return MultiProvider(
+            providers: providers,
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'CSA app',
+              theme: theme,
+              onGenerateRoute: generateRoute,
+              initialRoute: AppRoute.userLoginRoute,
+              navigatorKey: locator<RouterService>().navigatorKey,
+            ),
           );
         });
   }
