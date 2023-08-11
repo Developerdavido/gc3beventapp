@@ -35,15 +35,16 @@ class UpcomingEvents extends StatelessWidget {
                 child: Container(
                     height: 45.h,
                     width: 45.h,
-                    padding: EdgeInsets.all(11.w),
                     decoration: BoxDecoration(
                         border: Border.all(width: 0.8, color: circleAndIconColor!),
                         shape: BoxShape.circle
                     ),
-                    child: Icon(
-                      iconData ?? CupertinoIcons.arrow_up_right,
-                      color: circleAndIconColor,
-                      size: 24.w,
+                    child: Center(
+                      child: Icon(
+                        iconData ?? CupertinoIcons.arrow_up_right,
+                        color: circleAndIconColor,
+                        size: 24.sp,
+                      ),
                     )
                 ),
               )),

@@ -17,29 +17,30 @@ class AccountWidget extends StatelessWidget {
         child: Row(
           children: [
             Transform.translate(
-              offset: const Offset(14.0, 0),
+              offset: Offset(14.0.w, 0),
               child: Container(
-                padding: EdgeInsets.all(16.w),
                 height: 55.h,
                 width: 55.h,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.primaryColor
                 ),
-                child: Icon(
-                  CupertinoIcons.bell,
-                  color: AppColors.onPrimaryColor,
-                  size: 24.sp,
+                child: Center(
+                  child: Icon(
+                    CupertinoIcons.bell,
+                    color: AppColors.onPrimaryColor,
+                    size: 24.sp,
+                  ),
                 ),
               ),
             ),
-            const CircleAvatar(
+            CircleAvatar(
                 backgroundColor: AppColors.lightGrey,
-                radius: 35,
+                radius: 35.r,
                 child:
                 // user!.user?.avatar == null?
                 Center(
-                  child: Icon(Icons.person, size: 48, color: AppColors.grey,),
+                  child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
                 ),
                     // : CircleAvatar(
                     // radius: 35,

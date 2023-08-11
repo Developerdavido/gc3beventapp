@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 40.h),
                 child: const TitleText(titleText: "Manage \nConference",),
               ),
-              Utils.verticalPadding(space: 55.h),
+              Utils.verticalPadding(space: 15.h),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
@@ -111,21 +111,70 @@ class _HomeScreenState extends State<HomeScreen> {
                   ))
             ],
           ),
-          bottomNavigationBar: NavigationBar(
-            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-            indicatorColor: AppColors.primaryColor,
-            destinations: const [
-              NavigationDestination(icon: Icon(Icons.home_outlined), label: "Home"),
-              NavigationDestination(icon: Icon(CupertinoIcons.ticket), label: "My Tickets"),
-              NavigationDestination(icon: Icon(Icons.bookmark_border_outlined), label: "My Events"),
-            ],
-            selectedIndex: currentIndex!,
-            onDestinationSelected: (index) {
-              setState(() {
-                currentIndex = index;
-              });
-            },
-          ),
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(31.r),
+              child: Container(
+                width: 422.w,
+                height: 90.h,
+                color: AppColors.lightGrey,
+                child: NavigationBar(
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                  indicatorColor: AppColors.primaryColor,
+                  destinations: [
+                    NavigationDestination(
+                        icon: const Icon(Icons.home_outlined),
+                        selectedIcon: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.home_outlined, color: AppColors.onPrimaryColor,size: 18.sp,),
+                            Utils.horizontalPadding(space: 4.w),
+                            Text("Home", style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                              color: AppColors.onPrimaryColor,
+                              fontSize: 12.sp
+                            ),)
+                          ],
+                        ),
+                        label: "Home"),
+                    NavigationDestination(icon: const Icon(CupertinoIcons.ticket), label: "My Tickets",
+                    selectedIcon: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(CupertinoIcons.ticket, color: AppColors.onPrimaryColor,size: 18.sp,),
+                        Utils.horizontalPadding(space: 4.w),
+                        Text("Tickets", style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            color: AppColors.onPrimaryColor,
+                            fontSize: 12.sp
+                        ),)
+                      ],
+                    ),),
+                    NavigationDestination(
+                        icon: Icon(Icons.bookmark_border_outlined),
+                        label: "My Events",
+                      selectedIcon: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.bookmark_border_outlined, color: AppColors.onPrimaryColor,size: 18.sp,),
+                          Utils.horizontalPadding(space: 4.w),
+                          Text("Events", style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                              color: AppColors.onPrimaryColor,
+                              fontSize: 12.sp
+                          ),)
+                        ],
+                      ),
+                    ),
+                  ],
+                  selectedIndex: currentIndex!,
+                  onDestinationSelected: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                ),
+              ),
+            ),
+          )
         ));
   }
 }
