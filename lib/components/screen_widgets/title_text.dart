@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleText extends StatelessWidget {
   final String? titleText;
@@ -7,9 +8,12 @@ class TitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Text(
-      titleText!,
-      style: theme.textTheme.titleMedium!
+    return SizedBox(
+      width: 233.w,
+      child: Text(
+        titleText!,
+        style: theme.textTheme.titleMedium!
+      ),
     );
   }
 }

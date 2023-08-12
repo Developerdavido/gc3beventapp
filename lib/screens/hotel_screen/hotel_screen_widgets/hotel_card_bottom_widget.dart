@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/constants/utils.dart';
+
+class HotelCardBottomWidget extends StatelessWidget {
+  final String? hotelName;
+  final String? hotelLocation;
+  final num? rating;
+  const HotelCardBottomWidget({Key? key, this.hotelName, this.hotelLocation, this.rating}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              hotelName!,
+              style: theme.textTheme.bodySmall!.copyWith(
+                color: AppColors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w500,
+              )
+            ),
+            Utils.verticalPadding(space: 8.h),
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on_outlined,
+                  color: AppColors.blue,
+                  size: 20.sp,
+                ),
+                Utils.horizontalPadding(space: 7.w),
+                Text(
+                    hotelLocation!,
+                    style: theme.textTheme.labelSmall!.copyWith(
+                      color: AppColors.black,
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
+                    )
+                ),
+              ],
+            )
+          ],
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.star,
+              color: AppColors.yellow,
+              size: 20.sp,
+            ),
+            Utils.horizontalPadding(space: 7.w),
+            Text(
+                "$rating",
+                style: theme.textTheme.headlineSmall!.copyWith(
+                  color: AppColors.black,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                )
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}

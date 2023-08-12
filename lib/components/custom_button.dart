@@ -6,7 +6,8 @@ import 'package:gc3bapp/constants/colors.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String? btnText;
-  const CustomButton({Key? key, required this.onTap, this.btnText}) : super(key: key);
+  final double? borderRadius;
+  const CustomButton({Key? key, required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: AppColors.primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22.r),
+            borderRadius: BorderRadius.circular(borderRadius ?? 22.r),
           ),
         ),
         child: Center(

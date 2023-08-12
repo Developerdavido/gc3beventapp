@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 iconColor: AppColors.primaryColor,
                                 titleColor: AppColors.onPrimaryColor,
                                 onEventsTap: (){
-
+                                  locator<RouterService>().push(AppRoute.venueRoute);
                                 },
                               ),
 
@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Utils.verticalPadding(space: 12.w),
                           HotelBooking(
                             onBtnTap: (){
+                              locator<RouterService>().push(AppRoute.hotelRoute);
                             },
                           )
                         ],
