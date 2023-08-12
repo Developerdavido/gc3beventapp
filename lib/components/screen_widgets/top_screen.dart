@@ -9,12 +9,14 @@ class TopScreen extends StatelessWidget {
   final bool? isBackIconVisible;
   final Widget? accountIcon;
   final IconData? iconData;
+  final Color? iconColor;
   final bool? isAccountIconVisible;
   const TopScreen(
       {Key? key,
       this.isAccountIconVisible = false,
       this.isBackIconVisible = false,
         this.iconData,
+        this.iconColor,
       this.accountIcon,})
       : super(key: key);
 
@@ -34,7 +36,7 @@ class TopScreen extends StatelessWidget {
                 width: 24.h,
                 child: Icon(
                   iconData ?? CupertinoIcons.arrow_left,
-                  color: AppColors.black,
+                  color: iconColor ?? AppColors.black,
                   size: 24.w,
                 ),
               ),

@@ -23,12 +23,12 @@ class AccountWidget extends StatelessWidget {
                 width: 55.h,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primaryColor
+                  color: AppColors.lightBlue
                 ),
                 child: Center(
                   child: Icon(
                     CupertinoIcons.bell,
-                    color: AppColors.onPrimaryColor,
+                    color: AppColors.primaryColor,
                     size: 24.sp,
                   ),
                 ),

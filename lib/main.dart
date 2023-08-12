@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gc3bapp/config/env.dart';
 import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/config/providers.dart';
 import 'package:gc3bapp/config/router.dart';
@@ -10,6 +11,8 @@ import 'package:gc3bapp/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  APiEnvironment.setUpEnv(Environment.dev);
   setUpLocator();
   runApp(const MyApp());
 }

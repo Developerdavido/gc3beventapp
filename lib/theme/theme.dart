@@ -45,7 +45,18 @@ class AppTheme {
       labelSmall: GoogleFonts.outfit(
           fontSize: 24,
           fontWeight: FontWeight.w400,
-          color: AppColors.black)
+          color: AppColors.black),
+
+      //button
+      headlineSmall: GoogleFonts.outfit(
+      fontSize: 24,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black),
+
+      headlineMedium: GoogleFonts.outfit(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      color: AppColors.black)
   );
 
   // Theme configuration for light mode

@@ -36,14 +36,14 @@ class HotelBooking extends StatelessWidget {
             Container(
                 height: 45.h,
                 width: 45.h,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 0.8, color: AppColors.onPrimaryColor),
+                decoration: const BoxDecoration(
+                    color: AppColors.lightBlue,
                     shape: BoxShape.circle
                 ),
                 child: Center(
                   child: Icon(
                     Icons.luggage_outlined,
-                    color: AppColors.onPrimaryColor,
+                    color: AppColors.primaryColor,
                     size: 24.w,
                   ),
                 )

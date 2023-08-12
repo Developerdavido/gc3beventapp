@@ -58,18 +58,18 @@ class NewsAndFeeds extends StatelessWidget {
               width: 112.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(31.r),
-                  color: AppColors.onPrimaryColor
+                  color: AppColors.secondaryColor
               ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.chat_bubble_2, size: 24.w, color: AppColors.primaryColor,),
+                    Icon(CupertinoIcons.chat_bubble_2, size: 24.w, color: AppColors.onPrimaryColor,),
                     Utils.verticalPadding(space: 8.h),
                     Text(
                       "Feedback",
                       style: theme.textTheme.labelSmall!.copyWith(
-                        color: AppColors.primaryColor,
+                        color: AppColors.onPrimaryColor,
                         fontSize: 14
                       ),
                     )

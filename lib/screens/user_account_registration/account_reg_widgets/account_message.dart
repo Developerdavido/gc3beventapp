@@ -51,12 +51,12 @@ class _AccountMessageState extends State<AccountMessage> {
               style: theme.textTheme.headlineSmall!.copyWith(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
+                  color: AppColors.blue,
               ),
               recognizer: _tapGestureRecognizer
           ),
         ],
       ),
-    );;
+    );
   }
 }
