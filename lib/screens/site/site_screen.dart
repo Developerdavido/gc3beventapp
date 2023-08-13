@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
-import 'package:gc3bapp/config/locator.dart';
-import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
-import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card.dart';
-import 'package:gc3bapp/services/router_service.dart';
 
-class HotelScreen extends StatefulWidget {
-  const HotelScreen({Key? key}) : super(key: key);
+import '../../models/mock_conference_model.dart';
+import '../hotel_screen/hotel_screen_widgets/hotel_card.dart';
+
+class SiteScreen extends StatefulWidget {
+  const SiteScreen({Key? key}) : super(key: key);
 
   @override
-  State<HotelScreen> createState() => _HotelScreenState();
+  State<SiteScreen> createState() => _SiteScreenState();
 }
 
-class _HotelScreenState extends State<HotelScreen> {
+class _SiteScreenState extends State<SiteScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,29 +32,30 @@ class _HotelScreenState extends State<HotelScreen> {
               Utils.verticalPadding(space: 14.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 49.w),
-                child: const TitleText(titleText: "Hotels",),
+                child: const TitleText(titleText: "Site Visits",),
               ),
               Utils.verticalPadding(space: 22.h),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
                       child: ListView.builder(
-                          itemCount: HotelOrSite.hotels.length,
+                          itemCount: HotelOrSite.sites.length,
                           itemBuilder: (context, index) {
-                            final hotel = HotelOrSite.hotels[index];
+                            final site = HotelOrSite.sites[index];
                             return HotelCard(
-                              name: hotel.name,
-                              location: hotel.locationName,
-                              costOrRating: hotel.rating,
-                              isSite: false,
-                              image: hotel.image,
-                              isFavorited: hotel.isFavorited,
+                              name: site.name,
+                              location: site.locationName,
+                              costOrRating: site.cost,
+                              isSite: true,
+                              image: site.image,
+                              isFavorited: site.isFavorited,
+                              isFull: site.isFull,
                               onCardTap: (){
-                                locator<RouterService>().push(AppRoute.hotelDetailsRoute, args: hotel);
+                                //locator<RouterService>().push(AppRoute.hotelDetailsRoute, args: hotel);
                               },
                               onFavoriteTap: (){
                                 setState(() {
-                                  hotel.isFavorited = !hotel.isFavorited!;
+                                  site.isFavorited = !site.isFavorited!;
                                 });
                               },
                             );

@@ -59,6 +59,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   fontSize: 16.sp,
                   color: AppColors.grey
               ),
+              errorStyle: theme.textTheme.headlineMedium!.copyWith(
+                  fontSize: 16.sp,
+                  color: Colors.red,
+                fontWeight: FontWeight.w400
+              ),
               hintText: widget.hintText,
               focusedBorder: outlineBorder,
               disabledBorder: outlineBorder,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/config/env.dart';
 import 'package:gc3bapp/config/locator.dart';
@@ -6,20 +7,42 @@ import 'package:gc3bapp/config/providers.dart';
 import 'package:gc3bapp/config/router.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';
+import 'package:gc3bapp/services/connection_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/theme/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  APiEnvironment.setUpEnv(Environment.dev);
+  APiEnvironment.setUpEnv(Environment.staging);
   setUpLocator();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+  .then((value) => runApp(const MyApp()));
+
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    locator<ConnectionService>().checkConnection();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    locator<ConnectionService>().closeConnection();
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

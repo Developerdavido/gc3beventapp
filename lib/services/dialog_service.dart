@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_alert_dialog.dart';
 import 'package:gc3bapp/models/api_response.dart';
 
@@ -16,7 +17,7 @@ class DialogService {
     String? cancelText = "CANCEL",
     bool? showCancelBtn = false,
     bool? showOkayBtn = true,
-    bool? showTitle = true,
+    bool? showTitle = false,
     VoidCallback? onOkayBtnTap,
     VoidCallback? onCancelBtnTap,
     bool? barrierDismissible = true,
@@ -27,7 +28,7 @@ class DialogService {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22.0),
+            borderRadius: BorderRadius.circular(22.0.r),
           ),
           child: CustomAlertDialog(
             message: message,

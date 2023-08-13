@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
 
@@ -36,13 +37,19 @@ class NewsAndFeeds extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.feed_outlined, size: 24.w, color: AppColors.onPrimaryColor,),
+                    SizedBox(
+                      height: 20.w,
+                      width: 20.w,
+                      child: SvgPicture.asset("assets/svgs/announcement.svg",
+                          colorFilter: const ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn)
+                      ),
+                    ),
                     Utils.verticalPadding(space: 8.h),
                     Text(
                       "News & More",
                       style: theme.textTheme.labelSmall!.copyWith(
                         color: AppColors.onPrimaryColor,
-                        fontSize: 14
+                        fontSize: 14.sp
 
                       ),
                     )
@@ -64,7 +71,11 @@ class NewsAndFeeds extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.chat_bubble_2, size: 24.w, color: AppColors.onPrimaryColor,),
+                    SizedBox(
+                      height: 20.w,
+                      width: 20.w,
+                      child: SvgPicture.asset("assets/svgs/message-chat-circle.svg"),
+                    ),
                     Utils.verticalPadding(space: 8.h),
                     Text(
                       "Feedback",

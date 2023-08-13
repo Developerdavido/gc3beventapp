@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -32,6 +33,7 @@ class HttpService{
   //get the remote config
   Future<void> initHttpService() async {
     host = APiEnvironment.baseUrl;
+    log(host!);
     //initialize dio
     baseOptions = BaseOptions(
         baseUrl: host!,
@@ -78,7 +80,6 @@ class HttpService{
       {Map<String, dynamic>? queryParameters, CancelToken? token}) async {
     String uri = "$host$url";
     print(uri);
-
     return dio!.get(
       uri,
       options: Options(

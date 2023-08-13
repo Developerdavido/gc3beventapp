@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gc3bapp/components/screen_widgets/account_widget.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -58,10 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               UpcomingEvents(
                                 containerColor: AppColors.primaryColor,
-                                iconData: CupertinoIcons.ticket,
                                 iconColor: AppColors.primaryColor,
                                 circleAndIconColor: AppColors.lightBlue,
                                 title: "Upcoming \nEvents",
+                                svgAsset: "assets/svgs/ticket.svg",
                                 titleColor: AppColors.onPrimaryColor,
                                 onEventsTap: (){
                                   locator<RouterService>().push(AppRoute.conferencesRoute);
@@ -80,22 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               UpcomingEvents(
                                 containerColor: AppColors.lightBlue,
-                                iconData: CupertinoIcons.globe,
                                 circleAndIconColor: AppColors.secondaryColor,
                                 title: "Site Visits",
                                 width: 185.w,
+                                svgAsset: "assets/svgs/globe.svg",
                                 iconColor: AppColors.lightBlue,
                                 titleColor: AppColors.primaryColor,
                                 onEventsTap: (){
-
+                                  locator<RouterService>().push(AppRoute.sitesRoute);
                                 },
                               ),
                               Utils.horizontalPadding(space: 12.w),
                               UpcomingEvents(
                                 width: 185.w,
                                 containerColor: AppColors.primaryColor,
-                                iconData: CupertinoIcons.map_pin_ellipse,
                                 circleAndIconColor: AppColors.lightBlue,
+                                svgAsset: "assets/svgs/marker-pin.svg",
                                 title: "Venue",
                                 iconColor: AppColors.primaryColor,
                                 titleColor: AppColors.onPrimaryColor,
@@ -131,11 +132,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   indicatorColor: AppColors.lightBlue,
                   destinations: [
                     NavigationDestination(
-                        icon: const Icon(Icons.home_outlined),
+                        icon: SizedBox(
+                          height: 24.w,
+                          width: 24.w,
+                          child: SvgPicture.asset("assets/svgs/home.svg"),
+                        ),
                         selectedIcon: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.home_outlined, color: AppColors.black,size: 18.sp,),
+                            SizedBox(
+                              height: 24.w,
+                              width: 24.w,
+                              child: SvgPicture.asset("assets/svgs/home.svg"),
+                            ),
                             Utils.horizontalPadding(space: 4.w),
                             Text("Home", style: Theme.of(context).textTheme.labelSmall!.copyWith(
                               color: AppColors.black,

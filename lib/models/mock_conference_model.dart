@@ -143,22 +143,23 @@ class Gps {
   Gps({this.latitude, this.longitude});
 }
 
-class Hotel{
+class HotelOrSite{
   String? name;
   String? locationName;
   String? image;
   num? rating;
   bool? isFavorited = false;
+  bool? isFull = false;
   num? cost;
   Gps? gps;
   String? description;
 
-  Hotel({this.name, this.image, this.locationName, this.rating, this.isFavorited = false, this.cost,
+  HotelOrSite({this.name, this.image, this.isFull = false, this.locationName, this.rating, this.isFavorited = false, this.cost,
       this.gps, this.description});
 
 
-  static List<Hotel> hotels = [
-    Hotel(
+  static List<HotelOrSite> hotels = [
+    HotelOrSite(
       name: "Crystal Oasis Hotel",
       locationName: "Evergreen Events Center",
       rating: 4.9,
@@ -171,7 +172,7 @@ class Hotel{
       ),
       description: "Crystal Oasis Hotel offers a convenient and relaxing stay for conference attendees. A short drive or a leisurely walk along the scenic riverfront will lead you to the conference venue, ensuring you arrive at your meetings feeling refreshed and ready to engage in fruitful discussions."
     ),
-    Hotel(
+    HotelOrSite(
         name: "Azure View Lodge",
         locationName: "Ocean Breeze Pavilion",
         rating: 3.5,
@@ -184,7 +185,7 @@ class Hotel{
         ),
         description: "Azure View Lodge offers a convenient and relaxing stay for conference attendees. A short drive or a leisurely walk along the scenic riverfront will lead you to the conference venue, ensuring you arrive at your meetings feeling refreshed and ready to engage in fruitful discussions."
     ),
-    Hotel(
+    HotelOrSite(
         name: "Chipotles Serene Lodge",
         locationName: "Evergreen Events Center",
         rating: 4.9,
@@ -198,4 +199,50 @@ class Hotel{
         description: "Chipotles Serene Lodge offers a convenient and relaxing stay for conference attendees. A short drive or a leisurely walk along the scenic riverfront will lead you to the conference venue, ensuring you arrive at your meetings feeling refreshed and ready to engage in fruitful discussions."
     ),
   ];
+
+  static List<HotelOrSite> sites = [
+    HotelOrSite(
+        name: "Ancient Citadel of Rivertown",
+        locationName: "Rivertown, Kingdom of Serenia",
+        rating: 4.9,
+        isFavorited: false,
+        image: "assets/images/site_one.jpeg",
+        isFull: true,
+        cost: 15,
+        gps: Gps(
+            latitude: 0.0,
+            longitude: 0.0
+        ),
+        description: ""
+    ),
+    HotelOrSite(
+        name: "Lost City of Eldoria",
+        locationName: "Eldorian Desert, Land of Mystics",
+        rating: 3.5,
+        isFavorited: false,
+        image: "assets/images/site_two.jpeg",
+        cost: 15,
+        isFull: false,
+        gps: Gps(
+            latitude: 0.0,
+            longitude: 0.0
+        ),
+        description: ""
+    ),
+    HotelOrSite(
+        name: "George washington Monument",
+        locationName: "Washington DC",
+        rating: 4.9,
+        isFavorited: false,
+        image: "assets/images/evergreen.jpeg",
+        isFull: false,
+        cost: 15,
+        gps: Gps(
+            latitude: 0.0,
+            longitude: 0.0
+        ),
+        description: ""
+    ),
+  ];
 }
+

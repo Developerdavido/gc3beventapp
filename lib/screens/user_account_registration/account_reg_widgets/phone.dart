@@ -60,7 +60,12 @@ class Phone extends StatelessWidget {
                       border: outlineBorder,
                       enabledBorder: outlineBorder,
                       disabledBorder: outlineBorder,
-                      focusedBorder: outlineBorder
+                      focusedBorder: outlineBorder,
+                      errorStyle: theme.textTheme.headlineMedium!.copyWith(
+                          fontSize: 16.sp,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w400
+                      ),
                     ),
                     languageCode: "en",
                     initialCountryCode: 'GH',

@@ -56,13 +56,13 @@ class CustomAlertDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: showTitle! ? 16.h : 0),
-          showTitle! ? title : Container(),
-          SizedBox(height: showTitle! ? 16.h : 0),
+          //SizedBox(height: showTitle! ? 16.h : 0),
+          //showTitle! ? title : Container(),
+          SizedBox(height: 16.h ),
           Text(
             message,
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodyText1!.copyWith(
+            style: theme.textTheme.labelSmall!.copyWith(
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
                 color: AppColors.black
@@ -95,7 +95,7 @@ class CustomAlertDialog extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22.r), color: Colors.white
+            borderRadius: BorderRadius.circular(22.r), color: Colors.transparent
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

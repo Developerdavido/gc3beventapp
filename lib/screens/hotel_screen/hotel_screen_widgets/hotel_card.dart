@@ -8,21 +8,33 @@ import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card_bottom_widget.dart';
 import 'package:gc3bapp/services/router_service.dart';
 
-class HotelCard extends StatefulWidget {
-  final Hotel? hotel;
-  const HotelCard({Key? key, this.hotel}) : super(key: key);
+class HotelCard extends StatelessWidget {
+  final String? name;
+  final String? location;
+  final num? costOrRating;
+  final bool? isSite;
+  bool? isFavorited;
+  final String? image;
+  final VoidCallback? onCardTap;
+  final VoidCallback? onFavoriteTap;
+  final bool? isFull;
+  HotelCard({Key? key,
+    this.isSite = false,
+    this.onFavoriteTap,
+    this.location,
+    this.name,
+    this.image,
+    this.isFull,
+    this.onCardTap,
+    this.costOrRating,
+    this.isFavorited = false
+  }) : super(key: key);
 
-  @override
-  State<HotelCard> createState() => _HotelCardState();
-}
-
-class _HotelCardState extends State<HotelCard> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
-      onTap: (){
-        locator<RouterService>().push(AppRoute.hotelDetailsRoute, args: widget.hotel);
-      },
+      onTap: onCardTap,
       child: Padding(
         padding:  EdgeInsets.symmetric(vertical: 5.5.h),
         child: Container(
@@ -44,17 +56,13 @@ class _HotelCardState extends State<HotelCard> {
                       child: SizedBox(
                           height: 180.h,
                           width: 386.w,
-                          child: Image.asset(widget.hotel!.image!, fit: BoxFit.cover,)),
+                          child: Image.asset(image!, fit: BoxFit.cover,)),
                     ),
                     Positioned(
                       right: 23.69.w,
                         top: 13.h,
                         child:GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              widget.hotel!.isFavorited = !widget.hotel!.isFavorited!;
-                            });
-                          },
+                          onTap: onFavoriteTap!,
                           child: Container(
                             height: 25.31.h,
                             width: 25.31.h,
@@ -64,13 +72,37 @@ class _HotelCardState extends State<HotelCard> {
                             ),
                             child: Center(
                               child: Icon(
-                                widget.hotel!.isFavorited! ? Icons.favorite : Icons.favorite_border_outlined,
+                                isFavorited! ? Icons.favorite : Icons.favorite_border_outlined,
                                 color: AppColors.lightBlue,
                                 size: 16.sp,
                               ),
                             ),
                           ),
-                        ) )
+                        )),
+                    Visibility(
+                      visible: isSite! && isFull!,
+                      child: Positioned(
+                          right: 23.69.w,
+                          bottom: 19.h,
+                          child:Container(
+                            height: 28.h,
+                            padding: EdgeInsets.symmetric(horizontal: 16.15.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18.r),
+                                color: AppColors.onPrimaryColor
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Full",
+                                style: theme.textTheme.bodySmall!.copyWith(
+                                  color: AppColors.primaryColor,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            ),
+                          )),
+                    ),
                   ],
                 ),
               ),
@@ -78,9 +110,10 @@ class _HotelCardState extends State<HotelCard> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 21.0.w),
                 child: HotelCardBottomWidget(
-                  hotelName: widget.hotel!.name,
-                  rating: widget.hotel!.rating,
-                  hotelLocation: widget.hotel!.locationName,
+                  hotelName: name!,
+                  ratingOrCost: costOrRating,
+                  hotelLocation: location,
+                  isSite: isSite,
                 ),
               ),
             ],

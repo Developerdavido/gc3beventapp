@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gc3bapp/constants/colors.dart';
 
 class UpcomingEvents extends StatelessWidget {
@@ -9,10 +10,11 @@ class UpcomingEvents extends StatelessWidget {
   final Color? iconColor;
   final IconData? iconData;
   final Color? circleAndIconColor;
+  final String? svgAsset;
   final String? title;
   final Color? titleColor;
   final double? width;
-  const UpcomingEvents({Key? key,this.width, this.titleColor, this.iconColor, this.onEventsTap, this.title, this.iconData, this.circleAndIconColor, this.containerColor}) : super(key: key);
+  const UpcomingEvents({Key? key,this.width, this.svgAsset, this.titleColor, this.iconColor, this.onEventsTap, this.title, this.iconData, this.circleAndIconColor, this.containerColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +43,11 @@ class UpcomingEvents extends StatelessWidget {
                         shape: BoxShape.circle
                     ),
                     child: Center(
-                      child: Icon(
-                        iconData ?? CupertinoIcons.arrow_up_right,
-                        color: iconColor,
-                        size: 24.sp,
-                      ),
+                      child: SizedBox(
+                        height: 24.w,
+                        width: 24.w,
+                        child: SvgPicture.asset(svgAsset!),
+                      )
                     )
                 )),
             Positioned(

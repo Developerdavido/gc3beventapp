@@ -6,8 +6,9 @@ import 'package:gc3bapp/constants/utils.dart';
 class HotelCardBottomWidget extends StatelessWidget {
   final String? hotelName;
   final String? hotelLocation;
-  final num? rating;
-  const HotelCardBottomWidget({Key? key, this.hotelName, this.hotelLocation, this.rating}) : super(key: key);
+  final num? ratingOrCost;
+  final bool? isSite;
+  const HotelCardBottomWidget({Key? key,this.isSite = false, this.hotelName, this.hotelLocation, this.ratingOrCost}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,26 @@ class HotelCardBottomWidget extends StatelessWidget {
             )
           ],
         ),
-        Row(
+        isSite! ?
+            Container(
+              height: 28.h,
+              padding: EdgeInsets.symmetric(horizontal: 7.w, ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18.r),
+                color: AppColors.lightBlue
+              ),
+              child: Center(
+                child: Text(
+                  "\$$ratingOrCost",
+                  style: theme.textTheme.labelSmall!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp,
+                    color: AppColors.primaryColor
+                  ),
+                ),
+              ),
+            )
+            : Row(
           children: [
             Icon(
               Icons.star,
@@ -57,7 +77,7 @@ class HotelCardBottomWidget extends StatelessWidget {
             ),
             Utils.horizontalPadding(space: 7.w),
             Text(
-                "$rating",
+                "$ratingOrCost",
                 style: theme.textTheme.headlineSmall!.copyWith(
                   color: AppColors.black,
                   fontSize: 14.sp,

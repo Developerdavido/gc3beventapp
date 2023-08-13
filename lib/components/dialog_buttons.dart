@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 
 class DialogButtons extends StatelessWidget {
@@ -35,7 +36,7 @@ class DialogButtons extends StatelessWidget {
         mainAxisAlignment: mainAxisAlignment(),
         children: <Widget>[
           cancelBtn(context),
-          okayBtn(context, screenHeight, width),
+          okayBtn(context, 1.sh, 1.sw),
         ],
       ),
     );
@@ -54,10 +55,13 @@ class DialogButtons extends StatelessWidget {
     GestureDetector(
       onTap: onOkayButtonPressed,
       child: Container(
-        padding: EdgeInsets.all(screenHeight * 0.01),
-        width: width * 0.3,
-        height: screenHeight * 0.08,
-        color: AppColors.primaryColor,
+        padding: EdgeInsets.all(screenHeight * 0.01.h),
+        width: width * 0.3.w,
+        height: screenHeight * 0.08.h,
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(16.r)
+        ),
         child: Center(
           child: _buildButtonData(true, okayText!),
         ),
@@ -100,14 +104,14 @@ class DialogButtons extends StatelessWidget {
       text,
       style: TextStyle(
         color: color,
-        fontSize: 18.0,
+        fontSize: 18.0.sp,
       ),
     );
 
-    const loader = SizedBox(
-      height: 10,
-      width: 10,
-      child: CircularProgressIndicator(
+    final loader = SizedBox(
+      height: 10.h,
+      width: 10.h,
+      child: const CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
         strokeWidth: 2,
       ),

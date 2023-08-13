@@ -9,7 +9,7 @@ import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card_bottom_widget.dart';
 
 class HotelBookingDetails extends StatefulWidget {
-  final Hotel? hotel;
+  final HotelOrSite? hotel;
   const HotelBookingDetails({Key? key, this.hotel}) : super(key: key);
 
   @override
@@ -94,7 +94,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                   HotelCardBottomWidget(
                                     hotelName: widget.hotel!.name,
                                     hotelLocation: widget.hotel!.locationName,
-                                    rating: widget.hotel!.rating,
+                                    ratingOrCost: widget.hotel!.rating,
                                   ),
                                   Utils.verticalPadding(space: 46.h),
                                   SizedBox(
@@ -138,6 +138,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                     width: 307.w,
                                     titleWidget: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Price",

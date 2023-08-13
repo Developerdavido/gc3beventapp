@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gc3bapp/config/locator.dart';
+import 'package:gc3bapp/services/auth_service.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/local_storage_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
@@ -11,6 +12,7 @@ class BaseProvider with ChangeNotifier{
   final storage = locator<LocalStorageService>();
   final router = locator<RouterService>();
   final dialog = locator<DialogService>();
+  final auth = locator<AuthService>();
 
 
   UIState uiState = UIState.idle;

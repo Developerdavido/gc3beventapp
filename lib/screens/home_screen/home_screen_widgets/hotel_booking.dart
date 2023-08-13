@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gc3bapp/constants/colors.dart';
 
 class HotelBooking extends StatelessWidget {
@@ -41,11 +42,11 @@ class HotelBooking extends StatelessWidget {
                     shape: BoxShape.circle
                 ),
                 child: Center(
-                  child: Icon(
-                    Icons.luggage_outlined,
-                    color: AppColors.primaryColor,
-                    size: 24.w,
-                  ),
+                  child: SizedBox(
+                    height: 24.w,
+                    width: 24.w,
+                    child: SvgPicture.asset("assets/svgs/luggage.svg"),
+                  )
                 )
             ),
           ],

@@ -102,8 +102,12 @@ class ApiResponse {
           errors = (message);
           break;
         default:
-          message = "Unknown application error.";
-          errors = (message);
+          if (body.containsKey('error')) {
+            message = body['error'];
+          } else {
+            message = "Unknown application error.";
+            errors = (message);
+          }
           break;
       }
       return ApiResponse(
