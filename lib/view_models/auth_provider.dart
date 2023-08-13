@@ -2,9 +2,14 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gc3bapp/config/locator.dart';
+import 'package:gc3bapp/constants/route.dart';
+import 'package:gc3bapp/constants/storage_key.dart';
 import 'package:gc3bapp/models/api_response.dart';
+import 'package:gc3bapp/models/auth_model.dart';
 import 'package:gc3bapp/models/error_handler.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
+import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/base_provider.dart';
 
 class AuthProvider extends BaseProvider {
@@ -16,6 +21,10 @@ class AuthProvider extends BaseProvider {
   TextEditingController phoneCtrl = TextEditingController();
   String? countryCode = "GH";
   String? phoneNumber;
+
+
+  //user model
+  AuthModal? authModal;
 
   //login the user
   login() async {
@@ -29,12 +38,14 @@ class AuthProvider extends BaseProvider {
       log("auth response${response.toString()}");
       var apiResponse = ApiResponse.parse(response);
       if (apiResponse.allGood!) {
+        saveUserData(apiResponse);
         clearFields();
-      }
-      dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
+      }else {
+        dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
           apiResponse: apiResponse,
           barrierDismissible: true,
-      );
+        );
+      }
     } on DioException catch (e) {
       setUiState(UIState.done);
       dialog.showAlertDialog(
@@ -42,6 +53,12 @@ class AuthProvider extends BaseProvider {
           message: DioExceptionHandler.getMessage(e),
           type: AlertDialogType.error);
     }
+  }
+
+  saveUserData(ApiResponse apiResponse) async {
+    authModal = AuthModal.fromJson(apiResponse.mappedObjects!);
+    await storage.saveModel(LocalStorageKey.authKey, authModal);
+    locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.homeRoute);
   }
 
   //register a new user
@@ -61,12 +78,14 @@ class AuthProvider extends BaseProvider {
       log("auth response${response.toString()}");
       var apiResponse = ApiResponse.parse(response);
       if (apiResponse.allGood!) {
+        saveUserData(apiResponse);
         clearFields();
+      }else {
+        dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
+          apiResponse: apiResponse,
+          barrierDismissible: true,
+        );
       }
-      dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
-        apiResponse: apiResponse,
-         barrierDismissible: true,
-      );
     } on DioException catch (e) {
       setUiState(UIState.done);
       dialog.showAlertDialog(

@@ -66,10 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     return CustomButton(
                                         btnText: 'Login',
                                         onTap: (){
-                                         // if (key.currentState!.validate()) {
-                                         //   auth.login();
-                                         // }
-                                          locator<RouterService>().push(AppRoute.homeRoute);
+                                         if (key.currentState!.validate()) {
+                                           auth.login();
+                                         }
                                         });
                                   },
                                 ),

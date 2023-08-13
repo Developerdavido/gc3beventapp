@@ -21,28 +21,9 @@ void main() {
 
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    locator<ConnectionService>().checkConnection();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    locator<ConnectionService>().closeConnection();
-  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -57,7 +38,7 @@ class _MyAppState extends State<MyApp> {
               title: 'CSA app',
               theme: theme,
               onGenerateRoute: generateRoute,
-              initialRoute: AppRoute.userLoginRoute,
+              initialRoute: AppRoute.splashRoute,
               navigatorKey: locator<RouterService>().navigatorKey,
             ),
           );

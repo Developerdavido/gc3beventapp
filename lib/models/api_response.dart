@@ -19,6 +19,8 @@ class ApiResponse {
 
   List get data => body["data"];
 
+  List get listData => body;
+
   List get listWithoutDataKey => body;
 
   int get totalDataCount => body["meta"]["total"];
@@ -74,7 +76,7 @@ class ApiResponse {
           message = "Operation successful";
           break;
         case 401:
-          if(body["error"] != null) body["errror"];
+          if(body["error"] != null) body["error"];
           if(body["error"] == null) {
             body["message"];
             //when the token returns invalid, clear the data
@@ -84,6 +86,15 @@ class ApiResponse {
         case 403:
           if (body["data"] == null ) {
             errors = (body["message"]);
+          } else {
+            errors = (body["data"]["message"]);
+            message = errors;
+          }
+          break;
+        case 400:
+          if (body["data"] == null ) {
+            errors = body["error"];
+            message = errors;
           } else {
             errors = (body["data"]["message"]);
             message = errors;

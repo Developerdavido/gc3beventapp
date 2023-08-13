@@ -7,7 +7,9 @@ class Api {
 
   //register
   static const register = "apis/account_apis/register/";
-
   //login
   static const login = "apis/account_apis/login/";
+
+  //conferencees
+  static const conferences = "apis/conference_apis/conferences/";
 }

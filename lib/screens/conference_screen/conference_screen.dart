@@ -8,6 +8,8 @@ import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_card.dart';
 import 'package:gc3bapp/services/router_service.dart';
+import 'package:gc3bapp/view_models/ConferenceProvider.dart';
+import 'package:provider/provider.dart';
 
 class ConferenceScreen extends StatefulWidget {
   const ConferenceScreen({Key? key}) : super(key: key);
@@ -17,8 +19,25 @@ class ConferenceScreen extends StatefulWidget {
 }
 
 class _ConferenceScreenState extends State<ConferenceScreen> {
+  ConferenceProvider? conferenceVm;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    conferenceVm = context.read<ConferenceProvider>();
+    handleGetConferences();
+  }
+
+  handleGetConferences(){
+    if (conferenceVm!.conferences.isEmpty) {
+      conferenceVm!.getAllConferences();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    conferenceVm = context.watch<ConferenceProvider>();
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -41,15 +60,17 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   child: ListView.builder(
-                    itemCount: MockConferenceModel.conferences.length,
+                    itemCount: conferenceVm!.conferences.length,
                       itemBuilder: (context, index) {
-                      final conference = MockConferenceModel.conferences[index];
+                      final conference = conferenceVm!.conferences[index];
                       return ConferenceCard(
                         attendConference: (){
                           locator<RouterService>().push(AppRoute.conferenceDetailsRoute, args: conference);
                         },
-                        conferenceDate: conference.conferenceTime,
-                        conferenceTheme: conference.conferenceTheme,
+                        conferenceDate: conference.getConferenceDate(),
+                        conferenceTheme: conference.theme,
+                        conferenceTime: conference.getConferenceTime(),
+                        numberOfAttendees: conference.attendees!.length,
                       );
                       })
                 ))

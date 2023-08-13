@@ -1,26 +1,28 @@
 import 'package:gc3bapp/constants/api_constants.dart';
+import 'package:gc3bapp/constants/storage_key.dart';
+import 'package:gc3bapp/models/auth_model.dart';
 import 'package:gc3bapp/services/http_service.dart';
 
 class AuthService extends HttpService {
   //auto login
 
   //get when the user is authenticated
-  // Future<bool> isAuthenticated() async {
-  //   try {
-  //     AuthModal userModel = AuthModal.fromJson(
-  //         await localStorage.readModel(StorageConstants.authModalKey));
-  //
-  //     String bearerToken = userModel.token!;
-  //
-  //     if (bearerToken == null || bearerToken == "") {
-  //       print("bearerToken is empty.");
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  Future<bool> isAuthenticated() async {
+    try {
+      AuthModal userModel = AuthModal.fromJson(
+          await localStorage.readModel(LocalStorageKey.authKey));
+
+      String bearerToken = userModel.token!;
+
+      if (bearerToken == null || bearerToken == "") {
+        print("bearerToken is empty.");
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
 
   //register user
   registerUser(
@@ -41,7 +43,7 @@ class AuthService extends HttpService {
       "password2" : confirmPassword,
     };
     
-    var response = await post(Api.register, body);
+    var response = await post(Api.register, body: body);
     return response;
   }
 
@@ -53,9 +55,9 @@ class AuthService extends HttpService {
        }) async {
     Map<String, dynamic> body = {
       "email" : email,
-      "password1" : password,
+      "password" : password,
     };
-    var response = await post(Api.login, body);
+    var response = await post(Api.login, body: body);
     return response;
   }
 }

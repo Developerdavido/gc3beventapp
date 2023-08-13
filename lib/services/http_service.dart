@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:gc3bapp/config/env.dart';
 import 'package:gc3bapp/config/locator.dart';
+import 'package:gc3bapp/constants/storage_key.dart';
+import 'package:gc3bapp/models/auth_model.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/local_storage_service.dart';
 
@@ -19,8 +21,7 @@ class HttpService{
   Future<Map<String, String>> getHeaders() async {
     return {
       HttpHeaders.acceptHeader: "application/json",
-      //"access-token": "${await getAuthBearerToken()}",
-      //"mobile-mode": APiEnvironment.mobileMode!
+      "token": "${await getAuthBearerToken()}",
     } ;
 
   }
@@ -53,12 +54,12 @@ class HttpService{
 
 
   //TODO: this is to get the bearer token for the app to maintain session
-  // Future<String?> getAuthBearerToken() async {
-  //   var authDetails = await localStorage.readModel(
-  //     StorageConstants.authModalKey,
-  //   );
-  //   return authDetails == null ? null : AuthModal.fromJson(authDetails).token;
-  // }
+  Future<String?> getAuthBearerToken() async {
+    var authDetails = await localStorage.readModel(
+      LocalStorageKey.authKey,
+    );
+    return authDetails == null ? null : AuthModal.fromJson(authDetails).token;
+  }
 
 
   //get method
@@ -92,7 +93,7 @@ class HttpService{
   }
 
   //post method
-  Future<Response> post(String url, body, {CancelToken? token}) async {
+  Future<Response> post(String url, {dynamic body, CancelToken? token}) async {
     String uri = "$host$url";
     print(uri);
     return dio!.post(

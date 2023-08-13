@@ -30,6 +30,16 @@ class UserAccountRegistration extends StatefulWidget {
 
 class _UserAccountRegistrationState extends State<UserAccountRegistration> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
+
+  AuthProvider? vm;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    vm = context.read<AuthProvider>();
+    vm!.passwordCtrl.text = "";
+    vm!.emailCtrl.text = "";
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

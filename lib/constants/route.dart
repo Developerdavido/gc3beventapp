@@ -10,4 +10,5 @@ class AppRoute {
   static const String hotelRoute = "hotel_route";
   static const String newsAndSocialRoute = "news_and_social_media_feeds_route";
   static const String venueRoute = "venue_route";
+  static const String splashRoute = "splash_route";
 }

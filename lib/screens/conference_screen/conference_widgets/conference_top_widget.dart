@@ -5,9 +5,9 @@ import 'package:gc3bapp/constants/utils.dart';
 
 class ConferenceTopWidget extends StatelessWidget {
   final String? conferenceTitle;
-  final String? date;
+  final String? conferenceTime;
   final num? numberOfAttendees;
-  const ConferenceTopWidget({Key? key, this.conferenceTitle, this.numberOfAttendees, this.date}) : super(key: key);
+  const ConferenceTopWidget({Key? key, this.conferenceTitle, this.conferenceTime, this.numberOfAttendees,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class ConferenceTopWidget extends StatelessWidget {
             color: AppColors.lightBlue
           ),
           child: Center(
-            child: Text("2:00 PM",
+            child: Text(conferenceTime!,
               style: theme.textTheme.bodySmall!.copyWith(
                   fontSize: 14.sp,
                   color: AppColors.primaryColor,

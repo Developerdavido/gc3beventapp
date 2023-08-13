@@ -35,7 +35,7 @@ class ConferenceBottomWidget extends StatelessWidget {
                 conferenceTheme ?? "",
                 style: theme.textTheme.headlineMedium!.copyWith(
                   color: Colors.white,
-                  fontSize: 26.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                 )
               ),

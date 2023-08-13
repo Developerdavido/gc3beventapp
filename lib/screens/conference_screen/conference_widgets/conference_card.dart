@@ -7,8 +7,10 @@ import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_
 class ConferenceCard extends StatelessWidget {
   final String? conferenceTheme;
   final String? conferenceDate;
+  final String? conferenceTime;
+  final num? numberOfAttendees;
   final VoidCallback? attendConference;
-  const ConferenceCard({Key? key, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
+  const ConferenceCard({Key? key,this.conferenceTime, this.numberOfAttendees, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +29,10 @@ class ConferenceCard extends StatelessWidget {
               top: 27.h,
                 left: 20.w,
                 right: 20.w,
-                child: const ConferenceTopWidget(
+                child: ConferenceTopWidget(
                   conferenceTitle: "Cyber-security",
+                  conferenceTime: conferenceTime,
+                  numberOfAttendees: numberOfAttendees,
                 )),
             Positioned(
                 bottom: 27.h,
