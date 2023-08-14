@@ -12,4 +12,13 @@ class Api {
 
   //conferencees
   static const conferences = "apis/conference_apis/conferences/";
+
+  //sites
+  static const sites = "apis/site_apis/sites/";
+
+  //venues
+  static const venues = "apis/venue_apis/venues";
+
+  //hotels
+  static const hotels = "apis/hotel_apis/hotels";
 }

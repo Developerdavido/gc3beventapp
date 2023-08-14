@@ -2,30 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_button.dart';
 import 'package:gc3bapp/components/screen_widgets/custom_hotel_direction_widget.dart';
+import 'package:gc3bapp/components/screen_widgets/custom_loader.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
-import 'package:gc3bapp/models/hotel.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
+import 'package:gc3bapp/models/site.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card_bottom_widget.dart';
+import 'package:gc3bapp/view_models/site_provider.dart';
+import 'package:provider/provider.dart';
 
-class HotelBookingDetails extends StatefulWidget {
-  final Hotel? hotel;
-  const HotelBookingDetails({Key? key, this.hotel}) : super(key: key);
+class SiteDetail extends StatefulWidget {
+  final Site? site;
+  const SiteDetail({Key? key, this.site}) : super(key: key);
 
   @override
-  State<HotelBookingDetails> createState() => _HotelBookingDetailsState();
+  State<SiteDetail> createState() => _SiteDetailState();
 }
 
-class _HotelBookingDetailsState extends State<HotelBookingDetails> {
+class _SiteDetailState extends State<SiteDetail> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return SafeArea(
         child: Scaffold(
-            body: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 39.h),
+          body: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 39.h),
                 child: Column(
                   children: [
                     Container(
@@ -42,7 +45,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                   height: 309.h,
                                   width: 1.sw,
                                   child: Image.network(
-                                    widget.hotel!.image!,
+                                    widget.site!.image ?? "",
                                     fit: BoxFit.cover,
                                   ))),
                           Positioned(
@@ -56,8 +59,8 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                 accountIcon: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      widget.hotel!.isFavorite =
-                                          !widget.hotel!.isFavorite!;
+                                      widget.site!.isFavorite =
+                                      !widget.site!.isFavorite!;
                                     });
                                   },
                                   child: Container(
@@ -68,7 +71,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                         color: AppColors.primaryColor),
                                     child: Center(
                                       child: Icon(
-                                        widget.hotel!.isFavorite!
+                                        widget.site!.isFavorite!
                                             ? Icons.favorite
                                             : Icons.favorite_border_outlined,
                                         color: AppColors.lightBlue,
@@ -93,15 +96,16 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                               child: Column(
                                 children: [
                                   HotelCardBottomWidget(
-                                    hotelName: widget.hotel!.name,
-                                    hotelLocation: "${widget.hotel?.lat}, ${widget.hotel?.lon}",
-                                    ratingOrCost: 3.5,
+                                    hotelName: widget.site?.name ?? "",
+                                    hotelLocation: "${widget.site?.lat}, ${widget.site?.lon}",
+                                    ratingOrCost: widget.site!.cost,
+                                    isSite: true,
                                   ),
                                   Utils.verticalPadding(space: 46.h),
                                   SizedBox(
                                     width: 339.w,
                                     child: Text(
-                                      widget.hotel!.description!,
+                                      widget.site?.description ?? "",
                                       style: theme.textTheme.labelSmall!.copyWith(
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w400,
@@ -111,29 +115,29 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                     ),
                                   ),
                                   Utils.verticalPadding(space: 8.h),
-                                  CustomHotelDirectionWidget(
-                                    iconData: "assets/svgs/Icon.svg",
-                                    width: 353.w,
-                                    titleWidget: Text(
-                                      "Distance from conference",
-                                      style: theme.textTheme.labelSmall!.copyWith(
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.black,
-                                        letterSpacing: 0.25,
-                                      ),
-                                    ),
-                                    trailingWidget: Text(
-                                      "5.6 kilometers",
-                                      style: theme.textTheme.labelSmall!.copyWith(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.blue,
-                                        letterSpacing: 0.25,
-                                      ),
-                                    ),
-                                  ),
-                                  Utils.verticalPadding(space: 8.h),
+                                  // CustomHotelDirectionWidget(
+                                  //   iconData: "assets/svgs/Icon.svg",
+                                  //   width: 353.w,
+                                  //   titleWidget: Text(
+                                  //     "Distance from conference",
+                                  //     style: theme.textTheme.labelSmall!.copyWith(
+                                  //       fontSize: 14.sp,
+                                  //       fontWeight: FontWeight.w400,
+                                  //       color: AppColors.black,
+                                  //       letterSpacing: 0.25,
+                                  //     ),
+                                  //   ),
+                                  //   trailingWidget: Text(
+                                  //     "5.6 kilometers",
+                                  //     style: theme.textTheme.labelSmall!.copyWith(
+                                  //       fontSize: 15.sp,
+                                  //       fontWeight: FontWeight.w600,
+                                  //       color: AppColors.blue,
+                                  //       letterSpacing: 0.25,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Utils.verticalPadding(space: 8.h),
                                   CustomHotelDirectionWidget(
                                     iconData: "assets/svgs/coins-hand.svg",
                                     width: 307.w,
@@ -151,7 +155,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                           ),
                                         ),
                                         Text(
-                                          "(cost per 1 night)",
+                                          "(cost per 1 person)",
                                           style: theme.textTheme.labelSmall!.copyWith(
                                             fontSize: 14.sp,
                                             fontWeight: FontWeight.w400,
@@ -162,7 +166,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                       ],
                                     ),
                                     trailingWidget: Text(
-                                      "\$ ${widget.hotel!.rate}",
+                                      "\$ ${widget.site?.cost}",
                                       style: theme.textTheme.labelSmall!.copyWith(
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w600,
@@ -172,12 +176,16 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                     ),
                                   ),
                                   Utils.verticalPadding(space: 34.h),
-                                  CustomButton(
-                                    btnText: "Book ${widget.hotel!.getFirstNameOfHotel()!}",
-                                      borderRadius: 93.r,
-                                      onTap: (){
-                                      //TODO: open the browser to get enter the hotel page
-                                      })
+                                  Consumer<SiteProvider>(
+                                    builder: (context, siteVm, child) {
+                                      return CustomButton(
+                                          btnText: "Visit ${widget.site!.getFirstNameOfHotel()}",
+                                          borderRadius: 93.r,
+                                          onTap: (){
+                                            siteVm.visitASite("${widget.site!.id!}");
+                                          });
+                                    },
+                                  )
                                 ],
                               ),
                             ),
@@ -185,6 +193,17 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                       ),
                     ),
                   ],
-                ))));
+                ),
+              ),
+              Consumer<SiteProvider>(
+                builder: (context, site, child){
+                  return  Visibility(
+                      visible: site.isLoading,
+                      child: const CustomLoader(color: AppColors.lightBlue,));
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }

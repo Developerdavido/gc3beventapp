@@ -56,7 +56,8 @@ class HotelCard extends StatelessWidget {
                       child: SizedBox(
                           height: 180.h,
                           width: 386.w,
-                          child: Image.asset(image!, fit: BoxFit.cover,)),
+                          child: image != null ? Image.network(image!, fit: BoxFit.cover,) : Container(color: AppColors.lightPurple,)
+                      ),
                     ),
                     Positioned(
                       right: 23.69.w,

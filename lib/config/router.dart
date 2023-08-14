@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/models/conference.dart';
+import 'package:gc3bapp/models/hotel.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
+import 'package:gc3bapp/models/site.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_screen.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_screen.dart';
 import 'package:gc3bapp/screens/home_screen/home_screen.dart';
@@ -10,6 +12,7 @@ import 'package:gc3bapp/screens/hotel_screen/hotel_booking.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_booking_details.dart';
 import 'package:gc3bapp/screens/login_screen/login_screen.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';
+import 'package:gc3bapp/screens/site/site_detail.dart';
 import 'package:gc3bapp/screens/site/site_screen.dart';
 import 'package:gc3bapp/screens/splash_screen/splash_screen.dart';
 import 'package:gc3bapp/screens/user_account_registration/user_account_registration.dart';
@@ -33,8 +36,10 @@ Route<dynamic>  generateRoute(RouteSettings settings) {
       return CupertinoPageRoute(builder: (_)=> const HotelScreen());
     case AppRoute.sitesRoute:
       return CupertinoPageRoute(builder: (_)=> const SiteScreen());
+    case AppRoute.siteDetailRoute:
+      return CupertinoPageRoute(builder: (_)=> SiteDetail(site: settings.arguments as Site,));
     case AppRoute.hotelDetailsRoute:
-      return CupertinoPageRoute(builder: (_)=> HotelBookingDetails(hotel: settings.arguments as HotelOrSite,));
+      return CupertinoPageRoute(builder: (_)=> HotelBookingDetails(hotel: settings.arguments as Hotel,));
     case AppRoute.conferenceDetailsRoute:
       return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen(conference: settings.arguments as Conference,));
     default:

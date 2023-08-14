@@ -94,47 +94,6 @@ class ProgramOutline{
   ];
 }
 
- class Venue{
-  String? date;
-  String? time;
-  Gps? coordinates;
-  String? name;
-
-  Venue({this.date, this.time, this.coordinates, this.name});
-
-
-  static List<Venue> venues = [
-    Venue(
-      date: "August 15-17, 2023",
-      time: "2:00 PM",
-      name: "Grand Summit Convention Center",
-      coordinates: Gps(
-        longitude: 0.0,
-        latitude: 0.0
-      )
-    ),
-    Venue(
-        date: "September 5-7, 2023",
-        time: "2:00 PM",
-        name: "Riverfront Convention Hall",
-        coordinates: Gps(
-            longitude: 0.0,
-            latitude: 0.0
-        )
-    ),
-    Venue(
-        date: "October 10-12, 2023",
-        time: "2:00 PM",
-        name: "Oceanview Conference Hall",
-        coordinates: Gps(
-            longitude: 0.0,
-            latitude: 0.0
-        )
-    ),
-  ];
-
-
-}
 
 class Gps {
   double? latitude;

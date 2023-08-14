@@ -32,7 +32,7 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
     handleGetConferences();
   }
 
-  handleGetConferences(){
+  handleGetConferences() {
     if (conferenceVm!.conferences.isEmpty) {
       conferenceVm!.getAllConferences();
     }
@@ -49,50 +49,60 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
             Utils.verticalPadding(space: 51.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 29.w),
-              child: const  TopScreen(
+              child: const TopScreen(
                 isBackIconVisible: true,
               ),
             ),
             Utils.verticalPadding(space: 14.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 49.w),
-              child: const TitleText(titleText: "Conferences",),
+              child: const TitleText(
+                titleText: "Conferences",
+              ),
             ),
             Utils.verticalPadding(space: 22.h),
             Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  child: conferenceVm!.gettingConferenceList
-                      ? Center(
-                    child: SpinKitWanderingCubes(
-                      color: AppColors.primaryColor,
-                      size: 50.sp,
-                    ),
-                  )
-                      : conferenceVm!.conferences.isEmpty
-                      ? EmptyListState(
-                    message: "No Conferences found for you at the moment",
-                  )
-                      : ListView.builder(
-                    itemCount: conferenceVm!.conferences.length,
-                      itemBuilder: (context, index) {
-                      final conference = conferenceVm!.conferences[index];
-                      return ConferenceCard(
-                        attendConference: (){
-                          locator<RouterService>().push(AppRoute.conferenceDetailsRoute, args: conference);
-                        },
-                        conferenceDate: conference.getConferenceDate(),
-                        attendeeImage: conference.attendees!.isNotEmpty ? conference.attendees?.last.avatar : "",
-                        conferenceTheme: conference.theme,
-                        conferenceTime: conference.getConferenceTime(),
-                        numberOfAttendees: conference.attendees!.length,
-                      );
-                      })
-                ))
+                    padding: EdgeInsets.symmetric(horizontal: 23.w),
+                    child: conferenceVm!.gettingConferenceList
+                        ? Center(
+                            child: SpinKitWanderingCubes(
+                              color: AppColors.primaryColor,
+                              size: 50.sp,
+                            ),
+                          )
+                        : conferenceVm!.conferences.isEmpty
+                            ? EmptyListState(
+                                message:
+                                    "No Conferences found for you at the moment",
+                              )
+                            : ListView.builder(
+                                itemCount: conferenceVm!.conferences.length,
+                                itemBuilder: (context, index) {
+                                  final conference =
+                                      conferenceVm!.conferences[index];
+                                  return ConferenceCard(
+                                    attendConference: () {
+                                      locator<RouterService>().push(
+                                          AppRoute.conferenceDetailsRoute,
+                                          args: conference);
+                                    },
+                                    conferenceDate:
+                                        conference.getConferenceDate(),
+                                    attendeeImage:
+                                        conference.attendees!.isNotEmpty
+                                            ? conference.attendees?.last.avatar
+                                            : "",
+                                    conferenceTheme: conference.theme,
+                                    conferenceTime:
+                                        conference.getConferenceTime(),
+                                    numberOfAttendees:
+                                        conference.attendees!.length,
+                                  );
+                                })))
           ],
         ),
       ),
     );
   }
 }
-

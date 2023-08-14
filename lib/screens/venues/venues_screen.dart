@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
+import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/venues/venues_widgets/venue_card.dart';
+import 'package:gc3bapp/view_models/venue_provider.dart';
+import 'package:provider/provider.dart';
 
-class VenuesScreen extends StatelessWidget {
+class VenuesScreen extends StatefulWidget {
   const VenuesScreen({Key? key}) : super(key: key);
 
   @override
+  State<VenuesScreen> createState() => _VenuesScreenState();
+}
+
+class _VenuesScreenState extends State<VenuesScreen> {
+
+  VenueProvider? venueVm;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _handleGetVenues();
+  }
+
+  _handleGetVenues() {
+    venueVm = context.read<VenueProvider>();
+    if (venueVm!.venues.isEmpty) {
+      venueVm!.getAllVenues();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    venueVm = context.watch<VenueProvider>();
     return SafeArea(
         child: Scaffold(
           body: Column(
@@ -32,10 +60,21 @@ class VenuesScreen extends StatelessWidget {
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
-                      child: ListView.builder(
-                          itemCount: Venue.venues.length,
+                      child: venueVm!.gettingVenuesList
+                          ? Center(
+                        child: SpinKitWanderingCubes(
+                          color: AppColors.primaryColor,
+                          size: 50.sp,
+                        ),
+                      )
+                          : venueVm!.venues.isEmpty
+                          ? EmptyListState(
+                        message: "No Venues found for you at the moment",
+                      )
+                          : ListView.builder(
+                          itemCount: venueVm?.venues.length,
                           itemBuilder: (context, index) {
-                            final venue = Venue.venues[index];
+                            final venue = venueVm?.venues[index];
                             return VenueCard(
                               venue: venue,
                             );
