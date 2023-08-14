@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
 
 class ProgramItemWidget extends StatelessWidget {
-  final List<ProgramOutline>? programOutline;
+  final List<Session>? programOutline;
   final ConferenceIndicator? conferenceIndicator;
   final VoidCallback? onTap;
   ProgramItemWidget({Key? key, this.programOutline, this.conferenceIndicator, this.onTap}) : super(key: key);
@@ -20,7 +21,7 @@ class ProgramItemWidget extends StatelessWidget {
         child: Stack(
           children: [
             AnimatedContainer(
-              height: conferenceIndicator!.onIndicatorClicked == true ? (programOutline!.length * 150.h) : 0,
+              height: conferenceIndicator!.onIndicatorClicked == true ? (programOutline!.length * 170.h) : 60.h,
               width: 376.w,
               decoration: BoxDecoration(
                 color: AppColors.onPrimaryColor,
@@ -38,7 +39,7 @@ class ProgramItemWidget extends StatelessWidget {
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.radio_button_on_rounded),
                       title: Text(
-                        e.title!,
+                        e.topic!,
                         style: theme.textTheme.labelSmall!.copyWith(
                             fontSize: 18.sp,
                             color:  AppColors.black,
@@ -47,7 +48,7 @@ class ProgramItemWidget extends StatelessWidget {
                         ),
                       ),
                       trailing: Text(
-                        e.time!,
+                        e.getSessionTime()!,
                         style: theme.textTheme.labelSmall!.copyWith(
                             fontSize: 18.sp,
                             color:  AppColors.black,

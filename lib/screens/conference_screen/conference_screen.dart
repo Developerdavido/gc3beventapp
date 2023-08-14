@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
 import 'package:gc3bapp/config/locator.dart';
+import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
@@ -59,7 +62,18 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
             Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  child: ListView.builder(
+                  child: conferenceVm!.gettingConferenceList
+                      ? Center(
+                    child: SpinKitWanderingCubes(
+                      color: AppColors.primaryColor,
+                      size: 50.sp,
+                    ),
+                  )
+                      : conferenceVm!.conferences.isEmpty
+                      ? EmptyListState(
+                    message: "No Conferences found for you at the moment",
+                  )
+                      : ListView.builder(
                     itemCount: conferenceVm!.conferences.length,
                       itemBuilder: (context, index) {
                       final conference = conferenceVm!.conferences[index];
@@ -68,6 +82,7 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                           locator<RouterService>().push(AppRoute.conferenceDetailsRoute, args: conference);
                         },
                         conferenceDate: conference.getConferenceDate(),
+                        attendeeImage: conference.attendees!.isNotEmpty ? conference.attendees?.last.avatar : "",
                         conferenceTheme: conference.theme,
                         conferenceTime: conference.getConferenceTime(),
                         numberOfAttendees: conference.attendees!.length,

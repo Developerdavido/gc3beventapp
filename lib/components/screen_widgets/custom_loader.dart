@@ -6,7 +6,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gc3bapp/constants/colors.dart';
 
 class CustomLoader extends StatelessWidget {
-  const CustomLoader({Key? key}) : super(key: key);
+  final Color? color;
+  const CustomLoader({Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CustomLoader extends StatelessWidget {
         color: Colors.transparent,
         child: Center(
           child: SpinKitWanderingCubes(
-            color: AppColors.primaryColor,
+            color: color ?? AppColors.primaryColor,
             size: 50.sp,
           ),
         ),

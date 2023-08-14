@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/view_models/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class AccountWidget extends StatelessWidget {
   final VoidCallback? onAccountTap;
@@ -34,18 +36,22 @@ class AccountWidget extends StatelessWidget {
                 ),
               ),
             ),
-            CircleAvatar(
-                backgroundColor: AppColors.lightGrey,
-                radius: 35.r,
-                child:
-                // user!.user?.avatar == null?
-                Center(
-                  child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
-                ),
-                    // : CircleAvatar(
-                    // radius: 35,
-                    // foregroundImage: NetworkImage(user!.user!.avatar!)
-                //),
+            Consumer<AuthProvider>(
+              builder: (context, auth, child) {
+                return CircleAvatar(
+                  backgroundColor: AppColors.lightGrey,
+                  radius: 35.r,
+                  child:
+                  auth.authModal?.user?.avatar == null?
+                  Center(
+                    child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
+                  )
+                  : CircleAvatar(
+                  radius: 35.r,
+                  foregroundImage: NetworkImage(auth.authModal?.user?.avatar)
+                  ),
+                );
+              },
             ),
           ],
         ),

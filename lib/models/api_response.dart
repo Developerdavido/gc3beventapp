@@ -69,6 +69,8 @@ class ApiResponse {
               if (body["data"] is Map) {
                 message = body["data"]["message"];
               }
+            }else {
+              message = body['message'];
             }
           }
           break;
@@ -76,9 +78,11 @@ class ApiResponse {
           message = "Operation successful";
           break;
         case 401:
-          if(body["error"] != null) body["error"];
+          if(body["error"] != null) {
+            errors = body["error"];
+          };
           if(body["error"] == null) {
-            body["message"];
+            errors = body["message"];
             //when the token returns invalid, clear the data
           }
           message = errors;
@@ -86,6 +90,9 @@ class ApiResponse {
         case 403:
           if (body["data"] == null ) {
             errors = (body["message"]);
+            if (body['message'] == null) {
+              errors = body['error'];
+            }
           } else {
             errors = (body["data"]["message"]);
             message = errors;
@@ -94,9 +101,12 @@ class ApiResponse {
         case 400:
           if (body["data"] == null ) {
             errors = body["error"];
+            if (body['error'] == null) {
+              errors = body['message'];
+            }
             message = errors;
-          } else {
-            errors = (body["data"]["message"]);
+          } else if(body['message'] != null) {
+            errors = (body["message"]);
             message = errors;
           }
           break;

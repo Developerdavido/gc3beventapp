@@ -27,78 +27,86 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 26.w, top: 67.h),
-                    child: const TopScreen(
-                      isBackIconVisible: false,
+    return GestureDetector(
+      onTap: (){
+        FocusScopeNode focus = FocusScope.of(context);
+        if (!focus.hasPrimaryFocus) {
+          focus.unfocus();
+        }
+      },
+      child: SafeArea(
+          child: Scaffold(
+            body: Stack(
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.w, top: 67.h),
+                      child: const TopScreen(
+                        isBackIconVisible: false,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.w),
-                        child: SingleChildScrollView(
-                          child: Form(
-                            key: key,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Utils.verticalPadding(space: 63.h),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 40.h),
-                                  child: const TitleText(titleText: "Account \nLogin",),
-                                ),
-                                Utils.verticalPadding(space: 117.h),
-                                Email(),
-                                const Password(),
-                                Utils.verticalPadding(space: 22.h),
-                                ForgotPassword(
-                                  onForgotTap: (){},
-                                ),
-                                Utils.verticalPadding(space: 65.h),
-                                Consumer<AuthProvider>(
-                                  builder: (context, auth, child){
-                                    return CustomButton(
-                                        btnText: 'Login',
-                                        onTap: (){
-                                         if (key.currentState!.validate()) {
-                                           auth.login();
-                                         }
-                                        });
-                                  },
-                                ),
-                                Utils.verticalPadding(space: 17.h),
-                                Center(
-                                  child: AccountMessage(
-                                    title: "Dont have an account? ",
-                                    actionText: "Register",
-                                    onTap: (){
-                                      locator<RouterService>().push(AppRoute.accountRegistrationRoute);
+                    Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: SingleChildScrollView(
+                            child: Form(
+                              key: key,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Utils.verticalPadding(space: 63.h),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 40.h),
+                                    child: const TitleText(titleText: "Account \nLogin",),
+                                  ),
+                                  Utils.verticalPadding(space: 117.h),
+                                  Email(),
+                                  const Password(),
+                                  Utils.verticalPadding(space: 22.h),
+                                  ForgotPassword(
+                                    onForgotTap: (){},
+                                  ),
+                                  Utils.verticalPadding(space: 65.h),
+                                  Consumer<AuthProvider>(
+                                    builder: (context, auth, child){
+                                      return CustomButton(
+                                          btnText: 'Login',
+                                          onTap: (){
+                                           if (key.currentState!.validate()) {
+                                             auth.login();
+                                           }
+                                          });
                                     },
                                   ),
-                                ),
-                                Utils.verticalPadding(space: 83.h),
-                              ],
+                                  Utils.verticalPadding(space: 17.h),
+                                  Center(
+                                    child: AccountMessage(
+                                      title: "Dont have an account? ",
+                                      actionText: "Register",
+                                      onTap: (){
+                                        locator<RouterService>().push(AppRoute.accountRegistrationRoute);
+                                      },
+                                    ),
+                                  ),
+                                  Utils.verticalPadding(space: 83.h),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ))
-                ],
-              ),
-              Consumer<AuthProvider>(
-                builder: (context, auth, child){
-                  return  Visibility(
-                      visible: auth.isLoading,
-                      child: const CustomLoader());
-                },
-              ),
-            ],
-          ),
-        ));
+                        ))
+                  ],
+                ),
+                Consumer<AuthProvider>(
+                  builder: (context, auth, child){
+                    return  Visibility(
+                        visible: auth.isLoading,
+                        child: const CustomLoader());
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }

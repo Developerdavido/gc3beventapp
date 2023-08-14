@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -11,29 +9,55 @@ import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/base_provider.dart';
 
 class ConferenceProvider extends BaseProvider {
-  
   bool gettingConferenceList = false;
 
   List<Conference> conferences = [];
-  
+
   //get conferences
   getAllConferences() async {
-
-    try{
+    try {
       gettingConferenceList = true;
       var response = await conference.getConferences();
+      log(response.toString());
       var apiResponse = ApiResponse.parse(response);
       updateUi(() => gettingConferenceList = false);
       if (apiResponse.allGood!) {
-        conferences = apiResponse.listData.map<Conference>((e) => Conference.fromJson(e)).toList();
-      }else {
-        dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
+        conferences = apiResponse.listData
+            .map<Conference>((e) => Conference.fromJson(e))
+            .toList();
+      } else {
+        dialog.showResponseDialog(
+          context: router.navigatorKey.currentState!.context,
           apiResponse: apiResponse,
           barrierDismissible: true,
         );
       }
-    }on DioException catch(e) {
+    } on DioException catch (e) {
       updateUi(() => gettingConferenceList = false);
+      dialog.showAlertDialog(
+          context: router.navigatorKey.currentState!.context,
+          message: DioExceptionHandler.getMessage(e),
+          type: AlertDialogType.error);
+    }
+  }
+
+  joinAConference(String? conferenceId) async {
+    setUiState(UIState.loading);
+    try {
+      var response = await conference.registerForAConference(conferenceId);
+      log(response.toString());
+      var apiResponse = ApiResponse.parse(response);
+      setUiState(UIState.done);
+      if (apiResponse.allGood!) {
+        log(apiResponse.code.toString());
+      }
+        dialog.showResponseDialog(
+          context: router.navigatorKey.currentState!.context,
+          apiResponse: apiResponse,
+          barrierDismissible: true,
+        );
+    } on DioException catch (e) {
+      setUiState(UIState.done);
       dialog.showAlertDialog(
           context: router.navigatorKey.currentState!.context,
           message: DioExceptionHandler.getMessage(e),

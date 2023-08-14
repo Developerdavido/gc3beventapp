@@ -20,7 +20,7 @@ class AuthProvider extends BaseProvider {
   TextEditingController countryCtrl = TextEditingController();
   TextEditingController phoneCtrl = TextEditingController();
   String? countryCode = "GH";
-  String? phoneNumber;
+  String? countryDialCode = "233";
 
 
   //user model
@@ -68,7 +68,7 @@ class AuthProvider extends BaseProvider {
       var response = await auth.registerUser(
           password: passwordCtrl.text.trim(),
           email: emailCtrl.text.trim(),
-          phone: phoneCtrl.text.trim(),
+          phone: "$countryDialCode${phoneCtrl.text.trim()}",
           country: countryCode,
           avatar: null,
           fullName: fullNameCtrl.text.trim(),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gc3bapp/constants/route.dart';
+import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_screen.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_screen.dart';
@@ -35,7 +36,7 @@ Route<dynamic>  generateRoute(RouteSettings settings) {
     case AppRoute.hotelDetailsRoute:
       return CupertinoPageRoute(builder: (_)=> HotelBookingDetails(hotel: settings.arguments as HotelOrSite,));
     case AppRoute.conferenceDetailsRoute:
-      return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen(conference: settings.arguments as MockConferenceModel,));
+      return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen(conference: settings.arguments as Conference,));
     default:
       return CupertinoPageRoute(builder: (_)=> const SplashScreen());
   }

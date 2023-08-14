@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
+import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/models/mock_conference_model.dart';
 
 class ConferenceDetailTitleWidget extends StatelessWidget {
-  final MockConferenceModel? conference;
+  final Conference? conference;
   const ConferenceDetailTitleWidget({Key? key, this.conference})
       : super(key: key);
 
@@ -25,13 +26,14 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                      text: conference!.conferenceTime,
+                      text: conference!.getConferenceDate(),
                       style: theme.textTheme.headlineSmall!.copyWith(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: AppColors.onPrimaryColor)),
+                  //TODO: add the location of the conference
                   TextSpan(
-                    text: " | ${conference!.location}",
+                    text: " | ${conference?.venue?.name}",
                     style: theme.textTheme.headlineSmall!.copyWith(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
@@ -45,10 +47,10 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
             SizedBox(
               width: 289.w,
               child: Text(
-                  conference!.conferenceTheme!,
+                  conference!.theme!,
                   style: theme.textTheme.headlineMedium!.copyWith(
                     color: Colors.white,
-                    fontSize: 36.sp,
+                    fontSize: 28.sp,
                     fontWeight: FontWeight.w600,
                   )
               ),
@@ -63,18 +65,19 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                       backgroundColor: AppColors.lightGrey,
                       radius: 17.r,
                       child:
-                      // user!.user?.avatar == null?
+                      conference?.banner == null?
                       Center(
                         child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
+                      )
+                      : CircleAvatar(
+                      radius: 17.r,
+                      foregroundImage: NetworkImage(conference!.banner!)
                       ),
-                      // : CircleAvatar(
-                      // radius: 35,
-                      // foregroundImage: NetworkImage(user!.user!.avatar!)
-                      //),
                     ),
                     Utils.horizontalPadding(space: 4.w),
+                    //TODO: Add the conference speaker
                     Text(
-                      "${conference!.conferenceSpeaker}",
+                      "${""}",
                       style: theme.textTheme.headlineSmall!.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
@@ -87,13 +90,13 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: conference!.attendees,
+                          text: "${conference!.attendees!.length}",
                           style: theme.textTheme.headlineSmall!.copyWith(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.onPrimaryColor)),
                       TextSpan(
-                        text: " Attendees",
+                        text: getAttendee(),
                         style: theme.textTheme.headlineSmall!.copyWith(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
@@ -109,5 +112,13 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
           ],
         ),
     );
+  }
+
+  getAttendee(){
+    if (conference!.attendees!.length > 1) {
+      return " Attendees";
+    } else {
+      return " Attendee";
+    }
   }
 }

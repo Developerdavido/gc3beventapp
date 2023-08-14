@@ -30,98 +30,96 @@ class UserAccountRegistration extends StatefulWidget {
 
 class _UserAccountRegistrationState extends State<UserAccountRegistration> {
   final GlobalKey<FormState> key = GlobalKey<FormState>();
-
-  AuthProvider? vm;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    vm = context.read<AuthProvider>();
-    vm!.passwordCtrl.text = "";
-    vm!.emailCtrl.text = "";
-  }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          body: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 26.w, top: 67.h),
-                    child: const TopScreen(
-                      isBackIconVisible: true,
+    return GestureDetector(
+      onTap: (){
+        FocusScopeNode focus = FocusScope.of(context);
+        if (!focus.hasPrimaryFocus) {
+          focus.unfocus();
+        }
+      },
+      child: SafeArea(
+          child: Scaffold(
+            body: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 26.w, top: 67.h),
+                      child: const TopScreen(
+                        isBackIconVisible: true,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24.w),
-                        child: SingleChildScrollView(
-                          child: Form(
-                            key: key,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Utils.verticalPadding(space: 63.h),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 40.h),
-                                  child: const TitleText(titleText: "Account \nRegistration",),
-                                ),
-                                Utils.verticalPadding(space: 52.h),
-                                const Center(child: CSALogo()),
-                                Utils.verticalPadding(space: 51.h),
-                                FullName(),
-                                Email(),
-                                Phone(),
-                                Utils.verticalPadding(space: 12.h),
-                                const Password(),
-                                const ConfirmPassword(),
-                                Utils.verticalPadding(space: 17.h),
-                               Center(child: Padding(
-                                 padding: EdgeInsets.symmetric(horizontal: 43.w),
-                                 child: const TermsAndConditions(),
-                               )),
-                                Utils.verticalPadding(space: 55.h),
-                                Consumer<AuthProvider>(
-                                  builder: (context, auth, child) {
-                                    return CustomButton(
-                                        btnText: 'Register',
-                                        onTap: (){
-                                          if (key.currentState!.validate()) {
-                                            auth.register();
-                                          }
-                                        });
-                                  },
-                                ),
-                                Utils.verticalPadding(space: 17.h),
-                                Center(
-                                  child: AccountMessage(
-                                    title: "Have an account? ",
-                                    actionText: "Log In",
-                                    onTap: (){
-                                      locator<RouterService>().push(AppRoute.userLoginRoute);
+                    Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: SingleChildScrollView(
+                            child: Form(
+                              key: key,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Utils.verticalPadding(space: 63.h),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 40.h),
+                                    child: const TitleText(titleText: "Account \nRegistration",),
+                                  ),
+                                  Utils.verticalPadding(space: 52.h),
+                                  const Center(child: CSALogo()),
+                                  Utils.verticalPadding(space: 51.h),
+                                  FullName(),
+                                  Email(),
+                                  Phone(),
+                                  Utils.verticalPadding(space: 12.h),
+                                  const Password(),
+                                  const ConfirmPassword(),
+                                  Utils.verticalPadding(space: 17.h),
+                                 Center(child: Padding(
+                                   padding: EdgeInsets.symmetric(horizontal: 43.w),
+                                   child: const TermsAndConditions(),
+                                 )),
+                                  Utils.verticalPadding(space: 55.h),
+                                  Consumer<AuthProvider>(
+                                    builder: (context, auth, child) {
+                                      return CustomButton(
+                                          btnText: 'Register',
+                                          onTap: (){
+                                            if (key.currentState!.validate()) {
+                                              auth.register();
+                                            }
+                                          });
                                     },
                                   ),
-                                ),
-                                Utils.verticalPadding(space: 83.h),
-                              ],
+                                  Utils.verticalPadding(space: 17.h),
+                                  Center(
+                                    child: AccountMessage(
+                                      title: "Have an account? ",
+                                      actionText: "Log In",
+                                      onTap: (){
+                                        locator<RouterService>().push(AppRoute.userLoginRoute);
+                                      },
+                                    ),
+                                  ),
+                                  Utils.verticalPadding(space: 83.h),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ))
-                ],
-              ),
-              Consumer<AuthProvider>(
-                builder: (context, auth, child){
-                  return  Visibility(
-                      visible: auth.isLoading,
-                      child: const CustomLoader());
-                },
-              ),
-            ],
-          ),
-        ));
+                        ))
+                  ],
+                ),
+                Consumer<AuthProvider>(
+                  builder: (context, auth, child){
+                    return  Visibility(
+                        visible: auth.isLoading,
+                        child: const CustomLoader());
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }

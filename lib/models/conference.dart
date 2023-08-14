@@ -10,7 +10,7 @@ class Conference {
   String? time;
   String? description;
   String? banner;
-  int? venue;
+  Venue? venue;
   int? seats;
   List<Attendee>? attendees;
   List<Session>? sessions;
@@ -48,7 +48,7 @@ class Conference {
     time: json["time"],
     description: json["description"],
     banner: json["banner"],
-    venue: json["venue"],
+    venue: json["venue"] == null ? null : Venue.fromJson(json["venue"]),
     seats: json["seats"],
     attendees: json["attendees"] == null ? [] : List<Attendee>.from(json["attendees"]!.map((x) => Attendee.fromJson(x))),
     sessions: json["sessions"] == null ? [] : List<Session>.from(json["sessions"]!.map((x) => Session.fromJson(x))),
@@ -62,7 +62,7 @@ class Conference {
     "time": time,
     "description": description,
     "banner": banner,
-    "venue": venue,
+    "venue": venue?.toJson(),
     "seats": seats,
     "attendees": attendees == null ? [] : List<dynamic>.from(attendees!.map((x) => x.toJson())),
     "sessions": sessions == null ? [] : List<dynamic>.from(sessions!.map((x) => x.toJson())),
@@ -111,6 +111,12 @@ class Session {
   String? time;
   String? speaker;
 
+  getSessionTime(){
+    DateTime dateTime = DateFormat('HH:mm:ss').parse(time!);
+    String formattedTime = DateFormat('h:mm a').format(dateTime);
+    return formattedTime;
+  }
+
   Session({
     this.id,
     this.topic,
@@ -130,5 +136,45 @@ class Session {
     "topic": topic,
     "time": time,
     "speaker": speaker,
+  };
+}
+
+class Venue {
+  int? id;
+  String? name;
+  String? address;
+  String? country;
+  String? city;
+  double? lat;
+  double? lon;
+
+  Venue({
+    this.id,
+    this.name,
+    this.address,
+    this.country,
+    this.city,
+    this.lat,
+    this.lon,
+  });
+
+  factory Venue.fromJson(Map<String, dynamic> json) => Venue(
+    id: json["id"],
+    name: json["name"],
+    address: json["address"],
+    country: json["country"],
+    city: json["city"],
+    lat: json["lat"]?.toDouble(),
+    lon: json["lon"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "address": address,
+    "country": country,
+    "city": city,
+    "lat": lat,
+    "lon": lon,
   };
 }

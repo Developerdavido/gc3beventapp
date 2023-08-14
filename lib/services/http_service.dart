@@ -21,9 +21,8 @@ class HttpService{
   Future<Map<String, String>> getHeaders() async {
     return {
       HttpHeaders.acceptHeader: "application/json",
-      "token": "${await getAuthBearerToken()}",
-    } ;
-
+      HttpHeaders.authorizationHeader: "Token ${await getAuthBearerToken()}",
+    };
   }
 
   HttpService() {

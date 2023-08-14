@@ -7,7 +7,8 @@ class ConferenceTopWidget extends StatelessWidget {
   final String? conferenceTitle;
   final String? conferenceTime;
   final num? numberOfAttendees;
-  const ConferenceTopWidget({Key? key, this.conferenceTitle, this.conferenceTime, this.numberOfAttendees,}) : super(key: key);
+  final String? attendeeImage;
+  const ConferenceTopWidget({Key? key, this.conferenceTitle,this.attendeeImage, this.conferenceTime, this.numberOfAttendees,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,14 @@ class ConferenceTopWidget extends StatelessWidget {
                       backgroundColor: AppColors.lightGrey,
                       radius: 17.r,
                       child:
-                      // user!.user?.avatar == null?
+                      attendeeImage == null ?
                       Center(
                         child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
+                      )
+                      : CircleAvatar(
+                      radius: 17.r,
+                      foregroundImage: NetworkImage(attendeeImage!)
                       ),
-                      // : CircleAvatar(
-                      // radius: 35,
-                      // foregroundImage: NetworkImage(user!.user!.avatar!)
-                      //),
                     ),
                   ),
                   Transform.translate(

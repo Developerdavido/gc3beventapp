@@ -38,7 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   isBackIconVisible: false,
                   isAccountIconVisible: true,
                   accountIcon: AccountWidget(
-                    onAccountTap: (){},
+                    onAccountTap: (){
+
+                    },
                   ),
                 ),
               ),
