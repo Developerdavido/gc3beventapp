@@ -38,8 +38,13 @@ class AuthProvider extends BaseProvider {
       log("auth response${response.toString()}");
       var apiResponse = ApiResponse.parse(response);
       if (apiResponse.allGood!) {
-        saveUserData(apiResponse);
-        clearFields();
+        if (apiResponse.code == 200 || apiResponse.code == 400) {
+          saveUserData(apiResponse);
+          clearFields();
+        }else {
+          dialog.showAlertDialog(context: router.navigatorKey.currentState!.context, message: "User not found", type: AlertDialogType.error);
+        }
+
       }else {
         dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
           apiResponse: apiResponse,
@@ -78,8 +83,12 @@ class AuthProvider extends BaseProvider {
       log("auth response${response.toString()}");
       var apiResponse = ApiResponse.parse(response);
       if (apiResponse.allGood!) {
-        saveUserData(apiResponse);
-        clearFields();
+        if (apiResponse.code == 200 || apiResponse.code == 400) {
+          saveUserData(apiResponse);
+          clearFields();
+        }else {
+          dialog.showAlertDialog(context: router.navigatorKey.currentState!.context, message: "Something went wrong, please try again", type: AlertDialogType.error);
+        }
       }else {
         dialog.showResponseDialog(context: router.navigatorKey.currentState!.context,
           apiResponse: apiResponse,

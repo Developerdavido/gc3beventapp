@@ -13,6 +13,8 @@ import 'package:gc3bapp/screens/home_screen/home_screen_widgets/hotel_booking.da
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/news_and_feeds.dart';
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/upcoming_events.dart';
 import 'package:gc3bapp/services/router_service.dart';
+import 'package:gc3bapp/view_models/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,10 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: TopScreen(
                   isBackIconVisible: false,
                   isAccountIconVisible: true,
-                  accountIcon: AccountWidget(
-                    onAccountTap: (){
-
+                  accountIcon: Consumer<AuthProvider>(
+                    builder: (context, auth, child){
+                      return AccountWidget(
+                        onAccountTap: (){
+                          locator<RouterService>().push(AppRoute.profileRoute, args: auth.authModal?.user);
+                        },
+                      );
                     },
+
                   ),
                 ),
               ),

@@ -1,7 +1,11 @@
+import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/api_constants.dart';
+import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/storage_key.dart';
 import 'package:gc3bapp/models/auth_model.dart';
 import 'package:gc3bapp/services/http_service.dart';
+import 'package:gc3bapp/services/local_storage_service.dart';
+import 'package:gc3bapp/services/router_service.dart';
 
 class AuthService extends HttpService {
   //auto login
@@ -43,7 +47,7 @@ class AuthService extends HttpService {
       "password2" : confirmPassword,
     };
     
-    var response = await post(Api.register, body: body);
+    var response = await loginPost(Api.register, body: body);
     return response;
   }
 
@@ -57,7 +61,12 @@ class AuthService extends HttpService {
       "email" : email,
       "password" : password,
     };
-    var response = await post(Api.login, body: body);
+    var response = await loginPost(Api.login, body: body);
     return response;
+  }
+
+  logout()async{
+    await LocalStorageService().deleteModel(LocalStorageKey.authKey);
+    locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.userLoginRoute);
   }
 }

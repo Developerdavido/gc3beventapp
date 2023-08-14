@@ -106,6 +106,23 @@ class HttpService{
   }
 
 
+  //unique login post
+  Future<Response> loginPost(String url, {dynamic body, CancelToken? token}) async {
+    String uri = "$host$url";
+    print(uri);
+    return dio!.post(
+      uri,
+      data: body,
+      cancelToken: token,
+      options: Options(
+        headers: {
+          HttpHeaders.acceptHeader: "application/json",
+        }
+      ),
+    );
+  }
+
+
 
   //patch from database
   Future<Response> patch(String url, body, {CancelToken? token}) async {
@@ -133,6 +150,8 @@ class HttpService{
         queryParameters: queryParameters
     );
   }
+
+
 
   //detele from database
   Future<Response> delete(String url, {dynamic body, CancelToken? token}) async {
