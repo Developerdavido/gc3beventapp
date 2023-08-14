@@ -64,6 +64,8 @@ class ApiResponse {
         case 201:
           if(body is String) {
             message = body;
+          }else if(body.containsKey("message")) {
+            message = body['message'];
           }else {
             if (body.containsKey("data")) {
               if (body["data"] is Map) {
