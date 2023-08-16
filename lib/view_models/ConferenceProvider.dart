@@ -64,4 +64,33 @@ class ConferenceProvider extends BaseProvider {
           type: AlertDialogType.error);
     }
   }
+
+
+  //get a single conference
+  Future<Conference>? getAConference(int? conferenceId) async {
+    Conference? searchedConference;
+    setUiState(UIState.loading);
+    try {
+      var response = await conference.fetchConference(conferenceId);
+      log(response.toString());
+      var apiResponse = ApiResponse.parse(response);
+      setUiState(UIState.done);
+      if (apiResponse.allGood!) {
+        searchedConference = Conference.fromJson(apiResponse.mappedObjects!);
+      }else if(apiResponse.code != 200) {
+        dialog.showResponseDialog(
+          context: router.navigatorKey.currentState!.context,
+          apiResponse: apiResponse,
+          barrierDismissible: true,
+        );
+      }
+    } on DioException catch (e) {
+      setUiState(UIState.done);
+      dialog.showAlertDialog(
+          context: router.navigatorKey.currentState!.context,
+          message: DioExceptionHandler.getMessage(e),
+          type: AlertDialogType.error);
+    }
+    return searchedConference!;
+  }
 }

@@ -5,7 +5,7 @@ import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/conference.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
+import 'package:gc3bapp/models/conference_indicator.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/conference_detail_title_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/custom_sliver_appbar_delegate.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/program_item_widget.dart';

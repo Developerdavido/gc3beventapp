@@ -3,10 +3,11 @@ class Venue {
   String? name;
   String? address;
   String? country;
+  String? image;
   String? city;
   double? lat;
   double? lon;
-  List<Conference>? conferences;
+  List<VenueConference>? venueConference;
 
   Venue({
     this.id,
@@ -14,9 +15,10 @@ class Venue {
     this.address,
     this.country,
     this.city,
+    this.image,
     this.lat,
     this.lon,
-    this.conferences,
+    this.venueConference,
   });
 
   factory Venue.fromJson(Map<String, dynamic> json) => Venue(
@@ -25,9 +27,10 @@ class Venue {
     address: json["address"],
     country: json["country"],
     city: json["city"],
+    image: json["image"],
     lat: json["lat"]?.toDouble(),
     lon: json["lon"],
-    conferences: json["conferences"] == null ? [] : List<Conference>.from(json["conferences"]!.map((x) => Conference.fromJson(x))),
+    venueConference: json["conferences"] == null ? [] : List<VenueConference>.from(json["conferences"]!.map((x) => VenueConference.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,12 +40,13 @@ class Venue {
     "country": country,
     "city": city,
     "lat": lat,
+    "image": image,
     "lon": lon,
-    "conferences": conferences == null ? [] : List<dynamic>.from(conferences!.map((x) => x.toJson())),
+    "conferences": venueConference == null ? [] : List<dynamic>.from(venueConference!.map((x) => x.toJson())),
   };
 }
 
-class Conference {
+class VenueConference {
   int? id;
   String? theme;
   DateTime? date;
@@ -50,7 +54,7 @@ class Conference {
   String? description;
   String? banner;
 
-  Conference({
+  VenueConference({
     this.id,
     this.theme,
     this.date,
@@ -59,8 +63,8 @@ class Conference {
     this.banner,
   });
 
-  factory Conference.fromJson(Map<String, dynamic> json) =>
-      Conference(
+  factory VenueConference.fromJson(Map<String, dynamic> json) =>
+      VenueConference(
         id: json["id"],
         theme: json["theme"],
         date: json["date"] == null ? null : DateTime.parse(json["date"]),

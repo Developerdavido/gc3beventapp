@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/models/conference.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
+import 'package:gc3bapp/models/conference_indicator.dart';
 
 class ProgramItemWidget extends StatelessWidget {
   final List<Session>? programOutline;
@@ -28,7 +28,7 @@ class ProgramItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.r)
               ),
               padding: EdgeInsets.symmetric(horizontal: 25.w),
-              duration: const Duration(milliseconds: 800
+              duration: const Duration(milliseconds: 500
               ),
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),

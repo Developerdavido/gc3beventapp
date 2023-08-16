@@ -8,6 +8,7 @@ import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/hotel_services.dart';
 import 'package:gc3bapp/services/http_service.dart';
 import 'package:gc3bapp/services/local_storage_service.dart';
+import 'package:gc3bapp/services/locator_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/services/site_services.dart';
 import 'package:gc3bapp/services/venues_services.dart';
@@ -26,4 +27,5 @@ final GetIt locator = GetIt.instance;
       locator.registerLazySingleton<LocalStorageService>(() => LocalStorageService());
       locator.registerLazySingleton<DialogService>(() => DialogService());
       locator.registerLazySingleton<ConnectionService>(() => ConnectionService());
+      locator.registerLazySingleton<LocationService>(() => LocationService());
  }

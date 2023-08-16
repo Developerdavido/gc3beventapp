@@ -6,6 +6,7 @@ import 'package:gc3bapp/services/conference_service.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/hotel_services.dart';
 import 'package:gc3bapp/services/local_storage_service.dart';
+import 'package:gc3bapp/services/locator_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/services/site_services.dart';
 import 'package:gc3bapp/services/venues_services.dart';
@@ -21,6 +22,7 @@ class BaseProvider with ChangeNotifier{
   final site = locator<SiteService>();
   final hotel = locator<HotelService>();
   final venue = locator<VenueService>();
+  final location = locator<LocationService>();
 
 
   UIState uiState = UIState.idle;

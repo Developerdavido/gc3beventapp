@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/conference.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
 
 class ConferenceDetailTitleWidget extends StatelessWidget {
   final Conference? conference;
@@ -33,7 +32,7 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                           color: AppColors.onPrimaryColor)),
                   //TODO: add the location of the conference
                   TextSpan(
-                    text: " | ${conference?.venue?.name}",
+                    text: " | ${conference?.conferenceVenue?.name}",
                     style: theme.textTheme.headlineSmall!.copyWith(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,

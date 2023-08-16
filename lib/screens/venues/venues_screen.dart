@@ -4,10 +4,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
+import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/venues/venues_widgets/venue_card.dart';
+import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/venue_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +33,11 @@ class _VenuesScreenState extends State<VenuesScreen> {
 
   _handleGetVenues() {
     venueVm = context.read<VenueProvider>();
+    venueVm?.getLocationOfUser();
     if (venueVm!.venues.isEmpty) {
       venueVm!.getAllVenues();
     }
+
   }
 
   @override
@@ -75,8 +79,13 @@ class _VenuesScreenState extends State<VenuesScreen> {
                           itemCount: venueVm?.venues.length,
                           itemBuilder: (context, index) {
                             final venue = venueVm?.venues[index];
-                            return VenueCard(
-                              venue: venue,
+                            return GestureDetector(
+                              onTap: (){
+                                locator<RouterService>().push(AppRoute.venueDetail, args: venue);
+                              },
+                              child: VenueCard(
+                                venue: venue,
+                              ),
                             );
                           })
                   ))

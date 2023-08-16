@@ -8,10 +8,11 @@ class ConferenceCard extends StatelessWidget {
   final String? conferenceTheme;
   final String? conferenceDate;
   final String? conferenceTime;
+  final String? conferenceImage;
   final num? numberOfAttendees;
   final VoidCallback? attendConference;
   final String? attendeeImage;
-  const ConferenceCard({Key? key,this.conferenceTime, this.attendeeImage,  this.numberOfAttendees, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
+  const ConferenceCard({Key? key,this.conferenceImage, this.conferenceTime, this.attendeeImage,  this.numberOfAttendees, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,23 @@ class ConferenceCard extends StatelessWidget {
         width: 386.w,
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(38.r)
+          borderRadius: BorderRadius.circular(38.r),
+          image: DecorationImage(
+              image: NetworkImage(
+            conferenceImage ?? ""
+          ),
+            fit: BoxFit.cover
+          )
         ),
         child: Stack(
           children: [
+          Container(
+          height: 259.h,
+          width: 386.w,
+          decoration: BoxDecoration(
+              color: AppColors.primaryColor.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(38.r),
+          )),
             Positioned(
               top: 27.h,
                 left: 20.w,

@@ -10,7 +10,7 @@ class Conference {
   String? time;
   String? description;
   String? banner;
-  Venue? venue;
+  ConferenceVenue? conferenceVenue;
   int? seats;
   List<Attendee>? attendees;
   List<Session>? sessions;
@@ -34,13 +34,13 @@ class Conference {
     this.time,
     this.description,
     this.banner,
-    this.venue,
+    this.conferenceVenue,
     this.seats,
     this.attendees,
     this.sessions,
   });
 
-  factory Conference.fromJson(Map<String, dynamic> json) => Conference(
+  factory Conference.fromJson(Map<dynamic, dynamic> json) => Conference(
     id: json["id"],
     theme: json["theme"],
     programOutline: json["program_outline"],
@@ -48,7 +48,7 @@ class Conference {
     time: json["time"],
     description: json["description"],
     banner: json["banner"],
-    venue: json["venue"] == null ? null : Venue.fromJson(json["venue"]),
+    conferenceVenue: json["venue"] == null ? null : ConferenceVenue.fromJson(json["venue"]),
     seats: json["seats"],
     attendees: json["attendees"] == null ? [] : List<Attendee>.from(json["attendees"]!.map((x) => Attendee.fromJson(x))),
     sessions: json["sessions"] == null ? [] : List<Session>.from(json["sessions"]!.map((x) => Session.fromJson(x))),
@@ -62,7 +62,7 @@ class Conference {
     "time": time,
     "description": description,
     "banner": banner,
-    "venue": venue?.toJson(),
+    "venue": conferenceVenue?.toJson(),
     "seats": seats,
     "attendees": attendees == null ? [] : List<dynamic>.from(attendees!.map((x) => x.toJson())),
     "sessions": sessions == null ? [] : List<dynamic>.from(sessions!.map((x) => x.toJson())),
@@ -139,7 +139,7 @@ class Session {
   };
 }
 
-class Venue {
+class ConferenceVenue {
   int? id;
   String? name;
   String? address;
@@ -148,7 +148,7 @@ class Venue {
   double? lat;
   double? lon;
 
-  Venue({
+  ConferenceVenue({
     this.id,
     this.name,
     this.address,
@@ -158,7 +158,7 @@ class Venue {
     this.lon,
   });
 
-  factory Venue.fromJson(Map<String, dynamic> json) => Venue(
+  factory ConferenceVenue.fromJson(Map<String, dynamic> json) => ConferenceVenue(
     id: json["id"],
     name: json["name"],
     address: json["address"],

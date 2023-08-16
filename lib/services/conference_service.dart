@@ -16,4 +16,10 @@ class ConferenceService extends HttpService{
     var response = await post("${Api.conferences}$conferenceId/register");
     return response;
   }
+
+
+  fetchConference(int? id) async {
+    var response = await get("${Api.conferences}$id/");
+    return response;
+  }
 }

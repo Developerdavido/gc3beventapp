@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_button.dart';
 import 'package:gc3bapp/components/screen_widgets/custom_hotel_direction_widget.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
+import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/hotel.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card_bottom_widget.dart';
+import 'package:gc3bapp/services/router_service.dart';
 
 class HotelBookingDetails extends StatefulWidget {
   final Hotel? hotel;
@@ -177,6 +179,7 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                                       borderRadius: 93.r,
                                       onTap: (){
                                       //TODO: open the browser to get enter the hotel page
+                                        locator<RouterService>().push(AppRoute.hotelWebViewRoute, args: widget.hotel);
                                       })
                                 ],
                               ),

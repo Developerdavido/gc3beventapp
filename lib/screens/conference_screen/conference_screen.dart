@@ -8,7 +8,6 @@ import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_card.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
@@ -89,6 +88,7 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                                     },
                                     conferenceDate:
                                         conference.getConferenceDate(),
+                                    conferenceImage: conference.banner,
                                     attendeeImage:
                                         conference.attendees!.isNotEmpty
                                             ? conference.attendees?.last.avatar

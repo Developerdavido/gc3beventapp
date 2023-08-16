@@ -8,10 +8,13 @@ import 'package:gc3bapp/models/error_handler.dart';
 import 'package:gc3bapp/models/venue.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/base_provider.dart';
+import 'package:geolocator/geolocator.dart';
 
 class VenueProvider extends BaseProvider {
 
   bool gettingVenuesList = false;
+
+  Position? position;
 
   List<Venue> venues = [];
 
@@ -41,5 +44,10 @@ class VenueProvider extends BaseProvider {
           message: DioExceptionHandler.getMessage(e),
           type: AlertDialogType.error);
     }
+  }
+
+  getLocationOfUser() async {
+    position = await location.getCurrentUserLocation();
+    notifyListeners();
   }
 }

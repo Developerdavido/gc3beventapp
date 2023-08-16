@@ -4,7 +4,6 @@ import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
-import 'package:gc3bapp/models/mock_conference_model.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_card_bottom_widget.dart';
 import 'package:gc3bapp/services/router_service.dart';
 
