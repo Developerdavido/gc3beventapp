@@ -4,6 +4,7 @@ import 'package:gc3bapp/services/venues_services.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:gc3bapp/view_models/hotel_provider.dart';
+import 'package:gc3bapp/view_models/incidence_provider.dart';
 import 'package:gc3bapp/view_models/site_provider.dart';
 import 'package:gc3bapp/view_models/venue_provider.dart';
 import 'package:provider/provider.dart';
@@ -15,4 +16,5 @@ List<SingleChildWidget> providers = [
   ChangeNotifierProvider<SiteProvider>.value(value: SiteProvider()),
   ChangeNotifierProvider<VenueProvider>.value(value: VenueProvider()),
   ChangeNotifierProvider<HotelProvider>.value(value: HotelProvider()),
+  ChangeNotifierProvider<IncidenceProvider>.value(value: IncidenceProvider()),
 ];

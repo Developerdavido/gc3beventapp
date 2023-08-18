@@ -90,7 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Utils.horizontalPadding(space: 12.w),
                               NewsAndFeeds(
-                                onFeedTap: (){},
+                                onFeedTap: (){
+                                  locator<RouterService>().push(AppRoute.incidenceReportRoute);
+                                },
                                 onNewsTap: (){
                                   locator<RouterService>().push(AppRoute.newsAndSocialRoute);
                                 },

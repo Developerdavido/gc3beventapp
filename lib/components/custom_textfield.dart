@@ -12,6 +12,8 @@ class CustomTextField extends StatefulWidget {
   final bool? isPasswordField;
   final TextInputType? keyboardType;
   final Widget? suffix;
+  final int? maxLines;
+  final int? minLines;
   final bool? enabled;
   final TextEditingController? controller;
   const CustomTextField({Key? key,
@@ -20,6 +22,8 @@ class CustomTextField extends StatefulWidget {
     this.isPasswordField = false,
     this.validator,
     this.keyboardType,
+    this.maxLines = 1,
+    this.minLines = 1,
     this.controller,
     this.hintText,
     this.enabled = true,
@@ -86,6 +90,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             cursorColor: AppColors.black,
             obscureText: widget.isPasswordField! ? _obscureText : false,
             controller: widget.controller,
+            maxLines: widget.maxLines,
+            minLines: widget.minLines,
             enabled: widget.enabled,
           ),
         ),

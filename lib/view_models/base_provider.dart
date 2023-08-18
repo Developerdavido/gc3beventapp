@@ -5,6 +5,7 @@ import 'package:gc3bapp/services/auth_service.dart';
 import 'package:gc3bapp/services/conference_service.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/hotel_services.dart';
+import 'package:gc3bapp/services/incidence_services.dart';
 import 'package:gc3bapp/services/local_storage_service.dart';
 import 'package:gc3bapp/services/locator_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
@@ -23,6 +24,7 @@ class BaseProvider with ChangeNotifier{
   final hotel = locator<HotelService>();
   final venue = locator<VenueService>();
   final location = locator<LocationService>();
+  final incidenceReport = locator<IncidenceService>();
 
 
   UIState uiState = UIState.idle;
