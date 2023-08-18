@@ -83,7 +83,7 @@ class AuthProvider extends BaseProvider {
       log("auth response${response.toString()}");
       var apiResponse = ApiResponse.parse(response);
       if (apiResponse.allGood!) {
-        if (apiResponse.code == 200 || apiResponse.code == 400) {
+        if (apiResponse.code == 200 || apiResponse.code == 400 || apiResponse.code == 201) {
           saveUserData(apiResponse);
           clearFields();
         }else {

@@ -14,6 +14,7 @@ import 'package:gc3bapp/screens/home_screen/home_screen_widgets/news_and_feeds.d
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/upcoming_events.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
+import 'package:gc3bapp/view_models/venue_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,6 +25,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  VenueProvider? provider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    provider = context.read<VenueProvider>();
+    provider?.getLocationOfUser();
+    super.initState();
+
+  }
 
   int? currentIndex = 0;
   @override
@@ -80,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               Utils.horizontalPadding(space: 12.w),
                               NewsAndFeeds(
                                 onFeedTap: (){},
-                                onNewsTap: (){},
+                                onNewsTap: (){
+                                  locator<RouterService>().push(AppRoute.newsAndSocialRoute);
+                                },
                               )
                             ],
                           ),

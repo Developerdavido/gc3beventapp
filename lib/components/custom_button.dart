@@ -7,14 +7,15 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String? btnText;
   final double? borderRadius;
-  const CustomButton({Key? key, required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
+  final double? width;
+  const CustomButton({Key? key,this.width, required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 379.w,
+        width: width ?? 379.w,
         height: 65.h,
         decoration: ShapeDecoration(
           color: AppColors.primaryColor,

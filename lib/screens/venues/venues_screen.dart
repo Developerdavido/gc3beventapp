@@ -33,7 +33,6 @@ class _VenuesScreenState extends State<VenuesScreen> {
 
   _handleGetVenues() {
     venueVm = context.read<VenueProvider>();
-    venueVm?.getLocationOfUser();
     if (venueVm!.venues.isEmpty) {
       venueVm!.getAllVenues();
     }

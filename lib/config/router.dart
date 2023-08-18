@@ -17,6 +17,7 @@ import 'package:gc3bapp/screens/profile_screen/profile_screen.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';
 import 'package:gc3bapp/screens/site/site_detail.dart';
 import 'package:gc3bapp/screens/site/site_screen.dart';
+import 'package:gc3bapp/screens/feeds_and_news/social_and_feed.dart';
 import 'package:gc3bapp/screens/splash_screen/splash_screen.dart';
 import 'package:gc3bapp/screens/user_account_registration/user_account_registration.dart';
 import 'package:gc3bapp/screens/venues/venue_detail.dart';
@@ -40,6 +41,8 @@ Route<dynamic>  generateRoute(RouteSettings settings) {
       return CupertinoPageRoute(builder: (_)=> const HotelScreen());
     case AppRoute.sitesRoute:
       return CupertinoPageRoute(builder: (_)=> const SiteScreen());
+    case AppRoute.newsAndSocialRoute:
+      return CupertinoPageRoute(builder: (_)=> const SocialAndFeed());
     case AppRoute.hotelWebViewRoute:
       return CupertinoPageRoute(builder: (_)=> HotelWebView(hotel: settings.arguments as Hotel));
     case AppRoute.venueDetail:
