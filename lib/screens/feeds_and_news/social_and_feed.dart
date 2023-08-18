@@ -59,7 +59,7 @@ class _SocialAndFeedState extends State<SocialAndFeed> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 22.0.w),
               child: SizedBox(
-                height: 80.h,
+                height: 60.h,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
