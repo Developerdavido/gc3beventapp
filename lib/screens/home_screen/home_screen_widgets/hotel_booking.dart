@@ -16,41 +16,43 @@ class HotelBooking extends StatelessWidget {
       child: Container(
         width: 379.w,
         height: 76.h,
-        padding: EdgeInsets.symmetric(horizontal: 17.w),
         decoration: ShapeDecoration(
-          color: AppColors.primaryColor,
+          color: AppColors.lightBlue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(31.r),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Hotel Booking",
-              style: theme.textTheme.headlineSmall!.copyWith(
-                  color: AppColors.onPrimaryColor,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w400
-              )
-            ),
-            Container(
-                height: 45.h,
-                width: 45.h,
-                decoration: const BoxDecoration(
-                    color: AppColors.lightBlue,
-                    shape: BoxShape.circle
-                ),
-                child: Center(
-                  child: SizedBox(
-                    height: 24.w,
-                    width: 24.w,
-                    child: SvgPicture.asset("assets/svgs/luggage.svg"),
-                  )
-                )
-            ),
-          ],
-        ),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(31.r),
+            child: SvgPicture.asset("assets/svgs/hotel_booking.svg", fit: BoxFit.cover, height: 76.h, width: 379.w,))
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Text(
+        //       "Hotel Booking",
+        //       style: theme.textTheme.headlineSmall!.copyWith(
+        //           color: AppColors.primaryColor,
+        //           fontSize: 24.sp,
+        //           fontWeight: FontWeight.w400
+        //       )
+        //     ),
+        //     Container(
+        //         height: 45.h,
+        //         width: 45.h,
+        //         decoration: const BoxDecoration(
+        //             color: AppColors.primaryColor,
+        //             shape: BoxShape.circle
+        //         ),
+        //         child: Center(
+        //           child: SizedBox(
+        //             height: 24.w,
+        //             width: 24.w,
+        //             child: SvgPicture.asset("assets/svgs/luggage.svg", colorFilter: ColorFilter.mode(AppColors.lightBlue, BlendMode.srcIn),),
+        //           )
+        //         )
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

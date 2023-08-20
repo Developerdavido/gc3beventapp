@@ -24,4 +24,7 @@ class Api {
 
   //incidence
   static const incidents = "apis/incident_apis/incidents/";
+
+  //meetings
+  static const meetings = "apis/meeting_apis/meetings/";
 }

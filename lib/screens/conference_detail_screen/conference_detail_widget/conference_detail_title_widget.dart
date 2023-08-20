@@ -12,11 +12,11 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 38.w),
+    return Container(
+      width: 1.sw,
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text.rich(
               TextSpan(
@@ -85,29 +85,31 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: "${conference!.attendees!.length}",
+
+                Container(
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "${conference!.attendees!.length}",
+                            style: theme.textTheme.headlineSmall!.copyWith(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.onPrimaryColor)),
+                        TextSpan(
+                          text: getAttendee(),
                           style: theme.textTheme.headlineSmall!.copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.onPrimaryColor)),
-                      TextSpan(
-                        text: getAttendee(),
-                        style: theme.textTheme.headlineSmall!.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.onPrimaryColor,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.onPrimaryColor,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-            Utils.verticalPadding(space: 25.h)
           ],
         ),
     );

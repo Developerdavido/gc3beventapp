@@ -16,10 +16,10 @@ class EmptyListState extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 65.h,
-              width: 65.h,
+            height: 80.h,
+              width: 80.h,
               child: SvgPicture.asset("assets/svgs/no_file.svg", fit: BoxFit.contain,)),
-          Utils.verticalPadding(space: 8.h),
+          Utils.verticalPadding(space: 24.h),
           Text(message!,
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
               fontSize: 18.sp,

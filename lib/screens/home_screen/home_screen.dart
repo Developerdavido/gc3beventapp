@@ -9,10 +9,15 @@ import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
+import 'package:gc3bapp/screens/TicketsScreen/tickets_screen.dart';
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/hotel_booking.dart';
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/news_and_feeds.dart';
 import 'package:gc3bapp/screens/home_screen/home_screen_widgets/upcoming_events.dart';
+import 'package:gc3bapp/screens/manage_conference_screen/manage_conference.dart';
+import 'package:gc3bapp/screens/meeting_screen/meeting_screen.dart';
+import 'package:gc3bapp/screens/saved_events_screen/saved_events.dart';
 import 'package:gc3bapp/services/router_service.dart';
+import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:gc3bapp/view_models/venue_provider.dart';
 import 'package:provider/provider.dart';
@@ -36,182 +41,67 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
+  final screens = [
+    ManageConferences(),
+    TicketsScreen(),
+    MeetingScreen()
+  ];
+
   int? currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final conferenceVm = Provider.of<ConferenceProvider>(context);
     return SafeArea(
         child: Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Utils.verticalPadding(space: 51.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 29.w),
-                child: TopScreen(
-                  isBackIconVisible: false,
-                  isAccountIconVisible: true,
-                  accountIcon: Consumer<AuthProvider>(
-                    builder: (context, auth, child){
-                      return AccountWidget(
-                        onAccountTap: (){
-                          locator<RouterService>().push(AppRoute.profileRoute, args: auth.authModal?.user);
-                        },
-                      );
-                    },
-
+          body: screens[currentIndex!],
+          bottomNavigationBar: ClipRRect(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(31.r), topLeft: Radius.circular(31.r),),
+            child: Container(
+              width: 422.w,
+              height: 117.h,
+              color: AppColors.lightBlue,
+              child: NavigationBar(
+                height: 117.h,
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                indicatorColor: AppColors.primaryColor,
+                backgroundColor: AppColors.lightBlue,
+                destinations: [
+                  NavigationDestination(
+                      icon: SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)
+                      ),
+                      selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
+                      label: "Home"),
+                  NavigationDestination(icon:
+                  SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)),
+                  selectedIcon: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
+                  label: "My Tickets",),
+                  NavigationDestination(
+                      icon: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)),
+                      label: "My Events",
+                    selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
                   ),
-                ),
-              ),
-              Utils.verticalPadding(space: 55.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.h),
-                child: const TitleText(titleText: "Manage \nConference",),
-              ),
-              Utils.verticalPadding(space: 15.h),
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.w),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              UpcomingEvents(
-                                containerColor: AppColors.primaryColor,
-                                iconColor: AppColors.primaryColor,
-                                circleAndIconColor: AppColors.lightBlue,
-                                title: "Upcoming \nEvents",
-                                svgAsset: "assets/svgs/ticket.svg",
-                                titleColor: AppColors.onPrimaryColor,
-                                onEventsTap: (){
-                                  locator<RouterService>().push(AppRoute.conferencesRoute);
-                                },
-                              ),
-                              Utils.horizontalPadding(space: 12.w),
-                              NewsAndFeeds(
-                                onFeedTap: (){
-                                  locator<RouterService>().push(AppRoute.incidenceReportRoute);
-                                },
-                                onNewsTap: (){
-                                  locator<RouterService>().push(AppRoute.newsAndSocialRoute);
-                                },
-                              )
-                            ],
-                          ),
-                          Utils.verticalPadding(space: 12.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              UpcomingEvents(
-                                containerColor: AppColors.lightBlue,
-                                circleAndIconColor: AppColors.secondaryColor,
-                                title: "Site Visits",
-                                width: 185.w,
-                                svgAsset: "assets/svgs/globe.svg",
-                                iconColor: AppColors.lightBlue,
-                                titleColor: AppColors.primaryColor,
-                                onEventsTap: (){
-                                  locator<RouterService>().push(AppRoute.sitesRoute);
-                                },
-                              ),
-                              Utils.horizontalPadding(space: 12.w),
-                              UpcomingEvents(
-                                width: 185.w,
-                                containerColor: AppColors.primaryColor,
-                                circleAndIconColor: AppColors.lightBlue,
-                                svgAsset: "assets/svgs/marker-pin.svg",
-                                title: "Venue",
-                                iconColor: AppColors.primaryColor,
-                                titleColor: AppColors.onPrimaryColor,
-                                onEventsTap: (){
-                                  locator<RouterService>().push(AppRoute.venueRoute);
-                                },
-                              ),
-
-                            ],
-                          ),
-                          Utils.verticalPadding(space: 12.w),
-                          HotelBooking(
-                            onBtnTap: (){
-                              locator<RouterService>().push(AppRoute.hotelRoute);
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                  ))
-            ],
-          ),
-          bottomNavigationBar: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(31.r),
-              child: Container(
-                width: 422.w,
-                height: 90.h,
-                color: AppColors.lightGrey,
-                child: NavigationBar(
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                  indicatorColor: AppColors.lightBlue,
-                  destinations: [
-                    NavigationDestination(
-                        icon: SizedBox(
-                          height: 24.w,
-                          width: 24.w,
-                          child: SvgPicture.asset("assets/svgs/home.svg"),
-                        ),
-                        selectedIcon: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 24.w,
-                              width: 24.w,
-                              child: SvgPicture.asset("assets/svgs/home.svg"),
-                            ),
-                            Utils.horizontalPadding(space: 4.w),
-                            Text("Home", style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: AppColors.black,
-                              fontSize: 12.sp
-                            ),)
-                          ],
-                        ),
-                        label: "Home"),
-                    NavigationDestination(icon: const Icon(CupertinoIcons.ticket), label: "My Tickets",
-                    selectedIcon: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(CupertinoIcons.ticket, color: AppColors.black,size: 18.sp,),
-                        Utils.horizontalPadding(space: 4.w),
-                        Text("Tickets", style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                            color: AppColors.black,
-                            fontSize: 12.sp
-                        ),)
-                      ],
-                    ),),
-                    NavigationDestination(
-                        icon: const Icon(Icons.bookmark_border_outlined),
-                        label: "My Events",
-                      selectedIcon: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.bookmark_border_outlined, color: AppColors.black,size: 18.sp,),
-                          Utils.horizontalPadding(space: 4.w),
-                          Text("Events", style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: AppColors.black,
-                              fontSize: 12.sp
-                          ),)
-                        ],
-                      ),
-                    ),
-                  ],
-                  selectedIndex: currentIndex!,
-                  onDestinationSelected: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                ),
+                ],
+                selectedIndex: currentIndex!,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                  if (currentIndex == 2) {
+                    if (conferenceVm.meetings.isNotEmpty) {
+                      return;
+                    }
+                    conferenceVm.getYourMeetings();
+                  }
+                },
               ),
             ),
           )

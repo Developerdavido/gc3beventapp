@@ -90,7 +90,7 @@ class _VenueDetailState extends State<VenueDetail>
                 },
               )),
           Positioned(
-              left: 38.w,
+              left: 0.w,
               bottom: 52.h,
               child: Consumer<ConferenceProvider>(
                 builder: (context, conferenceVm, child){

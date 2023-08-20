@@ -1,11 +1,11 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_alert_dialog.dart';
+import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/models/api_response.dart';
 
-enum AlertDialogType {success, error, warning, confirm, custom}
+enum AlertDialogType { success, error, warning, confirm, custom }
 
 class DialogService {
   Future<bool?>? showAlertDialog({
@@ -22,29 +22,37 @@ class DialogService {
     VoidCallback? onCancelBtnTap,
     bool? barrierDismissible = true,
   }) {
-    return showDialog(
-      barrierDismissible: barrierDismissible!,
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(22.0.r),
-          ),
-          child: CustomAlertDialog(
-            message: message,
-            type: type,
-            title: title,
-            okayText: okayText,
-            cancelText: cancelText,
-            showCancelBtn: showCancelBtn,
-            showOkayBtn: showOkayBtn,
-            showTitle: showTitle,
-            onOkayBtnTap: onOkayBtnTap,
-            onCancelBtnTap: onCancelBtnTap,
-          ),
-        );
-      },
-    );
+    return showGeneralDialog(
+        barrierDismissible: barrierDismissible!,
+        context: context,
+        pageBuilder: (ctx, a1, a2) {
+          return Container();
+        },
+        barrierColor: AppColors.primaryColor.withOpacity(0.3),
+        barrierLabel: "response dialog barrier",
+        transitionDuration: const Duration(milliseconds: 400),
+        transitionBuilder: (context, a1, a2, child) {
+          var curve = Curves.easeInOut.transform(a1.value);
+          return Transform.scale(
+              scale: curve,
+              child: Dialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0.r),
+                ),
+                child: CustomAlertDialog(
+                  message: message,
+                  type: type,
+                  title: title,
+                  okayText: okayText,
+                  cancelText: cancelText,
+                  showCancelBtn: showCancelBtn,
+                  showOkayBtn: showOkayBtn,
+                  showTitle: showTitle,
+                  onOkayBtnTap: onOkayBtnTap,
+                  onCancelBtnTap: onCancelBtnTap,
+                ),
+              ));
+        });
   }
 
   bool showResponseDialog({
@@ -85,15 +93,23 @@ class DialogService {
     bool? barrierDismissible = true,
     bool? automaticallyClosed = false,
   }) {
-    return showDialog(
+    return showGeneralDialog(
         context: context,
-        builder: (context) {
+        pageBuilder: (ctx, a1, a2) {
+          return Container();
+        },
+        barrierDismissible: barrierDismissible!,
+        barrierColor: AppColors.primaryColor.withOpacity(0.3),
+        barrierLabel: "dialog barrier",
+        transitionDuration: const Duration(milliseconds: 400),
+        transitionBuilder: (context, a1, a2, child) {
+          var curve = Curves.easeInOut.transform(a1.value);
           Future.delayed(const Duration(seconds: 2)).then((value) {
             if (automaticallyClosed!) {
               Navigator.pop(context);
             }
           });
-          return customDialog;
+          return Transform.scale(scale: curve, child: customDialog);
         });
   }
 
@@ -117,5 +133,4 @@ class DialogService {
           return customModal;
         });
   }
-
 }

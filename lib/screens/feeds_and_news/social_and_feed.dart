@@ -63,13 +63,20 @@ class _SocialAndFeedState extends State<SocialAndFeed> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
+                    Container(
                       width: 0.5.sw,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(50.r), // Create  border
+                          color: AppColors.lightBlue.withOpacity(0.3)),
                       child: TabBar(
+                        indicatorWeight: 0,
+                          dividerColor: Colors.transparent,
                           indicatorPadding:
                               EdgeInsets.symmetric(horizontal: 4.w),
                           labelColor: AppColors.lightPurple,
                           indicator: BoxDecoration(
+                            border: null,
                               borderRadius:
                                   BorderRadius.circular(50.r), // Creates border
                               color: AppColors.primaryColor),

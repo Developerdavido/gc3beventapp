@@ -15,7 +15,7 @@ class TopAnnouncementWidget extends StatelessWidget {
         SizedBox(
           height: 20.w,
           width: 20.w,
-          child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.color),),
+          child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),),
         ),
         Utils.horizontalPadding(space: 4.w),
         Text(

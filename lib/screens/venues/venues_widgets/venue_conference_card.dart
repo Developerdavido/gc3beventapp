@@ -18,7 +18,8 @@ class ConferenceVenueCard extends StatelessWidget {
         width: 206.w,
         height: 235.h,
         decoration: BoxDecoration(
-          color: AppColors.lightBlue,
+          color: AppColors.onPrimaryColor,
+          border: Border.all(color: AppColors.black),
           borderRadius: BorderRadius.circular(31.r),
         ),
         child: Column(

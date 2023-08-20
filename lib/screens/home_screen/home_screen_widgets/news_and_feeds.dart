@@ -33,29 +33,32 @@ class NewsAndFeeds extends StatelessWidget {
                 borderRadius: BorderRadius.circular(31.r),
                 color: AppColors.primaryColor
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20.w,
-                      width: 20.w,
-                      child: SvgPicture.asset("assets/svgs/announcement.svg",
-                          colorFilter: const ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn)
-                      ),
-                    ),
-                    Utils.verticalPadding(space: 8.h),
-                    Text(
-                      "News & More",
-                      style: theme.textTheme.labelSmall!.copyWith(
-                        color: AppColors.onPrimaryColor,
-                        fontSize: 14.sp
-
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(31.r),
+                  child: SvgPicture.asset("assets/svgs/news.svg", fit: BoxFit.cover, height: 87.h, width: 112.w,))
+              // Center(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       SizedBox(
+              //         height: 20.w,
+              //         width: 20.w,
+              //         child: SvgPicture.asset("assets/svgs/announcement.svg",
+              //             colorFilter: const ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn)
+              //         ),
+              //       ),
+              //       Utils.verticalPadding(space: 8.h),
+              //       Text(
+              //         "News & More",
+              //         style: theme.textTheme.labelSmall!.copyWith(
+              //           color: AppColors.onPrimaryColor,
+              //           fontSize: 14.sp
+              //
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ),
           ),
           GestureDetector(
@@ -67,26 +70,29 @@ class NewsAndFeeds extends StatelessWidget {
                   borderRadius: BorderRadius.circular(31.r),
                   color: AppColors.secondaryColor
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 20.w,
-                      width: 20.w,
-                      child: SvgPicture.asset("assets/svgs/message-chat-circle.svg"),
-                    ),
-                    Utils.verticalPadding(space: 8.h),
-                    Text(
-                      "Feedback",
-                      style: theme.textTheme.labelSmall!.copyWith(
-                        color: AppColors.onPrimaryColor,
-                        fontSize: 14
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(31.r),
+                  child: SvgPicture.asset("assets/svgs/feedback.svg", fit: BoxFit.cover, height: 87.h, width: 112.w,))
+              // Center(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       SizedBox(
+              //         height: 20.w,
+              //         width: 20.w,
+              //         child: SvgPicture.asset("assets/svgs/message-chat-circle.svg"),
+              //       ),
+              //       Utils.verticalPadding(space: 8.h),
+              //       Text(
+              //         "Feedback",
+              //         style: theme.textTheme.labelSmall!.copyWith(
+              //           color: AppColors.onPrimaryColor,
+              //           fontSize: 14
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
             ),
           )
         ],

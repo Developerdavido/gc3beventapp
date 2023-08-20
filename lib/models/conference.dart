@@ -14,6 +14,7 @@ class Conference {
   int? seats;
   List<Attendee>? attendees;
   List<Session>? sessions;
+  List<Meeting>? meetings;
 
   getConferenceDate() {
     String formattedDate = DateFormat('dd MMM yyyy').format(date!);
@@ -34,6 +35,7 @@ class Conference {
     this.time,
     this.description,
     this.banner,
+    this.meetings,
     this.conferenceVenue,
     this.seats,
     this.attendees,
@@ -52,6 +54,7 @@ class Conference {
     seats: json["seats"],
     attendees: json["attendees"] == null ? [] : List<Attendee>.from(json["attendees"]!.map((x) => Attendee.fromJson(x))),
     sessions: json["sessions"] == null ? [] : List<Session>.from(json["sessions"]!.map((x) => Session.fromJson(x))),
+    meetings: json["meetings"] == null ? [] : List<Meeting>.from(json["meetings"]!.map((x) => Meeting.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +69,7 @@ class Conference {
     "seats": seats,
     "attendees": attendees == null ? [] : List<dynamic>.from(attendees!.map((x) => x.toJson())),
     "sessions": sessions == null ? [] : List<dynamic>.from(sessions!.map((x) => x.toJson())),
+    "meetings": meetings == null ? [] : List<dynamic>.from(meetings!.map((x) => x.toJson())),
   };
 }
 
@@ -138,6 +142,61 @@ class Session {
     "speaker": speaker,
   };
 }
+
+class Meeting {
+  int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  bool? isApproved;
+  String? agenda;
+  String? room;
+  bool? hasTranslation;
+  String? startTime;
+  String? endTime;
+
+  Meeting({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.isApproved,
+    this.agenda,
+    this.room,
+    this.hasTranslation,
+    this.startTime,
+    this.endTime,
+  });
+
+  getMeetingTime(){
+    DateTime dateTime = DateFormat('HH:mm:ss').parse(startTime!);
+    String formattedTime = DateFormat('h:mm a').format(dateTime);
+    return formattedTime;
+  }
+
+  factory Meeting.fromJson(Map<String, dynamic> json) => Meeting(
+    id: json["id"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    isApproved: json["is_approved"],
+    agenda: json["agenda"],
+    room: json["room"],
+    hasTranslation: json["has_translation"],
+    startTime: json["start_time"],
+    endTime: json["end_time"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+    "is_approved": isApproved,
+    "agenda": agenda,
+    "room": room,
+    "has_translation": hasTranslation,
+    "start_time": startTime,
+    "end_time": endTime,
+  };
+}
+
 
 class ConferenceVenue {
   int? id;
