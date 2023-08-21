@@ -16,15 +16,25 @@ class HotelBooking extends StatelessWidget {
       child: Container(
         width: 379.w,
         height: 76.h,
+        padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 18.h),
         decoration: ShapeDecoration(
           color: AppColors.lightBlue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(31.r),
           ),
+          image:  DecorationImage(
+                image: AssetImage("assets/images/hotel_image.png",),
+                fit: BoxFit.cover
+            )
         ),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(31.r),
-            child: SvgPicture.asset("assets/svgs/hotel_booking.svg", fit: BoxFit.cover, height: 76.h, width: 379.w,))
+        child: Text(
+          "Hotel Booking",
+          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.onPrimaryColor,
+              fontSize: 24.sp
+          ),
+        ),
         // Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
         //   children: [

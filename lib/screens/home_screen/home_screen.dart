@@ -58,13 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.only(topRight: Radius.circular(31.r), topLeft: Radius.circular(31.r),),
             child: Container(
               width: 422.w,
-              height: 117.h,
-              color: AppColors.lightBlue,
+              height: 90.h,
+              color: AppColors.lightGrey.withOpacity(0.4),
               child: NavigationBar(
-                height: 117.h,
+                height: 90.h,
                 labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
                 indicatorColor: AppColors.primaryColor,
-                backgroundColor: AppColors.lightBlue,
+                backgroundColor: AppColors.lightGrey.withOpacity(0.4),
                 destinations: [
                   NavigationDestination(
                       icon: SizedBox(

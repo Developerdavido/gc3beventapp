@@ -22,6 +22,10 @@ class MeetingCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(38.r),
           ),
+          image: DecorationImage(
+              image: AssetImage("assets/images/meet.png",),
+              fit: BoxFit.cover
+          )
         ),
         child: Stack(
           children: [
@@ -58,7 +62,7 @@ class MeetingCard extends StatelessWidget {
                 child: Text(
                   meeting!.conference?.theme ?? "",
                   style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        color: AppColors.black,
+                        color: AppColors.onPrimaryColor,
                         fontSize: 16.w,
                         fontWeight: FontWeight.w600,
                       ),
@@ -83,7 +87,7 @@ class MeetingCard extends StatelessWidget {
                       Text(
                         meeting!.room ?? "",
                         style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: AppColors.black,
+                              color: AppColors.onPrimaryColor,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                             ),

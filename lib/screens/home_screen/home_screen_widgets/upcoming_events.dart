@@ -6,9 +6,10 @@ import 'package:gc3bapp/constants/colors.dart';
 
 class UpcomingEvents extends StatelessWidget {
   final VoidCallback? onEventsTap;
-  final String? svgAsset;
+  final String? imageAsset;
+  final String? text;
   final double? width;
-  const UpcomingEvents({Key? key,this.width, this.svgAsset,this.onEventsTap,}) : super(key: key);
+  const UpcomingEvents({Key? key,this.width, this.text, this.imageAsset,this.onEventsTap,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +22,30 @@ class UpcomingEvents extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(31.r),
           ),
+          image: DecorationImage(
+            image: AssetImage(imageAsset!,),
+            fit: BoxFit.cover
+          )
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(31.r),
-            child: SvgPicture.asset(svgAsset!, fit: BoxFit.cover, height: 182.h, width: width ?? 254.w,))
+        child: Stack(
+          children: [
+            Positioned(
+              left: 22.w,
+              top: 22.h,
+              child: SizedBox(
+                width: 150.w,
+                child: Text(
+                  text ?? "",
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.onPrimaryColor,
+                    fontSize: 24.sp
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
       ),
     );
   }

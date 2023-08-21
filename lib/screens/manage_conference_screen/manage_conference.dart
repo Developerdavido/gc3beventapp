@@ -58,7 +58,8 @@ class ManageConferences extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         UpcomingEvents(
-                          svgAsset: "assets/svgs/event_group.svg",
+                          imageAsset: "assets/images/event_image.png",
+                          text: "Upcoming \nEvents ",
                           onEventsTap: (){
                             locator<RouterService>().push(AppRoute.conferencesRoute);
                           },
@@ -80,7 +81,8 @@ class ManageConferences extends StatelessWidget {
                       children: [
                         UpcomingEvents(
                           width: 185.w,
-                          svgAsset: "assets/svgs/site_visits.svg",
+                          imageAsset: "assets/images/site_image.png",
+                          text: "Site Visits",
                           onEventsTap: (){
                             locator<RouterService>().push(AppRoute.sitesRoute);
                           },
@@ -88,7 +90,8 @@ class ManageConferences extends StatelessWidget {
                         Utils.horizontalPadding(space: 12.w),
                         UpcomingEvents(
                           width: 185.w,
-                          svgAsset: "assets/svgs/venue_image.svg",
+                          imageAsset: "assets/images/venue_image.png",
+                          text: "Venue",
                           onEventsTap: (){
                             locator<RouterService>().push(AppRoute.venueRoute);
                           },
