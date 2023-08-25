@@ -16,15 +16,16 @@ class MeetingDateAndTime extends StatelessWidget {
         Icon(
           iconData,
           size: 17.sp,
-          color: AppColors.primaryColor
+          weight: 2,
+          color: AppColors.secondaryColor
         ),
         Utils.horizontalPadding(space: 25.w),
         Text(
           data ?? "",
           style: Theme.of(context).textTheme.labelSmall!.copyWith(
-            color: AppColors.primaryColor,
+            color: AppColors.secondaryColor,
             fontSize: 11.sp,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
           ),
         )
       ],

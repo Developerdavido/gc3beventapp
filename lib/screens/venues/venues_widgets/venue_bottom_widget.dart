@@ -47,7 +47,7 @@ class VenueBottomWidget extends StatelessWidget {
             height: 49.65.h,
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: AppColors.secondaryColor,
+              color: AppColors.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(65.r),
               ),

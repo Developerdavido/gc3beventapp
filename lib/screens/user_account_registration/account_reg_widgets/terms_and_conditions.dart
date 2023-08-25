@@ -51,7 +51,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             style: theme.textTheme.headlineSmall!.copyWith(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
-                color: AppColors.black,
+                color: AppColors.secondaryColor,
               decoration: TextDecoration.underline
             ),
             recognizer: _tapGestureRecognizer

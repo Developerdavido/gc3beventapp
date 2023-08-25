@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_button.dart';
@@ -44,9 +45,11 @@ class _HotelBookingDetailsState extends State<HotelBookingDetails> {
                   child: SizedBox(
                       height: 351.h,
                       width: 1.sw,
-                      child: Image.network(
-                        widget.hotel!.image!,
+                      child: CachedNetworkImage(
                         fit: BoxFit.cover,
+                        imageUrl: widget.hotel!.image!,
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
                       ))),
               Positioned(
                 top: 31.h,

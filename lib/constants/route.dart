@@ -16,5 +16,6 @@ class AppRoute {
   static const String feedsAndSocialMediaRoute = "feeds_and_social_media_route";
   static const String splashRoute = "splash_route";
   static const String profileRoute = "profile_route";
+  static const String landingPageRoute = "landing_page_route";
   static const String incidenceReportRoute = "incidence_report_route";
 }

@@ -18,12 +18,12 @@ class MeetingCard extends StatelessWidget {
         width: 386.w,
         height: 249.h,
         decoration: ShapeDecoration(
-          color: AppColors.lightGrey,
+          color: AppColors.lightPrimaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(38.r),
           ),
           image: DecorationImage(
-              image: AssetImage("assets/images/meet.png",),
+              image: AssetImage("assets/images/event_image.png",),
               fit: BoxFit.cover
           )
         ),
@@ -38,7 +38,7 @@ class MeetingCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         horizontal: 13.66.w, vertical: 9.66.w),
                     decoration: BoxDecoration(
-                        color: AppColors.lightBlue,
+                        color: AppColors.lightPrimaryColor,
                         borderRadius: BorderRadius.circular(39.r)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +71,7 @@ class MeetingCard extends StatelessWidget {
             ),
             Positioned(
               left: 41.w,
-              top: 151.h,
+              top: 161.h,
               child: SizedBox(
                   width: 235.w,
                   child: Row(
@@ -81,7 +81,7 @@ class MeetingCard extends StatelessWidget {
                         height: 24.h,
                         width: 24.h,
                         colorFilter: ColorFilter.mode(
-                            AppColors.primaryColor, BlendMode.srcIn),
+                            AppColors.onPrimaryColor, BlendMode.srcIn),
                       ),
                       Utils.horizontalPadding(space: 9.w),
                       Text(

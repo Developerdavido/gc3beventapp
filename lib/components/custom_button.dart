@@ -8,7 +8,9 @@ class CustomButton extends StatelessWidget {
   final String? btnText;
   final double? borderRadius;
   final double? width;
-  const CustomButton({Key? key,this.width, required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
+  final Color? btnColor;
+  final Color? textColor;
+  const CustomButton({Key? key,this.width,this.btnColor, this.textColor,  required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +20,16 @@ class CustomButton extends StatelessWidget {
         width: width ?? 379.w,
         height: 65.h,
         decoration: ShapeDecoration(
-          color: AppColors.primaryColor,
+          color: btnColor ?? AppColors.primaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 22.r),
+            borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
           ),
         ),
         child: Center(
           child: Text(
             btnText!,
             style: TextStyle(
-              color: AppColors.onPrimaryColor,
+              color: textColor ?? AppColors.onPrimaryColor,
               fontSize: 20.sp,
               fontFamily: 'Outfit',
               fontWeight: FontWeight.w600,

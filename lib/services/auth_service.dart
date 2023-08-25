@@ -43,6 +43,8 @@ class AuthService extends HttpService {
       "email" : email,
       "country" : country,
       "avatar" : avatar,
+      'organization': null,
+      'description': null,
       "password1" : password,
       "password2" : confirmPassword,
     };

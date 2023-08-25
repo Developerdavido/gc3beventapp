@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/screen_widgets/custom_loader.dart';
@@ -63,9 +64,14 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                               child: SizedBox(
                                   height: 575.h,
                                   width: 1.sw,
-                                  child: Image.network(
-                                    widget.conference!.banner ?? "",
+                                  child: CachedNetworkImage(
                                     fit: BoxFit.cover,
+                                    imageUrl: widget.conference!.banner ?? "",
+                                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                        Center(child: SizedBox(
+                                          height: 40.h,
+                                            width: 40.h,
+                                            child: CircularProgressIndicator(value: downloadProgress.progress))),
                                   ))),
                           Container(
                               height: 575.h,
@@ -92,7 +98,7 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                                       color: AppColors.primaryColor),
                                   child: Center(
                                     child: Text(
-                                        '${widget.conference?.attendees?.length ?? 0}',
+                                        Utils.getNumberEquivalent(widget.conference!.attendees!.length ?? 0),
                                         style: theme.textTheme.labelSmall!
                                             .copyWith(
                                           color: AppColors.onPrimaryColor,

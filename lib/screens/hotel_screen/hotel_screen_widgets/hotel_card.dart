@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/config/locator.dart';
@@ -40,7 +41,7 @@ class HotelCard extends StatelessWidget {
           height: 263.h,
           width: 386.w,
           decoration: BoxDecoration(
-              color: AppColors.lightGrey,
+              color: AppColors.lightPrimaryColor,
               borderRadius: BorderRadius.circular(38.r)
           ),
           child: Column(
@@ -55,7 +56,16 @@ class HotelCard extends StatelessWidget {
                       child: SizedBox(
                           height: 180.h,
                           width: 386.w,
-                          child: image != null ? Image.network(image!, fit: BoxFit.cover,) : Container(color: AppColors.lightPurple,)
+                          child: image != null ? CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: image!,
+                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                Center(child:
+                                SizedBox(
+                                  height: 40.h,
+                                    width: 40.h,
+                                    child: CircularProgressIndicator(value: downloadProgress.progress))),
+                          ) : Container(color: AppColors.lightPurple,)
                       ),
                     ),
                     Positioned(

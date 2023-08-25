@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
@@ -24,17 +25,21 @@ class ConferenceVenueCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
-              width: 198.w,
-              height: 137.h,
-              decoration: ShapeDecoration(
-                color: AppColors.primaryColor,
-                image: DecorationImage(
-                  image: NetworkImage(venueConference!.banner ?? ""),
-                  fit: BoxFit.cover,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(31.r),
+            CachedNetworkImage(
+              imageUrl: venueConference!.banner ?? "",
+              imageBuilder: (context, imageProvider) => Container(
+                width: 198.w,
+                height: 137.h,
+                decoration: ShapeDecoration(
+                  color: AppColors.primaryColor,
+                  image: DecorationImage(
+                    image: imageProvider,
+                    colorFilter: ColorFilter.mode(AppColors.lightPurple, BlendMode.colorBurn),
+                    fit: BoxFit.cover,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(31.r),
+                  ),
                 ),
               ),
             ),

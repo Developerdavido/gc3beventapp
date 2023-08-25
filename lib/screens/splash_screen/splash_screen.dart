@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/screen_widgets/csa_logo.dart';
@@ -34,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         });
       }else {
-        locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.userLoginRoute);
+        locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.landingPageRoute);
       }
     });
 
@@ -45,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _handleLogin();
+    Timer(Duration(seconds: 2), _handleLogin);
   }
   @override
   Widget build(BuildContext context) {

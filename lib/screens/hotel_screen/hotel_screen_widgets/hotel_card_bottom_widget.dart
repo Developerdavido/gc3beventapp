@@ -34,7 +34,7 @@ class HotelCardBottomWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.location_on_outlined,
-                  color: AppColors.blue,
+                  color: AppColors.black,
                   size: 18.sp,
                 ),
                 Utils.horizontalPadding(space: 7.w),
@@ -54,7 +54,7 @@ class HotelCardBottomWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 7.w, ),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.r),
-                  color: AppColors.lightBlue
+                  color: AppColors.primaryColor
               ),
               child: Center(
                 child: Text(
@@ -62,7 +62,7 @@ class HotelCardBottomWidget extends StatelessWidget {
                   style: theme.textTheme.labelSmall!.copyWith(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.sp,
-                      color: AppColors.primaryColor
+                      color: AppColors.onPrimaryColor
                   ),
                 ),
               ),

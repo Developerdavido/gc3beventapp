@@ -44,4 +44,15 @@ class Utils {
     barBlur: 38,
     duration: Duration(seconds: timeout ?? 5),
   ).show(locator<RouterService>().navigatorKey.currentState!.context);
+
+  static getNumberEquivalent(num number) {
+    if ( number < 100) {
+      return "$number";
+    } else if (number > 100 && number < 100) {
+      return "99+";
+    } else if (number >= 1000) {
+      var value = number.toString();
+      return "${value[0]}K+";
+    }
+  }
 }

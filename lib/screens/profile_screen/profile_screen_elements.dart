@@ -19,7 +19,7 @@ class ProfileScreenElements extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28.r),
-          color: AppColors.lightBlue,
+          color: AppColors.lightPrimaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

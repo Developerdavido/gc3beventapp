@@ -29,6 +29,12 @@ class UpcomingEvents extends StatelessWidget {
         ),
         child: Stack(
           children: [
+            Positioned.fill(child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(31.r),
+              ),
+            )),
             Positioned(
               left: 22.w,
               top: 22.h,

@@ -46,13 +46,13 @@ class ConferenceTopWidget extends StatelessWidget {
                       width: 33.75.h,
                       decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.black
+                          color: AppColors.primaryColor
                       ),
                       child: Center(
                         child: Text(
-                          "${numberOfAttendees ?? 0}",
+                          Utils.getNumberEquivalent(numberOfAttendees ?? 0),
                           style: theme.textTheme.labelSmall!.copyWith(
-                            color: AppColors.onPrimaryColor,
+                            color: AppColors.secondaryColor,
                             fontSize: 12.sp
                           ),
                         ),

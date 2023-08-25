@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_button.dart';
@@ -46,9 +47,14 @@ class _SiteDetailState extends State<SiteDetail> {
                         child: SizedBox(
                             height: 351.h,
                             width: 1.sw,
-                            child: Image.network(
-                              widget.site!.image ?? "",
+                            child: CachedNetworkImage(
                               fit: BoxFit.cover,
+                              imageUrl: widget.site!.image ?? "",
+                              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                  Center(child: SizedBox(
+                                      height: 40.h,
+                                      width: 40.h,
+                                      child: CircularProgressIndicator(value: downloadProgress.progress))),
                             ))),
                     Positioned(
                       top: 31.h,
@@ -186,6 +192,7 @@ class _SiteDetailState extends State<SiteDetail> {
                                     btnText:
                                         "Visit ${widget.site!.getFirstNameOfHotel()}",
                                     borderRadius: 93.r,
+                                    width: 249.31.w,
                                     onTap: () {
                                       siteVm.visitASite("${widget.site!.id!}");
                                     });

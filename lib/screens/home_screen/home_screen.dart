@@ -59,35 +59,35 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               width: 422.w,
               height: 90.h,
-              color: AppColors.lightGrey.withOpacity(0.4),
+              color: AppColors.primaryColor,
               child: NavigationBar(
                 height: 90.h,
                 labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
                 indicatorColor: AppColors.primaryColor,
-                backgroundColor: AppColors.lightGrey.withOpacity(0.4),
+                backgroundColor: AppColors.primaryColor,
                 destinations: [
                   NavigationDestination(
                       icon: SizedBox(
                         height: 24,
                         width: 24,
-                        child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)
+                        child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)
                       ),
-                      selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
+                      selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
                       label: "Home"),
                   NavigationDestination(icon:
                   SizedBox(
                       height: 24,
                       width: 24,
-                      child: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)),
-                  selectedIcon: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
+                      child: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
+                  selectedIcon: SvgPicture.asset("assets/svgs/ticket.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
                   label: "My Tickets",),
                   NavigationDestination(
                       icon: SizedBox(
                           height: 24,
                           width: 24,
-                          child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),)),
+                          child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
                       label: "My Events",
-                    selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.onPrimaryColor, BlendMode.srcIn),),
+                    selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
                   ),
                 ],
                 selectedIndex: currentIndex!,

@@ -91,7 +91,7 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: "${conference!.attendees!.length}",
+                            text: Utils.getNumberEquivalent(conference!.attendees!.length ?? 0),
                             style: theme.textTheme.headlineSmall!.copyWith(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
