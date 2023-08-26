@@ -12,7 +12,9 @@ class CSALogo extends StatelessWidget {
     return SizedBox(
       height: height ?? 74.h,
       width: width ?? 74.h,
-      child: Image.asset("assets/images/csa_logo.png", fit: BoxFit.contain,),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(39.r),
+          child: Image.asset("assets/images/csa_logo.png", fit: BoxFit.cover,)),
     );
   }
 }

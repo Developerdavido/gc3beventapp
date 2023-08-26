@@ -21,7 +21,13 @@ class AuthProvider extends BaseProvider {
   TextEditingController phoneCtrl = TextEditingController();
   String? countryCode = "GH";
   String? countryDialCode = "233";
+  bool? selectedTermsAndCondition = false;
 
+
+  changeSelectedTermsAndCondition(bool value) {
+    selectedTermsAndCondition = value;
+    notifyListeners();
+  }
 
   //user model
   AuthModal? authModal;

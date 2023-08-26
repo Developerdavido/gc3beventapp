@@ -8,19 +8,20 @@ class CustomButton extends StatelessWidget {
   final String? btnText;
   final double? borderRadius;
   final double? width;
+  final bool? enabled;
   final Color? btnColor;
   final Color? textColor;
-  const CustomButton({Key? key,this.width,this.btnColor, this.textColor,  required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
+  const CustomButton({Key? key,this.width, this.enabled = true, this.btnColor, this.textColor,  required this.onTap, this.btnText, this.borderRadius}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: enabled! ? onTap : null,
       child: Container(
         width: width ?? 379.w,
         height: 65.h,
         decoration: ShapeDecoration(
-          color: btnColor ?? AppColors.primaryColor,
+          color: enabled! ? btnColor ?? AppColors.primaryColor : AppColors.grey,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
           ),
@@ -29,7 +30,7 @@ class CustomButton extends StatelessWidget {
           child: Text(
             btnText!,
             style: TextStyle(
-              color: textColor ?? AppColors.onPrimaryColor,
+              color: enabled! ? textColor ?? AppColors.onPrimaryColor : AppColors.black,
               fontSize: 20.sp,
               fontFamily: 'Outfit',
               fontWeight: FontWeight.w600,

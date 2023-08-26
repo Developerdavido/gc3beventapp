@@ -14,6 +14,8 @@ import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/utils.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -53,43 +55,35 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
+      backgroundColor: AppColors.primaryColor,
+      body: Center(
+        child: Column(
+          children: [
+            Spacer(),
+            Container(
+              height: 136.h,
+              width: 136.h,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+              ),
               child: Center(
-                child: Container(
-                  height: 136.h,
-                  width: 136.h,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.lightGrey
-                  ),
-                  child: Center(
-                    child: CSALogo(
-                      height: 111.82.h,
-                      width: 111.82.h,
-                    ),
-                  ),
+                child: CSALogo(
+                  height: 260.h,
+                  width: 260.h,
                 ),
-              ),),
-          Positioned(
-            left: 0,
-              right: 0,
-              bottom: 77.h,
-              child: Text(
-                'GC3B EVENT MOBILE',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium!.copyWith(
-                  color: AppColors.black,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                )
-              ))
-        ],
+              ),
+            ),
+            Spacer(),
+            Text(
+              "Powered by Omni Strategies",
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                  color: AppColors.grey,
+                  fontSize: 12
+              ),
+            ),
+            Utils.verticalPadding(space: 16.h)
+          ],
+        ),
       )
     );
   }

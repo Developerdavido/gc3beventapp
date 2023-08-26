@@ -17,6 +17,7 @@ import 'package:gc3bapp/screens/user_account_registration/account_reg_widgets/fu
 import 'package:gc3bapp/screens/user_account_registration/account_reg_widgets/password.dart';
 import 'package:gc3bapp/screens/user_account_registration/account_reg_widgets/phone.dart';
 import 'package:gc3bapp/screens/user_account_registration/account_reg_widgets/terms_and_conditions.dart';
+import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -76,15 +77,13 @@ class _UserAccountRegistrationState extends State<UserAccountRegistration> {
                                   const Password(),
                                   const ConfirmPassword(),
                                   Utils.verticalPadding(space: 17.h),
-                                 Center(child: Padding(
-                                   padding: EdgeInsets.symmetric(horizontal: 43.w),
-                                   child: const TermsAndConditions(),
-                                 )),
+                                 const TermsAndConditions(),
                                   Utils.verticalPadding(space: 55.h),
                                   Consumer<AuthProvider>(
                                     builder: (context, auth, child) {
                                       return CustomButton(
                                           btnText: 'Register',
+                                          enabled: auth.selectedTermsAndCondition,
                                           onTap: (){
                                             if (key.currentState!.validate()) {
                                               auth.register();

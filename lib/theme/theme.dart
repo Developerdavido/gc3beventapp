@@ -66,7 +66,16 @@ class AppTheme {
       useMaterial3: true,
       checkboxTheme: CheckboxThemeData(
           fillColor: MaterialStateColor.resolveWith(
-                  (states) => AppColors.primaryColor)),
+                  (states) {
+                    if (states.contains(MaterialState.selected)) {
+                      return AppColors.primaryColor;
+                    }else {
+                      return AppColors.onPrimaryColor;
+                    }
+                  }),
+
+        
+      ),
       appBarTheme: const AppBarTheme(
           foregroundColor: AppColors.black,
           backgroundColor: Colors.transparent,
