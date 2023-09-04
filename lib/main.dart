@@ -21,10 +21,31 @@ void main() {
 
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    locator<ConnectionService>().checkConnection();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    locator<ConnectionService>().closeConnection();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = AppTheme.light();

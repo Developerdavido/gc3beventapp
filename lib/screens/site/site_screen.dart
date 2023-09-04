@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/custom_list_shimmer.dart';
 import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -33,7 +34,9 @@ class _SiteScreenState extends State<SiteScreen> {
   _handleGetSites() {
     siteVm = context.read<SiteProvider>();
     if (siteVm!.sites.isEmpty) {
-      siteVm!.getAllSites();
+      siteVm!.getAllSites(backgroundLoad: false);
+    }else {
+      siteVm!.getAllSites(backgroundLoad: true);
     }
   }
 
@@ -64,38 +67,39 @@ class _SiteScreenState extends State<SiteScreen> {
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   child: siteVm!.gettingSitesList
-                      ? Center(
-                          child: SpinKitWanderingCubes(
-                            color: AppColors.primaryColor,
-                            size: 50.sp,
-                          ),
-                        )
+                      ? CustomListShimmer()
                       : siteVm!.sites.isEmpty
                           ? EmptyListState(
                               message: "No Sites found for you at the moment",
                             )
-                          : ListView.builder(
-                              itemCount: siteVm?.sites.length,
-                              itemBuilder: (context, index) {
-                                final site = siteVm?.sites[index];
-                                return HotelCard(
-                                  name: site?.name ?? "",
-                                  location: "${site?.lat}, ${site?.lon}",
-                                  costOrRating: site?.cost,
-                                  isSite: true,
-                                  image: site?.image,
-                                  isFavorited: site?.isFavorite,
-                                  isFull: site?.isFull(),
-                                  onCardTap: () {
-                                    locator<RouterService>().push(AppRoute.siteDetailRoute, args: site);
-                                  },
-                                  onFavoriteTap: () {
-                                    setState(() {
-                                      site?.isFavorite = !site.isFavorite!;
-                                    });
-                                  },
-                                );
-                              })))
+                          : RefreshIndicator.adaptive(
+                            color: AppColors.primaryColor,
+                            onRefresh: () async{
+                              siteVm!.getAllSites(refresh: true);
+                            },
+                            child: ListView.builder(
+                                itemCount: siteVm?.sites.length,
+                                itemBuilder: (context, index) {
+                                  final site = siteVm?.sites[index];
+                                  return HotelCard(
+                                    name: site?.name ?? "",
+                                    location: "${site?.lat}, ${site?.lon}",
+                                    costOrRating: site?.cost,
+                                    isSite: true,
+                                    image: site?.image,
+                                    isFavorited: site?.isFavorite,
+                                    isFull: site?.isFull(),
+                                    onCardTap: () {
+                                      locator<RouterService>().push(AppRoute.siteDetailRoute, args: site);
+                                    },
+                                    onFavoriteTap: () {
+                                      setState(() {
+                                        site?.isFavorite = !site.isFavorite!;
+                                      });
+                                    },
+                                  );
+                                }),
+                          )))
         ],
       ),
     ));

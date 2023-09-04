@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/custom_list_shimmer.dart';
 import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -33,7 +34,9 @@ class _HotelScreenState extends State<HotelScreen> {
   _handleGetHotels() {
     hotelVm = context.read<HotelProvider>();
     if (hotelVm!.hotels.isEmpty) {
-      hotelVm!.getHotels();
+      hotelVm!.getHotels(backgroundLoad: false);
+    }else {
+      hotelVm!.getHotels(backgroundLoad: true);
     }
   }
 
@@ -62,37 +65,37 @@ class _HotelScreenState extends State<HotelScreen> {
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
                       child: hotelVm!.gettingHotelsList
-                          ? Center(
-                        child: SpinKitWanderingCubes(
-                          color: AppColors.primaryColor,
-                          size: 50.sp,
-                        ),
-                      )
+                          ? CustomListShimmer()
                           : hotelVm!.hotels.isEmpty
                           ? EmptyListState(
                         message: "No Hotels found for you at the moment",
                       )
-                          : ListView.builder(
-                          itemCount: hotelVm?.hotels.length,
-                          itemBuilder: (context, index) {
-                            final hotel = hotelVm?.hotels[index];
-                            return HotelCard(
-                              name: hotel?.name ?? "",
-                              location: "${hotel?.lat}, ${hotel?.lon}",
-                              costOrRating: 3.5,
-                              isSite: false,
-                              image: hotel?.image,
-                              isFavorited: hotel?.isFavorite,
-                              onCardTap: (){
-                                locator<RouterService>().push(AppRoute.hotelDetailsRoute, args: hotel);
-                              },
-                              onFavoriteTap: (){
-                                setState(() {
-                                  hotel?.isFavorite = !hotel.isFavorite!;
-                                });
-                              },
-                            );
-                          })
+                          : RefreshIndicator.adaptive(
+                            onRefresh: () async {
+                              await hotelVm!.getHotels(refresh: true);
+                            },
+                            child: ListView.builder(
+                            itemCount: hotelVm?.hotels.length,
+                            itemBuilder: (context, index) {
+                              final hotel = hotelVm?.hotels[index];
+                              return HotelCard(
+                                name: hotel?.name ?? "",
+                                location: "${hotel?.lat}, ${hotel?.lon}",
+                                costOrRating: 3.5,
+                                isSite: false,
+                                image: hotel?.image,
+                                isFavorited: hotel?.isFavorite,
+                                onCardTap: (){
+                                  locator<RouterService>().push(AppRoute.hotelDetailsRoute, args: hotel);
+                                },
+                                onFavoriteTap: (){
+                                  setState(() {
+                                    hotel?.isFavorite = !hotel.isFavorite!;
+                                  });
+                                },
+                              );
+                            }),
+                          )
                   ))
             ],
           ),

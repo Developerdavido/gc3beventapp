@@ -13,7 +13,8 @@ class ConferenceCard extends StatelessWidget {
   final num? numberOfAttendees;
   final VoidCallback? attendConference;
   final String? attendeeImage;
-  const ConferenceCard({Key? key,this.conferenceImage, this.conferenceTime, this.attendeeImage,  this.numberOfAttendees, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
+  final bool? userInConference;
+  const ConferenceCard({Key? key,this.conferenceImage, this.userInConference, this.conferenceTime, this.attendeeImage,  this.numberOfAttendees, this.conferenceTheme, this.conferenceDate, this.attendConference}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class ConferenceCard extends StatelessWidget {
                     conferenceDate: conferenceDate,
                     conferenceTheme: conferenceTheme,
                     attendConference: attendConference,
+                    userInConference: userInConference!,
                   ),)
             ],
           ),

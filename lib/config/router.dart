@@ -13,7 +13,7 @@ import 'package:gc3bapp/screens/hotel_screen/hotel_booking.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_screen_widgets/hotel_booking_details.dart';
 import 'package:gc3bapp/screens/hotel_screen/hotel_web_view.dart';
 import 'package:gc3bapp/screens/incidence_report_screen/incidence_report_screen.dart';
-import 'package:gc3bapp/screens/landing_sreen.dart';
+import 'package:gc3bapp/screens/landing_screen/landing_sreen.dart';
 import 'package:gc3bapp/screens/login_screen/login_screen.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_screen.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';

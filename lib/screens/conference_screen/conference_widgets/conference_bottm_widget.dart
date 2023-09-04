@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
+import 'package:gc3bapp/view_models/ConferenceProvider.dart';
+import 'package:provider/provider.dart';
 
 class ConferenceBottomWidget extends StatelessWidget {
   final String? conferenceDate;
   final String? conferenceTheme;
   final VoidCallback? attendConference;
-  const ConferenceBottomWidget({Key? key, this.conferenceDate, this.attendConference, this.conferenceTheme}) : super(key: key);
+  final bool userInConference;
+  const ConferenceBottomWidget({Key? key, this.conferenceDate, this.userInConference = false, this.attendConference, this.conferenceTheme}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +45,16 @@ class ConferenceBottomWidget extends StatelessWidget {
             )
           ],
         ),
-        InkWell(
+        userInConference
+            ? Container()
+            : InkWell(
           onTap: attendConference,
           child: Container(
             width: 128.11.w,
             height: 49.65.h,
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: AppColors.primaryColor,
+              color: userInConference ? AppColors.lightPrimaryColor : AppColors.primaryColor ,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(65.r),
               ),
@@ -66,12 +71,12 @@ class ConferenceBottomWidget extends StatelessWidget {
                 ),
                 Utils.horizontalPadding(space: 16.31.w),
                 Text(
-                  'Attend',
-                  style: theme.textTheme.bodySmall!.copyWith(
-                    color: AppColors.lightBlue,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                  )
+                    'Attend',
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: AppColors.lightBlue,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    )
                 ),
               ],
             ),

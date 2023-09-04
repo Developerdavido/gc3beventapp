@@ -25,7 +25,7 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                      text: conference!.getConferenceDate(),
+                      text: conference!.getConferenceDate(conference!.startDateTime!),
                       style: theme.textTheme.headlineSmall!.copyWith(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,

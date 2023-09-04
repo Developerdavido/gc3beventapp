@@ -6,8 +6,8 @@ class Conference {
   int? id;
   String? theme;
   String? programOutline;
-  DateTime? date;
-  String? time;
+  DateTime? startDateTime;
+  DateTime? endDateTime;
   String? description;
   String? banner;
   ConferenceVenue? conferenceVenue;
@@ -16,14 +16,13 @@ class Conference {
   List<Session>? sessions;
   List<Meeting>? meetings;
 
-  getConferenceDate() {
-    String formattedDate = DateFormat('dd MMM yyyy').format(date!);
+  getConferenceDate(DateTime date) {
+    String formattedDate = DateFormat('dd MMM yyyy').format(date);
     return formattedDate;
   }
 
-  getConferenceTime(){
-    DateTime dateTime = DateFormat('HH:mm:ss').parse(time!);
-    String formattedTime = DateFormat('h:mm a').format(dateTime);
+  getConferenceTime(DateTime date){
+    String formattedTime = DateFormat('h:mm a').format(date);
     return formattedTime;
   }
 
@@ -31,8 +30,8 @@ class Conference {
     this.id,
     this.theme,
     this.programOutline,
-    this.date,
-    this.time,
+    this.startDateTime,
+    this.endDateTime,
     this.description,
     this.banner,
     this.meetings,
@@ -46,8 +45,8 @@ class Conference {
     id: json["id"],
     theme: json["theme"],
     programOutline: json["program_outline"],
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    time: json["time"],
+    startDateTime: json["start_date_time"] == null ? null : DateTime.parse(json["start_date_time"]),
+    endDateTime: json["end_date_time"] == null ? null : DateTime.parse(json['end_date_time']),
     description: json["description"],
     banner: json["banner"],
     conferenceVenue: json["venue"] == null ? null : ConferenceVenue.fromJson(json["venue"]),
@@ -61,8 +60,8 @@ class Conference {
     "id": id,
     "theme": theme,
     "program_outline": programOutline,
-    "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-    "time": time,
+    "start_date_time": "${startDateTime!.year.toString().padLeft(4, '0')}-${startDateTime!.month.toString().padLeft(2, '0')}-${startDateTime!.day.toString().padLeft(2, '0')}",
+    "end_date_time": "${endDateTime!.year.toString().padLeft(4, '0')}-${endDateTime!.month.toString().padLeft(2, '0')}-${endDateTime!.day.toString().padLeft(2, '0')}",
     "description": description,
     "banner": banner,
     "venue": conferenceVenue?.toJson(),
@@ -113,6 +112,7 @@ class Session {
   int? id;
   String? topic;
   String? time;
+  String? programOutline;
   String? speaker;
 
   getSessionTime(){
@@ -125,6 +125,7 @@ class Session {
     this.id,
     this.topic,
     this.time,
+    this.programOutline,
     this.speaker,
   });
 
@@ -133,6 +134,7 @@ class Session {
     topic: json["topic"],
     time: json["time"],
     speaker: json["speaker"],
+    programOutline: json["program_outline"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -140,6 +142,7 @@ class Session {
     "topic": topic,
     "time": time,
     "speaker": speaker,
+    "program_outline": programOutline
   };
 }
 

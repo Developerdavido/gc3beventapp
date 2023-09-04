@@ -15,9 +15,14 @@ class SiteProvider extends BaseProvider {
   List<Site> sites = [];
 
   //get conferences
-  getAllSites() async {
+  getAllSites({bool backgroundLoad = false, bool refresh = false}) async {
     try {
-      gettingSitesList = true;
+      if (!backgroundLoad) {
+        gettingSitesList = true;
+      }
+      if (refresh) {
+        updateUi(()=> gettingSitesList = true);
+      }
       var response = await site.getSites();
       log(response.toString());
       var apiResponse = ApiResponse.parse(response);

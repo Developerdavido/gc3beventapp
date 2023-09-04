@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/custom_list_shimmer.dart';
 import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -21,7 +22,6 @@ class VenuesScreen extends StatefulWidget {
 }
 
 class _VenuesScreenState extends State<VenuesScreen> {
-
   VenueProvider? venueVm;
 
   @override
@@ -34,9 +34,10 @@ class _VenuesScreenState extends State<VenuesScreen> {
   _handleGetVenues() {
     venueVm = context.read<VenueProvider>();
     if (venueVm!.venues.isEmpty) {
-      venueVm!.getAllVenues();
+      venueVm!.getAllVenues(backgroundLoad: false);
+    } else {
+      venueVm!.getAllVenues(backgroundLoad: true);
     }
-
   }
 
   @override
@@ -44,52 +45,56 @@ class _VenuesScreenState extends State<VenuesScreen> {
     venueVm = context.watch<VenueProvider>();
     return SafeArea(
         child: Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Utils.verticalPadding(space: 51.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 29.w),
-                child: const  TopScreen(
-                  isBackIconVisible: true,
-                ),
-              ),
-              Utils.verticalPadding(space: 14.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 49.w),
-                child: const TitleText(titleText: "Conference Venues",),
-              ),
-              Utils.verticalPadding(space: 22.h),
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 23.w),
-                      child: venueVm!.gettingVenuesList
-                          ? Center(
-                        child: SpinKitWanderingCubes(
-                          color: AppColors.primaryColor,
-                          size: 50.sp,
-                        ),
-                      )
-                          : venueVm!.venues.isEmpty
-                          ? EmptyListState(
-                        message: "No Venues found for you at the moment",
-                      )
-                          : ListView.builder(
-                          itemCount: venueVm?.venues.length,
-                          itemBuilder: (context, index) {
-                            final venue = venueVm?.venues[index];
-                            return GestureDetector(
-                              onTap: (){
-                                locator<RouterService>().push(AppRoute.venueDetail, args: venue);
-                              },
-                              child: VenueCard(
-                                venue: venue,
-                              ),
-                            );
-                          })
-                  ))
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Utils.verticalPadding(space: 51.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 29.w),
+            child: const TopScreen(
+              isBackIconVisible: true,
+            ),
           ),
-        ));
+          Utils.verticalPadding(space: 14.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 49.w),
+            child: const TitleText(
+              titleText: "Conference Venues",
+            ),
+          ),
+          Utils.verticalPadding(space: 22.h),
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 23.w),
+                  child: venueVm!.gettingVenuesList
+                      ? CustomListShimmer(conferenceList: true,)
+                      : venueVm!.venues.isEmpty
+                          ? EmptyListState(
+                              message: "No Venues found for you at the moment",
+                            )
+                          : RefreshIndicator.adaptive(
+                              color: AppColors.primaryColor,
+                              onRefresh: () async {
+                                await venueVm!.getAllVenues(refresh: true);
+                              },
+                              child: ListView.builder(
+                                  itemCount: venueVm?.venues.length,
+                                  itemBuilder: (context, index) {
+                                    final venue = venueVm?.venues[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        locator<RouterService>().push(
+                                            AppRoute.venueDetail,
+                                            args: venue);
+                                      },
+                                      child: VenueCard(
+                                        venue: venue,
+                                      ),
+                                    );
+                                  }),
+                            )))
+        ],
+      ),
+    ));
   }
 }

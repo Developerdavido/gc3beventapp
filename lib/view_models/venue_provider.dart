@@ -19,9 +19,14 @@ class VenueProvider extends BaseProvider {
   List<Venue> venues = [];
 
   //get conferences
-  getAllVenues() async {
+  getAllVenues({bool backgroundLoad = false, bool refresh = false}) async {
     try {
-      gettingVenuesList = true;
+      if (!backgroundLoad) {
+        gettingVenuesList = true;
+      }
+      if (refresh) {
+        updateUi(()=> gettingVenuesList = true);
+      }
       var response = await venue.getVenues();
       log(response.toString());
       var apiResponse = ApiResponse.parse(response);

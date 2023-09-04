@@ -27,9 +27,14 @@ class ConferenceProvider extends BaseProvider {
 
 
   //get conferences
-  getAllConferences() async {
+  getAllConferences({bool backgroundLoad = false, bool refresh = false}) async {
     try {
-      gettingConferenceList = true;
+      if (!backgroundLoad) {
+        gettingConferenceList = true;
+      }
+      if (refresh) {
+        updateUi(()=> gettingConferenceList = true);
+      }
       var response = await conference.getConferences();
       log(response.toString());
       var apiResponse = ApiResponse.parse(response);
@@ -138,9 +143,14 @@ class ConferenceProvider extends BaseProvider {
     }
   }
 
-  getYourMeetings() async {
+  getYourMeetings({bool backgroundLoad = false, bool refresh = false}) async {
     try {
-      gettingMeetingsList = true;
+      if (!backgroundLoad) {
+        gettingMeetingsList = true;
+      }
+      if (refresh) {
+        updateUi(()=> gettingMeetingsList = true);
+      }
       var response = await conference.getMeetings();
       log(response.toString());
       var apiResponse = ApiResponse.parse(response);
@@ -150,8 +160,8 @@ class ConferenceProvider extends BaseProvider {
             .map<savedMeeting.SavedMeeting>((e) => savedMeeting.SavedMeeting.fromJson(e))
             .toList();
         var today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-        upComingMeetings = meetings.where((element) => element.conference!.date!.isBefore(today)).toList();
-        onGoingMeetings = meetings.where((element) => element.conference!.date!.isAtSameMomentAs(today)).toList();
+        upComingMeetings = meetings.where((element) => element.conference!.startDateTime!.isBefore(today)).toList();
+        onGoingMeetings = meetings.where((element) => element.conference!.startDateTime!.isAtSameMomentAs(today)).toList();
       } else {
         dialog.showResponseDialog(
           context: router.navigatorKey.currentState!.context,
@@ -166,6 +176,22 @@ class ConferenceProvider extends BaseProvider {
           message: DioExceptionHandler.getMessage(e),
           type: AlertDialogType.error);
     }
+  }
+
+
+  //check if the use is in the conference
+  bool isUserInConference(int? userId, Conference? conference){
+    bool found = false;
+    var attendees = conference?.attendees;
+    for(var attendee in attendees!){
+      if(attendee.id == userId){
+        found = true;
+        break;
+      }
+    }
+    log(found.toString());
+    return found;
+
   }
 
   clearFields(){

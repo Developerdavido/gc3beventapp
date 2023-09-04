@@ -10,10 +10,15 @@ import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widge
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:provider/provider.dart';
 
-class AttendAMeeting extends StatelessWidget {
+class AttendAMeeting extends StatefulWidget {
   final Conference? conference;
   const AttendAMeeting({Key? key, this.conference}) : super(key: key);
 
+  @override
+  State<AttendAMeeting> createState() => _AttendAMeetingState();
+}
+
+class _AttendAMeetingState extends State<AttendAMeeting> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -57,9 +62,14 @@ class AttendAMeeting extends StatelessWidget {
                   )
                       : CustomButton(
                       btnText: "Join Conference",
-                      onTap: (){
+                      onTap: () async {
                        if ( confVm.conferenceKey.currentState!.validate()) {
-                         confVm.joinAConference("${conference!.id}");
+                         bool success = await confVm.joinAConference("${widget.conference!.id}");
+                         if (success) {
+                           setState(() {
+                             widget.conference!.attendees!.length + 1;
+                           });
+                         }
                        }
                       })
                 ],

@@ -20,15 +20,15 @@ class ConnectionService {
     _subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       // Got a new connectivity status!
       if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi || result == ConnectivityResult.ethernet) {
-        Utils.showConnectionSnackBar( color: Colors.red,
-            timeout: 2,
-            barrierDismissible: true,
-            message: "No Internet Connection. Check your internet connectivity");
-      }else {
         Utils.showConnectionSnackBar( color: Colors.green,
             timeout: 2,
             barrierDismissible: true,
             message: "Internet connectivity restored");
+      }else {
+        Utils.showConnectionSnackBar( color: Colors.red,
+            timeout: 2,
+            barrierDismissible: true,
+            message: "No Internet Connection. Check your internet connectivity");
       }
       _controller.add(result);
       });

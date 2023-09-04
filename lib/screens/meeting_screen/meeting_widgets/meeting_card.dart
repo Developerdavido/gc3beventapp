@@ -45,7 +45,7 @@ class MeetingCard extends StatelessWidget {
                       children: [
                         MeetingDateAndTime(
                           iconData: Icons.calendar_month_rounded,
-                          data: meeting?.getConferenceDate(meeting!.conference!.date),
+                          data: meeting?.getConferenceDate(meeting!.conference!.startDateTime),
                         ),
                         MeetingDateAndTime(
                           iconData: Icons.access_time_rounded,

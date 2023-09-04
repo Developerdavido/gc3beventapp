@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gc3bapp/components/custom_list_shimmer.dart';
 import 'package:gc3bapp/components/screen_widgets/empty_list_state.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -11,6 +12,7 @@ import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_card.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
+import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class ConferenceScreen extends StatefulWidget {
@@ -33,13 +35,16 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
 
   handleGetConferences() {
     if (conferenceVm!.conferences.isEmpty) {
-      conferenceVm!.getAllConferences();
+      conferenceVm!.getAllConferences(backgroundLoad: false);
+    } else {
+      conferenceVm!.getAllConferences(backgroundLoad: true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     conferenceVm = context.watch<ConferenceProvider>();
+    final authVm = Provider.of<AuthProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -64,42 +69,50 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 23.w),
                     child: conferenceVm!.gettingConferenceList
-                        ? Center(
-                            child: SpinKitWanderingCubes(
-                              color: AppColors.primaryColor,
-                              size: 50.sp,
-                            ),
-                          )
+                        ? CustomListShimmer(conferenceList: true,)
                         : conferenceVm!.conferences.isEmpty
                             ? EmptyListState(
                                 message:
                                     "No Conferences found for you at the moment",
                               )
-                            : ListView.builder(
-                                itemCount: conferenceVm!.conferences.length,
-                                itemBuilder: (context, index) {
-                                  final conference =
-                                      conferenceVm!.conferences[index];
-                                  return ConferenceCard(
-                                    attendConference: () {
-                                      locator<RouterService>().push(
-                                          AppRoute.conferenceDetailsRoute,
-                                          args: conference);
-                                    },
-                                    conferenceDate:
-                                        conference.getConferenceDate(),
-                                    conferenceImage: conference.banner,
-                                    attendeeImage:
-                                        conference.attendees!.isNotEmpty
+                            : RefreshIndicator.adaptive(
+                                color: AppColors.primaryColor,
+                                onRefresh: () async {
+                                  await conferenceVm!
+                                      .getAllConferences(refresh: true);
+                                },
+                                child: ListView.builder(
+                                    itemCount: conferenceVm!.conferences.length,
+                                    itemBuilder: (context, index) {
+                                      final conference =
+                                          conferenceVm!.conferences[index];
+                                      return ConferenceCard(
+                                        attendConference: () {
+                                          locator<RouterService>().push(
+                                              AppRoute.conferenceDetailsRoute,
+                                              args: conference);
+                                        },
+                                        conferenceDate:
+                                            conference.getConferenceDate(
+                                                conference.startDateTime!),
+                                        conferenceImage: conference.banner,
+                                        userInConference: conferenceVm!
+                                            .isUserInConference(
+                                                authVm.authModal?.user!.id!,
+                                                conference),
+                                        attendeeImage: conference
+                                                .attendees!.isNotEmpty
                                             ? conference.attendees?.last.avatar
                                             : "",
-                                    conferenceTheme: conference.theme,
-                                    conferenceTime:
-                                        conference.getConferenceTime(),
-                                    numberOfAttendees:
-                                        conference.attendees!.length,
-                                  );
-                                })))
+                                        conferenceTheme: conference.theme,
+                                        conferenceTime:
+                                            conference.getConferenceTime(
+                                                conference.startDateTime!),
+                                        numberOfAttendees:
+                                            conference.attendees!.length,
+                                      );
+                                    }),
+                              )))
           ],
         ),
       ),

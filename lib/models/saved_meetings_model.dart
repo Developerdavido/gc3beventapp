@@ -56,12 +56,14 @@ class ConferenceMeeting {
   int? id;
   String? theme;
   String? venue;
+  DateTime? startDateTime;
   DateTime? date;
 
   ConferenceMeeting({
     this.id,
     this.theme,
     this.venue,
+    this.startDateTime,
     this.date,
   });
 
@@ -69,6 +71,7 @@ class ConferenceMeeting {
     id: json["id"],
     theme: json["theme"],
     venue: json["venue"],
+    startDateTime: json["start_date_time"] == null ? null : DateTime.parse(json["start_date_time"]),
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
   );
 
@@ -76,6 +79,7 @@ class ConferenceMeeting {
     "id": id,
     "theme": theme,
     "venue": venue,
+    "start_date_time": "${startDateTime!.year.toString().padLeft(4, '0')}-${startDateTime!.month.toString().padLeft(2, '0')}-${startDateTime!.day.toString().padLeft(2, '0')}",
     "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
   };
 }

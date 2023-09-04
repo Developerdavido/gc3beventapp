@@ -15,9 +15,14 @@ class HotelProvider extends BaseProvider {
   List<Hotel> hotels = [];
 
   //get conferences
-  getHotels() async {
+  getHotels({bool backgroundLoad = false, bool refresh = false}) async {
     try {
-      gettingHotelsList = true;
+      if (!backgroundLoad) {
+        gettingHotelsList = true;
+      }
+      if (refresh) {
+        updateUi(()=> gettingHotelsList = true);
+      }
       var response = await hotel.getAllHotels();
       log(response.toString());
       var apiResponse = ApiResponse.parse(response);
