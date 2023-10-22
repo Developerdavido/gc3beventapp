@@ -40,10 +40,12 @@ class HotelProvider extends BaseProvider {
       }
     } on DioException catch (e) {
       updateUi(() => gettingHotelsList = false);
-      dialog.showAlertDialog(
-          context: router.navigatorKey.currentState!.context,
-          message: DioExceptionHandler.getMessage(e),
-          type: AlertDialogType.error);
+      if (!backgroundLoad) {
+        dialog.showAlertDialog(
+            context: router.navigatorKey.currentState!.context,
+            message: DioExceptionHandler.getMessage(e),
+            type: AlertDialogType.error);
+      }
     }
   }
 }

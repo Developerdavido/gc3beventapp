@@ -10,10 +10,14 @@ import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/models/conference_indicator.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/attend_a_meeting.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/conference_detail_title_widget.dart';
+import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/conference_details_attendees.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/custom_sliver_appbar_delegate.dart';
+import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/join_conference_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/meetings_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/program_item_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/sessions_widget.dart';
+import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_event_details.dart';
+import 'package:gc3bapp/screens/conference_screen/conference_widgets/custom_bottom_sheet.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +31,8 @@ class ConferenceDetailScreen extends StatefulWidget {
 }
 
 class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     final conferenceVm = Provider.of<ConferenceProvider>(context);
@@ -90,28 +96,13 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                                 isBackIconVisible: true,
                                 isAccountIconVisible: true,
                                 iconColor: AppColors.onPrimaryColor,
-                                accountIcon: Container(
-                                  height: 24.h,
-                                  width: 40.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20.r),
-                                      color: AppColors.primaryColor),
-                                  child: Center(
-                                    child: Text(
-                                        Utils.getNumberEquivalent(widget.conference!.attendees!.length ?? 0),
-                                        style: theme.textTheme.labelSmall!
-                                            .copyWith(
-                                          color: AppColors.onPrimaryColor,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                  ),
-                                )),
+
+                          ),
                           ),
                           Positioned(
                             left: 46.w,
                             right: 46.w,
-                            bottom: 32.h,
+                            bottom: 82.h,
                             child: ConferenceDetailTitleWidget(
                                 conference: widget.conference),
                           )
@@ -121,80 +112,101 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                   ],
                 ),
               ),
-              Utils.verticalPadding(space: 7.h),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(39.r),
-                          color: AppColors.lightPurple),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 18.0.w, vertical: 18.h),
-                        child: Column(children: [
-                          ProgramItemWidget(
-                            conferenceIndicator:
-                                ConferenceIndicator.conferenceIndicators[0],
-                            onTap: () {
-                              locator<DialogService>().showCustomDialog(context: context, customDialog: AttendAMeeting(
-                                conference: widget.conference,
-                              ));
-                            },
-                          ),
-                          Utils.verticalPadding(space: 10.h),
-                          ProgramItemWidget(
-                            conferenceIndicator:
-                                ConferenceIndicator.conferenceIndicators[1],
-                            onTap: () {
-                              locator<DialogService>().showCustomModal(
-                                  barrierColor:
-                                      AppColors.primaryColor.withOpacity(0.8),
-                                  isScrollControlled:
-                                      widget.conference!.sessions!.length < 4
-                                          ? false
-                                          : true,
-                                  context: context,
-                                  customModal: SessionsWidget(
-                                    height:
-                                        widget.conference!.sessions!.length < 4
-                                            ? null
-                                            : widget.conference!.sessions!
-                                                    .length *
-                                                0.3.sw,
-                                    conference: widget.conference,
-                                  ));
-                            },
-                          ),
-                          Utils.verticalPadding(space: 10.h),
-                          ProgramItemWidget(
-                            conferenceIndicator:
-                                ConferenceIndicator.conferenceIndicators[2],
-                            onTap: () {
-                              locator<DialogService>().showCustomModal(
-                                  barrierColor:
-                                      AppColors.primaryColor.withOpacity(0.8),
-                                  isScrollControlled:
-                                      widget.conference!.meetings!.length < 4
-                                          ? false
-                                          : true,
-                                  context: context,
-                                  customModal: MeetingsWidget(
-                                    height:
-                                        widget.conference!.meetings!.length < 4
-                                            ? null
-                                            : widget.conference!.meetings!
-                                                    .length *
-                                                0.3.sw,
-                                    conference: widget.conference,
-                                  ));
-                            },
-                          ),
-                        ]),
-                      )),
-                ),
-              ),
+
             ],
           ),
+          CustomBottomSheet(
+            maxChildSize: 0.5,
+            widgets: [
+            Column(
+              children: [
+                Utils.verticalPadding(space: 9.h),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 5.h,
+                    width: 47.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.r),
+                      color: AppColors.grey
+                    ),
+                  ),
+                ),
+                Utils.verticalPadding(space: 13),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 26.0.w),
+                  child: ConferenceEventDetails(
+                    conference: widget.conference,
+                  ),
+                ),
+                Utils.verticalPadding(space: 10.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 26.0.w),
+                  child: ConferenceEventAttendees(
+                    conference: widget.conference,
+                  ),
+                ),
+                Utils.verticalPadding(space: 10.h),
+                JoinConferenceWidget(
+                  btnTap: (){
+                        locator<DialogService>().showCustomDialog(context: context, customDialog: AttendAMeeting(
+                          conference: widget.conference,
+                        ));
+                  },
+                ),
+                // Utils.verticalPadding(space: 10.h),
+                // ProgramItemWidget(
+                //   conferenceIndicator:
+                //   ConferenceIndicator.conferenceIndicators[1],
+                //   onTap: () {
+                //     locator<DialogService>().showCustomModal(
+                //         barrierColor:
+                //         AppColors.primaryColor.withOpacity(0.8),
+                //         isScrollControlled:
+                //         widget.conference!.sessions!.length < 4
+                //             ? false
+                //             : true,
+                //         context: context,
+                //         customModal: SessionsWidget(
+                //           height:
+                //           widget.conference!.sessions!.length < 4
+                //               ? null
+                //               : widget.conference!.sessions!
+                //               .length *
+                //               0.3.sw,
+                //           conference: widget.conference,
+                //         ));
+                //   },
+                // ),
+                // Utils.verticalPadding(space: 10.h),
+                // ProgramItemWidget(
+                //   conferenceIndicator:
+                //   ConferenceIndicator.conferenceIndicators[2],
+                //   onTap: () {
+                //     locator<DialogService>().showCustomModal(
+                //         barrierColor:
+                //         AppColors.primaryColor.withOpacity(0.8),
+                //         isScrollControlled:
+                //         widget.conference!.meetings!.length < 4
+                //             ? false
+                //             : true,
+                //         context: context,
+                //         customModal: MeetingsWidget(
+                //           height:
+                //           widget.conference!.meetings!.length < 4
+                //               ? null
+                //               : widget.conference!.meetings!
+                //               .length *
+                //               0.3.sw,
+                //           conference: widget.conference,
+                //         ));
+                //   },
+                // ),
+                // Utils.verticalPadding(space: 10.h),
+
+              ],
+            )
+          ],),
           Consumer<ConferenceProvider>(
             builder: (context, conference, child) {
               return Visibility(
@@ -208,4 +220,6 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
       ),
     ));
   }
+
+
 }

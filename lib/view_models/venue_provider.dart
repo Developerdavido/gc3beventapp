@@ -44,10 +44,12 @@ class VenueProvider extends BaseProvider {
       }
     } on DioException catch (e) {
       updateUi(() => gettingVenuesList = false);
-      dialog.showAlertDialog(
-          context: router.navigatorKey.currentState!.context,
-          message: DioExceptionHandler.getMessage(e),
-          type: AlertDialogType.error);
+      if (!backgroundLoad) {
+        dialog.showAlertDialog(
+            context: router.navigatorKey.currentState!.context,
+            message: DioExceptionHandler.getMessage(e),
+            type: AlertDialogType.error);
+      }
     }
   }
 

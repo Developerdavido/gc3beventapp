@@ -42,12 +42,6 @@ class _SocialAndFeedState extends State<SocialAndFeed> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Utils.verticalPadding(space: 67.h),
-                    TopScreen(
-                      isBackIconVisible: true,
-                      isAccountIconVisible: false,
-                      iconColor: AppColors.black,
-                    ),
-                    Utils.verticalPadding(space: 24.h),
                     TopAnnouncementWidget(),
                     Utils.verticalPadding(space: 24.h),
                     TopFeedsTitle(),

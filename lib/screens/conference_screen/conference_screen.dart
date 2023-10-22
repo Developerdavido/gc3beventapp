@@ -10,13 +10,15 @@ import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_card.dart';
+import 'package:gc3bapp/screens/conference_screen/conference_widgets/custom_bottom_sheet.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class ConferenceScreen extends StatefulWidget {
-  const ConferenceScreen({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const ConferenceScreen({Key? key, this.controller}) : super(key: key);
 
   @override
   State<ConferenceScreen> createState() => _ConferenceScreenState();
@@ -50,21 +52,6 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Utils.verticalPadding(space: 51.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 29.w),
-              child: const TopScreen(
-                isBackIconVisible: true,
-              ),
-            ),
-            Utils.verticalPadding(space: 14.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 49.w),
-              child: const TitleText(
-                titleText: "Conferences",
-              ),
-            ),
-            Utils.verticalPadding(space: 22.h),
             Expanded(
                 child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 23.w),
@@ -82,34 +69,21 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                                       .getAllConferences(refresh: true);
                                 },
                                 child: ListView.builder(
+                                  controller: widget.controller,
+                                    reverse: true,
                                     itemCount: conferenceVm!.conferences.length,
                                     itemBuilder: (context, index) {
                                       final conference =
                                           conferenceVm!.conferences[index];
-                                      return ConferenceCard(
-                                        attendConference: () {
+                                      return GestureDetector(
+                                        onTap: (){
                                           locator<RouterService>().push(
                                               AppRoute.conferenceDetailsRoute,
                                               args: conference);
                                         },
-                                        conferenceDate:
-                                            conference.getConferenceDate(
-                                                conference.startDateTime!),
-                                        conferenceImage: conference.banner,
-                                        userInConference: conferenceVm!
-                                            .isUserInConference(
-                                                authVm.authModal?.user!.id!,
-                                                conference),
-                                        attendeeImage: conference
-                                                .attendees!.isNotEmpty
-                                            ? conference.attendees?.last.avatar
-                                            : "",
-                                        conferenceTheme: conference.theme,
-                                        conferenceTime:
-                                            conference.getConferenceTime(
-                                                conference.startDateTime!),
-                                        numberOfAttendees:
-                                            conference.attendees!.length,
+                                        child: ConferenceCard(
+                                          conference: conference,
+                                        ),
                                       );
                                     }),
                               )))

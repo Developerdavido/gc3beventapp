@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
 import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
+import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/auth_model.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_pic_widget/profile_pic_widget.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_screen_elements.dart';
 import 'package:gc3bapp/services/auth_service.dart';
+import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,10 +27,10 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Utils.verticalPadding(space: 50.h),
-            TopScreen(
-              isBackIconVisible: true,
-              isAccountIconVisible: false,
-            ),
+            // TopScreen(
+            //   isBackIconVisible: false,
+            //   isAccountIconVisible: false,
+            // ),
             ProfilePictureWidget(
               user: user!,
             ),
@@ -55,9 +57,11 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Utils.verticalPadding(space: 55.h),
                     ProfileScreenElements(
-                      iconData: Icons.settings,
-                      text: "Settings",
-                      callback: () {},
+                      iconData: Icons.report_gmailerrorred,
+                      text: "Report an incident ",
+                      callback: () {
+                        locator<RouterService>().push(AppRoute.incidenceReportRoute);
+                      },
                     ),
                     Utils.verticalPadding(space: 22.h),
                     ProfileScreenElements(

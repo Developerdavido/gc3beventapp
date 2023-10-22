@@ -15,7 +15,8 @@ import 'package:gc3bapp/view_models/hotel_provider.dart';
 import 'package:provider/provider.dart';
 
 class HotelScreen extends StatefulWidget {
-  const HotelScreen({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const HotelScreen({Key? key, this.controller}) : super(key: key);
 
   @override
   State<HotelScreen> createState() => _HotelScreenState();
@@ -48,19 +49,6 @@ class _HotelScreenState extends State<HotelScreen> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Utils.verticalPadding(space: 51.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 29.w),
-                child: const  TopScreen(
-                  isBackIconVisible: true,
-                ),
-              ),
-              Utils.verticalPadding(space: 14.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 49.w),
-                child: const TitleText(titleText: "Hotels",),
-              ),
-              Utils.verticalPadding(space: 22.h),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
@@ -75,6 +63,8 @@ class _HotelScreenState extends State<HotelScreen> {
                               await hotelVm!.getHotels(refresh: true);
                             },
                             child: ListView.builder(
+                              controller: widget.controller,
+                            reverse: true,
                             itemCount: hotelVm?.hotels.length,
                             itemBuilder: (context, index) {
                               final hotel = hotelVm?.hotels[index];

@@ -23,7 +23,7 @@ class ConnectionService {
         Utils.showConnectionSnackBar( color: Colors.green,
             timeout: 2,
             barrierDismissible: true,
-            message: "Internet connectivity restored");
+            message: "Internet connectivity available");
       }else {
         Utils.showConnectionSnackBar( color: Colors.red,
             timeout: 2,

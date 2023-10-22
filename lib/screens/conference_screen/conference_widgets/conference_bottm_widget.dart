@@ -3,86 +3,72 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/utils.dart';
+import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:provider/provider.dart';
 
 class ConferenceBottomWidget extends StatelessWidget {
-  final String? conferenceDate;
-  final String? conferenceTheme;
-  final VoidCallback? attendConference;
-  final bool userInConference;
-  const ConferenceBottomWidget({Key? key, this.conferenceDate, this.userInConference = false, this.attendConference, this.conferenceTheme}) : super(key: key);
+  final Conference? conference;
+  const ConferenceBottomWidget({Key? key,this.conference,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              conferenceDate ?? "",
-              style:theme.textTheme.bodySmall!.copyWith(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              )
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(38.r),
+        color: AppColors.lightPrimaryColor
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    conference?.theme ?? "",
+                    style: theme.textTheme.headlineMedium!.copyWith(
+                      color: Colors.black,
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                    )
+                ),
+                Text(
+                  "${conference?.conferenceVenue?.name ?? ""} | ${conference!.getConferenceTime(
+                      conference!.startDateTime!)}",
+                  style:theme.textTheme.bodySmall!.copyWith(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  )
+                ),
+
+              ],
             ),
-            Utils.verticalPadding(space: 12.h),
-            SizedBox(
-              width: 187.w,
-              child: Text(
-                conferenceTheme ?? "",
-                style: theme.textTheme.headlineMedium!.copyWith(
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                )
-              ),
-            )
-          ],
-        ),
-        userInConference
-            ? Container()
-            : InkWell(
-          onTap: attendConference,
-          child: Container(
-            width: 128.11.w,
-            height: 49.65.h,
-            clipBehavior: Clip.antiAlias,
+          ),
+          Utils.horizontalPadding(space: 16.w),
+          Container(
+            padding: EdgeInsets.all(14.w),
             decoration: ShapeDecoration(
-              color: userInConference ? AppColors.lightPrimaryColor : AppColors.primaryColor ,
+              color: AppColors.secondaryColor ,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(65.r),
               ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  CupertinoIcons.arrow_up_right,
-                  color: AppColors.lightBlue,
-                  size: 24.sp,
-                ),
-                Utils.horizontalPadding(space: 16.31.w),
-                Text(
-                    'Attend',
-                    style: theme.textTheme.bodySmall!.copyWith(
-                      color: AppColors.lightBlue,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    )
-                ),
-              ],
+            child: Text(
+                '\$15',
+                style: theme.textTheme.bodySmall!.copyWith(
+                  color: AppColors.onPrimaryColor,
+                  fontSize: 18.5.sp,
+                  fontWeight: FontWeight.w600,
+                )
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

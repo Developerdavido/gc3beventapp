@@ -18,40 +18,23 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text.rich(
-              TextSpan(
-                style: theme.textTheme.headlineSmall!.copyWith(
-                    fontSize: 16.sp
-                ),
-                children: [
-                  TextSpan(
-                      text: conference!.getConferenceDate(conference!.startDateTime!),
-                      style: theme.textTheme.headlineSmall!.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.onPrimaryColor)),
-                  //TODO: add the location of the conference
-                  TextSpan(
-                    text: " | ${conference?.conferenceVenue?.name}",
-                    style: theme.textTheme.headlineSmall!.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.onPrimaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Utils.verticalPadding(space: 12.h),
             SizedBox(
-              width: 289.w,
+              width: 300.w,
               child: Text(
                   conference!.theme!,
                   style: theme.textTheme.headlineMedium!.copyWith(
                     color: Colors.white,
-                    fontSize: 28.sp,
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.w600,
                   )
+              ),
+            ),
+            Text(
+              "${conference?.description}",
+              style: theme.textTheme.headlineSmall!.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.onPrimaryColor,
               ),
             ),
             Utils.verticalPadding(space: 43.h),

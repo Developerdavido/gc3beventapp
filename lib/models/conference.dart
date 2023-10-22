@@ -21,6 +21,11 @@ class Conference {
     return formattedDate;
   }
 
+  getShortenedDate(DateTime date){
+    String formattedDate  = DateFormat('dd MMM').format(date);
+    return formattedDate;
+  }
+
   getConferenceTime(DateTime date){
     String formattedTime = DateFormat('h:mm a').format(date);
     return formattedTime;
