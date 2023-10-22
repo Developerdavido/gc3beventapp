@@ -7,6 +7,8 @@ import 'package:gc3bapp/config/locator.dart';
 import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
+import 'package:gc3bapp/screens/manage_conference_screen/ongoing_meeting.dart';
+import 'package:gc3bapp/screens/meeting_screen/meeting_widgets/ongoiog_meetings.dart';
 import 'package:gc3bapp/screens/meeting_screen/meeting_widgets/upcoming_meeting.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
@@ -14,7 +16,8 @@ import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class MeetingScreen extends StatefulWidget {
-  const MeetingScreen({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const MeetingScreen({Key? key, this.controller}) : super(key: key);
 
   @override
   State<MeetingScreen> createState() => _MeetingScreenState();
@@ -33,28 +36,10 @@ class _MeetingScreenState extends State<MeetingScreen> {
             children: [
               Utils.verticalPadding(space: 51.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 29.w),
-                child: TopScreen(
-                  isBackIconVisible: false,
-                  isAccountIconVisible: true,
-                  accountIcon: Consumer<AuthProvider>(
-                    builder: (context, auth, child){
-                      return AccountWidget(
-                        onAccountTap: (){
-                          locator<RouterService>().push(AppRoute.profileRoute, args: auth.authModal?.user);
-                        },
-                      );
-                    },
-
-                  ),
-                ),
-              ),
-              Utils.verticalPadding(space: 22.h),
-              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 49.w),
                 child: const TitleText(titleText: "Meeting \nSchedules",),
               ),
-              Utils.verticalPadding(space: 44.h),
+              Utils.verticalPadding(space: 22.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 22.0.w),
                 child: SizedBox(
@@ -106,8 +91,8 @@ class _MeetingScreenState extends State<MeetingScreen> {
               Expanded(
                   child: TabBarView(
                     children: [
-                      UpcomingMeeting(),
-                      UpcomingMeeting(),
+                      UpcomingMeeting(controller: widget.controller),
+                      OnGoingMeetingScreen(controller: widget.controller),
                     ],
                   )
               )

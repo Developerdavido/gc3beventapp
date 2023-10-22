@@ -8,7 +8,8 @@ import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:provider/provider.dart';
 
 class UpcomingMeeting extends StatefulWidget {
-  const UpcomingMeeting({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const UpcomingMeeting({Key? key, this.controller}) : super(key: key);
 
   @override
   State<UpcomingMeeting> createState() => _UpcomingMeetingState();
@@ -28,16 +29,18 @@ class _UpcomingMeetingState extends State<UpcomingMeeting> {
           size: 50.sp,
         ),
       )
-          : conferenceVm.meetings.isEmpty
+          : conferenceVm.upComingMeetings.isEmpty
           ? EmptyListState(
         message:
         "You do not have any saved up-coming meetings at the moment",
       )
           : ListView.builder(
-          itemCount: conferenceVm.meetings.length,
+          controller: widget.controller,
+          reverse: true,
+          itemCount: conferenceVm.upComingMeetings.length,
           itemBuilder: (context, index) {
             final meeting =
-            conferenceVm.meetings[index];
+            conferenceVm.upComingMeetings[index];
             return MeetingCard(meeting: meeting);
           })
     );

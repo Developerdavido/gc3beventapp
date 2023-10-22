@@ -80,6 +80,7 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                                           locator<RouterService>().push(
                                               AppRoute.conferenceDetailsRoute,
                                               args: conference);
+                                          conferenceVm!.checkIfUserIsAttendingConference(authVm.authModal!.user!.id!, conference);
                                         },
                                         child: ConferenceCard(
                                           conference: conference,

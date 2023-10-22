@@ -50,16 +50,15 @@ class JoinConferenceWidget extends StatelessWidget {
               height: 87.h,
               padding: EdgeInsets.symmetric(horizontal: 72.w, vertical: 29.h),
               decoration: BoxDecoration(
-                color: Color(0xFF151054),
+                color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(30.r),
               ),
               child: Text(
-                'Join',
+                'Attend',
                 style: theme.textTheme.headlineMedium!.copyWith(
                   color: AppColors.onPrimaryColor,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w600,
-                  height: 0,
                 ),
               ),
             ),

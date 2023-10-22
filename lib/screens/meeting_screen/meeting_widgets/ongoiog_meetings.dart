@@ -7,14 +7,15 @@ import 'package:gc3bapp/screens/meeting_screen/meeting_widgets/meeting_card.dart
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:provider/provider.dart';
 
-class UpComingMeeting extends StatefulWidget {
-  const UpComingMeeting({Key? key}) : super(key: key);
+class OnGoingMeetingScreen extends StatefulWidget {
+  final ScrollController? controller;
+  const OnGoingMeetingScreen({Key? key, this.controller}) : super(key: key);
 
   @override
-  State<UpComingMeeting> createState() => _UpComingMeetingState();
+  State<OnGoingMeetingScreen> createState() => _OnGoingMeetingScreenState();
 }
 
-class _UpComingMeetingState extends State<UpComingMeeting> {
+class _OnGoingMeetingScreenState extends State<OnGoingMeetingScreen> {
   @override
   Widget build(BuildContext context) {
     final conferenceVm = Provider.of<ConferenceProvider>(context);
@@ -26,16 +27,18 @@ class _UpComingMeetingState extends State<UpComingMeeting> {
             size: 50.sp,
           ),
         )
-            : conferenceVm.meetings.isEmpty
+            : conferenceVm.onGoingMeetings.isEmpty
             ? EmptyListState(
           message:
           "You do not have any saved on-going meetings at the moment",
         )
             : ListView.builder(
-            itemCount: conferenceVm.meetings.length,
+          controller: widget.controller,
+            reverse: true,
+            itemCount: conferenceVm.onGoingMeetings.length,
             itemBuilder: (context, index) {
               final meeting =
-              conferenceVm.meetings[index];
+              conferenceVm.onGoingMeetings[index];
               return MeetingCard(meeting: meeting);
             })
     );

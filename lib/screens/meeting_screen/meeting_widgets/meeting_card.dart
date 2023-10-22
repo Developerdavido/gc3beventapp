@@ -15,7 +15,6 @@ class MeetingCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.0.h, horizontal: 21.w),
       child: Container(
-        width: 386.w,
         height: 249.h,
         decoration: ShapeDecoration(
           color: AppColors.lightPrimaryColor,
