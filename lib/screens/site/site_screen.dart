@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 import '../hotel_screen/hotel_screen_widgets/hotel_card.dart';
 
 class SiteScreen extends StatefulWidget {
-  const SiteScreen({Key? key}) : super(key: key);
+  final ScrollController? controller;
+  const SiteScreen({Key? key, this.controller}) : super(key: key);
 
   @override
   State<SiteScreen> createState() => _SiteScreenState();
@@ -48,21 +49,6 @@ class _SiteScreenState extends State<SiteScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Utils.verticalPadding(space: 51.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 29.w),
-            child: const TopScreen(
-              isBackIconVisible: true,
-            ),
-          ),
-          Utils.verticalPadding(space: 14.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 49.w),
-            child: const TitleText(
-              titleText: "Site Visits",
-            ),
-          ),
-          Utils.verticalPadding(space: 22.h),
           Expanded(
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
@@ -78,6 +64,8 @@ class _SiteScreenState extends State<SiteScreen> {
                               siteVm!.getAllSites(refresh: true);
                             },
                             child: ListView.builder(
+                              controller: widget.controller,
+                                reverse: true,
                                 itemCount: siteVm?.sites.length,
                                 itemBuilder: (context, index) {
                                   final site = siteVm?.sites[index];

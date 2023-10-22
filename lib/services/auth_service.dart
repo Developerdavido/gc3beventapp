@@ -69,6 +69,6 @@ class AuthService extends HttpService {
 
   logout()async{
     await LocalStorageService().deleteModel(LocalStorageKey.authKey);
-    locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.userLoginRoute);
+    locator<RouterService>().pushNamedAndRemoveUntil(AppRoute.landingPageRoute);
   }
 }

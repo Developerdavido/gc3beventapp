@@ -19,18 +19,18 @@ class ProfileScreenElements extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28.r),
-          color: AppColors.lightPrimaryColor,
+          color: isLogoutElement! ? AppColors.secondaryColor : AppColors.lightPrimaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(iconData, color: AppColors.black, size: 22.sp,),
+            Icon(iconData, color: isLogoutElement! ? AppColors.onPrimaryColor : AppColors.black, size: 22.sp,),
             Utils.horizontalPadding(space: 20.w),
             Text(
               text!,
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                 fontSize: 18,
-                color: AppColors.grey
+                color: isLogoutElement! ? AppColors.onPrimaryColor : AppColors.grey
               ),
               textAlign: TextAlign.left,
             ),

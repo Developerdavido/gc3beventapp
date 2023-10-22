@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gc3bapp/components/custom_button.dart';
+import 'package:gc3bapp/components/screen_widgets/csa_logo.dart';
 import 'package:gc3bapp/components/screen_widgets/custom_loader.dart';
 import 'package:gc3bapp/components/screen_widgets/title_text.dart';
 import 'package:gc3bapp/components/screen_widgets/top_screen.dart';
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 26.w, top: 67.h),
                       child: const TopScreen(
-                        isBackIconVisible: false,
+                        isBackIconVisible: true,
                       ),
                     ),
                     Expanded(
@@ -60,7 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: EdgeInsets.symmetric(horizontal: 40.h),
                                     child: const TitleText(titleText: "Account \nLogin",),
                                   ),
-                                  Utils.verticalPadding(space: 117.h),
+                                  Utils.verticalPadding(space: 52.h),
+                                  const Center(child: CSALogo()),
+                                  Utils.verticalPadding(space: 51.h),
                                   Email(),
                                   const Password(),
                                   Utils.verticalPadding(space: 22.h),

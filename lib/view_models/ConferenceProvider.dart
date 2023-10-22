@@ -8,6 +8,7 @@ import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/models/error_handler.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/base_provider.dart';
+import 'package:intl/intl.dart';
 
 import '../models/saved_meetings_model.dart' as savedMeeting;
 
@@ -19,6 +20,7 @@ class ConferenceProvider extends BaseProvider {
   bool gettingMeetingsList  = false;
 
   List<Conference> conferences = [];
+  List<Conference> activeConferences = [];
 
   List<savedMeeting.SavedMeeting> meetings = [];
   List<savedMeeting.SavedMeeting> upComingMeetings = [];
@@ -43,6 +45,7 @@ class ConferenceProvider extends BaseProvider {
         conferences = apiResponse.listData
             .map<Conference>((e) => Conference.fromJson(e))
             .toList();
+        getAllActiveConferences();
       } else {
         dialog.showResponseDialog(
           context: router.navigatorKey.currentState!.context,
@@ -52,10 +55,12 @@ class ConferenceProvider extends BaseProvider {
       }
     } on DioException catch (e) {
       updateUi(() => gettingConferenceList = false);
-      dialog.showAlertDialog(
-          context: router.navigatorKey.currentState!.context,
-          message: DioExceptionHandler.getMessage(e),
-          type: AlertDialogType.error);
+      if (!backgroundLoad) {
+        dialog.showAlertDialog(
+            context: router.navigatorKey.currentState!.context,
+            message: DioExceptionHandler.getMessage(e),
+            type: AlertDialogType.error);
+      }
     }
   }
 
@@ -171,10 +176,12 @@ class ConferenceProvider extends BaseProvider {
       }
     } on DioException catch (e) {
       updateUi(() => gettingMeetingsList  = false);
-      dialog.showAlertDialog(
-          context: router.navigatorKey.currentState!.context,
-          message: DioExceptionHandler.getMessage(e),
-          type: AlertDialogType.error);
+      if (!backgroundLoad) {
+        dialog.showAlertDialog(
+            context: router.navigatorKey.currentState!.context,
+            message: DioExceptionHandler.getMessage(e),
+            type: AlertDialogType.error);
+      }
     }
   }
 
@@ -192,6 +199,22 @@ class ConferenceProvider extends BaseProvider {
     log(found.toString());
     return found;
 
+  }
+
+  removeActiveConference(Conference conference){
+    activeConferences.remove(conference);
+    notifyListeners();
+  }
+
+  getAllActiveConferences(){
+    DateTime today = DateTime.now();
+    if (conferences.isNotEmpty) {
+      for(var conference in conferences){
+        if (conference.startDateTime!.isAtSameMomentAs(today)) {
+          activeConferences.add(conference);
+        }
+      }
+    }
   }
 
   clearFields(){
