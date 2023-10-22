@@ -32,25 +32,30 @@ class ConferenceEventAttendees extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              for(int i = 0; i < conference!.attendees!.length; i++)
-                if (i <= 3)
-                  Align(
-                    widthFactor: 0.5,
-                    child: CircleAvatar(
-                      radius: 20.r,
-                      backgroundColor: AppColors.lightBlue,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(conference!.attendees![i].avatar ?? ""),
-                        radius: 24.r,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  for(int i = 0; i < conference!.attendees!.length; i++)
+                    // if (i <= 3)
+                      Align(
+                        widthFactor: 0.5,
+                        child: CircleAvatar(
+                          radius: 20.r,
+                          backgroundColor: AppColors.lightBlue,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(conference!.attendees![i].avatar ?? ""),
+                            radius: 24.r,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                ],
+              ),
               Row(
                 children: [
                   Icon(Icons.supervisor_account_rounded, size: 20.sp, color: AppColors.secondaryColor,),
                   Utils.horizontalPadding(space: 4.w),
                   Text(
-                    Utils.getNumberEquivalent(conference!.attendees!.length ?? 0),
+                      Utils.getNumberEquivalent(conference!.attendees!.length ?? 0),
                       style:theme.textTheme.headlineMedium!.copyWith(
                         color: AppColors.black,
                         fontSize: 24.sp,

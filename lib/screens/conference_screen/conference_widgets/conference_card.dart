@@ -17,7 +17,7 @@ class ConferenceCard extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: conference?.banner ?? "",
         imageBuilder: (context, imageProvider) => Container(
-          height: 280.h,
+          height: 260.h,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(38.r),

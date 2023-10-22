@@ -24,17 +24,17 @@ class SessionsWidget extends StatelessWidget {
             color: AppColors.onPrimaryColor),
         child:
             ListView(physics: const NeverScrollableScrollPhysics(), children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              height: 2.h,
-              width: 0.2.sw,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: AppColors.grey,
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: 5.h,
+                  width: 47.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.r),
+                      color: AppColors.grey
+                  ),
+                ),
               ),
-            ),
-          ),
           Utils.verticalPadding(space: 16.sp),
           Column(
             children: conference!.sessions!.isNotEmpty ? conference!.sessions!

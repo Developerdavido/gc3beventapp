@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final screens = [
       ManageConferences(controller: controller),
       SocialAndFeed(),
-      MeetingScreen(),
+      MeetingScreen(controller: controller,),
       ProfileScreen(user: authVm!.authModal?.user,)
     ];
     authVm = context.watch<AuthProvider>();

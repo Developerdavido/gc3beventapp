@@ -22,6 +22,8 @@ class ConferenceProvider extends BaseProvider {
   List<Conference> conferences = [];
   List<Conference> activeConferences = [];
 
+  bool isUserPresent = false;
+
   List<savedMeeting.SavedMeeting> meetings = [];
   List<savedMeeting.SavedMeeting> upComingMeetings = [];
   List<savedMeeting.SavedMeeting> onGoingMeetings = [];
@@ -165,7 +167,7 @@ class ConferenceProvider extends BaseProvider {
             .map<savedMeeting.SavedMeeting>((e) => savedMeeting.SavedMeeting.fromJson(e))
             .toList();
         var today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-        upComingMeetings = meetings.where((element) => element.conference!.startDateTime!.isBefore(today)).toList();
+        upComingMeetings = meetings.where((element) => element.conference!.startDateTime!.isAfter(today)).toList();
         onGoingMeetings = meetings.where((element) => element.conference!.startDateTime!.isAtSameMomentAs(today)).toList();
       } else {
         dialog.showResponseDialog(
@@ -186,19 +188,10 @@ class ConferenceProvider extends BaseProvider {
   }
 
 
-  //check if the use is in the conference
-  bool isUserInConference(int? userId, Conference? conference){
-    bool found = false;
-    var attendees = conference?.attendees;
-    for(var attendee in attendees!){
-      if(attendee.id == userId){
-        found = true;
-        break;
-      }
-    }
-    log(found.toString());
-    return found;
-
+  checkIfUserIsAttendingConference(int userId, Conference conference){
+    isUserPresent = conference.attendees!.any((attendee) => attendee.id == userId);
+    log(isUserPresent.toString());
+    notifyListeners();
   }
 
   removeActiveConference(Conference conference){
