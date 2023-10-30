@@ -16,6 +16,7 @@ import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widge
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/meetings_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/program_item_widget.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/sessions_widget.dart';
+import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/show_user_qr_code.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/conference_event_details.dart';
 import 'package:gc3bapp/screens/conference_screen/conference_widgets/custom_bottom_sheet.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
@@ -146,8 +147,13 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                     conference: widget.conference,
                   ),
                 ),
-                conferenceVm.isUserPresent ? Container() : Utils.verticalPadding(space: 10.h),
-                conferenceVm.isUserPresent ? Container() : JoinConferenceWidget(
+               Utils.verticalPadding(space: 10.h),
+                conferenceVm.isUserPresent ? ProgramItemWidget(
+                  conferenceIndicator: ConferenceIndicator.conferenceIndicators[0],
+                  onTap: (){
+                    locator<DialogService>().showCustomDialog(context: context, customDialog: ShowUserQrCode(conf: widget.conference,));
+                  },
+                ) : JoinConferenceWidget(
                   btnTap: (){
                         locator<DialogService>().showCustomDialog(context: context, customDialog: AttendAMeeting(
                           conference: widget.conference,

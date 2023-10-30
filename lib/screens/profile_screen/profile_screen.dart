@@ -6,10 +6,13 @@ import 'package:gc3bapp/constants/colors.dart';
 import 'package:gc3bapp/constants/route.dart';
 import 'package:gc3bapp/constants/utils.dart';
 import 'package:gc3bapp/models/auth_model.dart';
+import 'package:gc3bapp/screens/profile_screen/profile_pic_widget/my_conference_card.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_pic_widget/profile_pic_widget.dart';
+import 'package:gc3bapp/screens/profile_screen/profile_pic_widget/profile_ui_widgets.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_screen_elements.dart';
 import 'package:gc3bapp/services/auth_service.dart';
 import 'package:gc3bapp/services/router_service.dart';
+import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 35.w),
+        padding: EdgeInsets.symmetric(horizontal: 18.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,6 +59,43 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Utils.verticalPadding(space: 55.h),
+                    Consumer<ConferenceProvider>(
+                      builder: (context, cVm, _) {
+                        cVm.getUserInConference(user!.id);
+                        return ProfileUiWidgets(
+                          profileTitle: "My conferences",
+                          height: 0.2.sh,
+                          widget: cVm.userConferences.isEmpty ?
+                              Container(
+                                child: Center(
+                                  child: Text(
+                                      "You have not registered for any conference",
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                        color: AppColors.grey,
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                              : ListView.builder(
+                              itemCount: cVm.userConferences.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context,index){
+                                var conf = cVm.userConferences[index];
+                                return MyConferenceCard(conference: conf,
+                                  onTap: (){
+                                  locator<RouterService>().push(AppRoute.conferenceDetailsRoute, args: conf);
+                                  cVm.checkIfUserIsAttendingConference(user!.id!, conf);
+                                  },
+                                );
+                              }),
+                        );
+                      },
+
+                    ),
+                    Utils.verticalPadding(space: 22.h),
                     ProfileScreenElements(
                       iconData: Icons.report_gmailerrorred,
                       text: "Report an incident ",

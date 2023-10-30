@@ -72,6 +72,7 @@ dependencies:
   rename: ^2.1.1
   flashy_tab_bar2: ^0.0.6
   scroll_to_hide: ^2.0.1
+  qr_flutter: ^4.1.0
 
 flutter_native_splash:
   android: true

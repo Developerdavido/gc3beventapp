@@ -18,4 +18,5 @@ class AppRoute {
   static const String profileRoute = "profile_route";
   static const String landingPageRoute = "landing_page_route";
   static const String incidenceReportRoute = "incidence_report_route";
+  static const String profileSettingRoute = "profile_setting_route";
 }

@@ -21,6 +21,7 @@ class ConferenceProvider extends BaseProvider {
 
   List<Conference> conferences = [];
   List<Conference> activeConferences = [];
+  List<Conference> userConferences = [];
 
   bool isUserPresent = false;
 
@@ -62,6 +63,17 @@ class ConferenceProvider extends BaseProvider {
             context: router.navigatorKey.currentState!.context,
             message: DioExceptionHandler.getMessage(e),
             type: AlertDialogType.error);
+      }
+    }
+  }
+
+  getUserInConference(int? userId){
+    for(var conference in conferences){
+      if (conference.attendees!.any((attendee) => attendee.id == userId)) {
+        if(userConferences.isEmpty) userConferences.add(conference);
+        if (userConferences.any((conf) => conf.id != conference.id)) {
+          userConferences.add(conference);
+        }
       }
     }
   }
