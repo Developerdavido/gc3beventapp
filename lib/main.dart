@@ -12,10 +12,15 @@ import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/theme/theme.dart';
 import 'package:provider/provider.dart';
 
+import 'constants/colors.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   APiEnvironment.setUpEnv(Environment.staging);
   setUpLocator();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: AppColors.lightBlue
+  ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
   .then((value) => runApp(const MyApp()));
 

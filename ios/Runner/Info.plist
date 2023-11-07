@@ -44,6 +44,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access user photo in order identify user and increase user experience</string>
+	<key>NSCameraUsageDescription</key>
+    <string>This app needs camera access to scan QR codes and take profile photo</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

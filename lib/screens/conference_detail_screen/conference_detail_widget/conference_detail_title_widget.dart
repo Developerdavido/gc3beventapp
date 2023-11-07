@@ -29,6 +29,7 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                   )
               ),
             ),
+            Utils.verticalPadding(space: 8.h),
             Text(
               "${conference?.description}",
               style: theme.textTheme.headlineSmall!.copyWith(
@@ -37,62 +38,7 @@ class ConferenceDetailTitleWidget extends StatelessWidget {
                 color: AppColors.onPrimaryColor,
               ),
             ),
-            Utils.verticalPadding(space: 43.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: AppColors.lightGrey,
-                      radius: 17.r,
-                      child:
-                      conference?.banner == null?
-                      Center(
-                        child: Icon(Icons.person, size: 24.sp, color: AppColors.grey,),
-                      )
-                      : CircleAvatar(
-                      radius: 17.r,
-                      foregroundImage: NetworkImage(conference!.banner!)
-                      ),
-                    ),
-                    Utils.horizontalPadding(space: 4.w),
-                    //TODO: Add the conference speaker
-                    Text(
-                      "${""}",
-                      style: theme.textTheme.headlineSmall!.copyWith(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.onPrimaryColor,
-                      ),
-                    ),
-                  ],
-                ),
 
-                Container(
-                  child: Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                            text: Utils.getNumberEquivalent(conference!.attendees!.length ?? 0),
-                            style: theme.textTheme.headlineSmall!.copyWith(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.onPrimaryColor)),
-                        TextSpan(
-                          text: getAttendee(),
-                          style: theme.textTheme.headlineSmall!.copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.onPrimaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
     );

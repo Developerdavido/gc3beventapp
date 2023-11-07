@@ -9,10 +9,12 @@ import 'package:gc3bapp/models/error_handler.dart';
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/base_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../models/saved_meetings_model.dart' as savedMeeting;
 
 class ConferenceProvider extends BaseProvider {
+  MobileScannerController scannerController = MobileScannerController();
   GlobalKey<FormState> conferenceKey = GlobalKey<FormState>();
   TextEditingController organizationCtrl = TextEditingController();
   TextEditingController descriptionCtrl = TextEditingController();
@@ -23,7 +25,12 @@ class ConferenceProvider extends BaseProvider {
   List<Conference> activeConferences = [];
   List<Conference> userConferences = [];
 
+  Registration? currentUserRegistration;
+  Conference? currentConference;
+
   bool isUserPresent = false;
+
+  bool isScanning = true;
 
   List<savedMeeting.SavedMeeting> meetings = [];
   List<savedMeeting.SavedMeeting> upComingMeetings = [];
@@ -69,7 +76,7 @@ class ConferenceProvider extends BaseProvider {
 
   getUserInConference(int? userId){
     for(var conference in conferences){
-      if (conference.attendees!.any((attendee) => attendee.id == userId)) {
+      if (conference.registrations!.any((registration) => registration.attendee!.id == userId)) {
         if(userConferences.isEmpty) userConferences.add(conference);
         if (userConferences.any((conf) => conf.id != conference.id)) {
           userConferences.add(conference);
@@ -199,10 +206,34 @@ class ConferenceProvider extends BaseProvider {
     }
   }
 
+  confirmUserInConference(String? url) async {
+    try{
+      setUiState(UIState.loading);
+      var response = await conference.confirmUserInConference(url);
+      setUiState(UIState.done);
+      log(response.toString());
+      var apiResponse = ApiResponse.parse(response);
+      if (apiResponse.allGood!) {
+        if (apiResponse.code == 200) {
+          return true;
+        }
+      }
+      dialog.showResponseDialog(context: router.navigatorKey.currentState!.context, apiResponse: apiResponse);
+      return false;
+    }on DioException catch(e){
+      setUiState(UIState.done);
+      dialog.showAlertDialog(
+          context: router.navigatorKey.currentState!.context,
+          message: DioExceptionHandler.getMessage(e),
+          type: AlertDialogType.error);
+      return false;
+    }
+  }
+
 
   checkIfUserIsAttendingConference(int userId, Conference conference){
-    isUserPresent = conference.attendees!.any((attendee) => attendee.id == userId);
-    log(isUserPresent.toString());
+    isUserPresent = conference.registrations!.any((registration) => registration.attendee!.id == userId);
+    currentUserRegistration = conference.registrations!.firstWhere((registration) => registration.attendee!.id == userId);
     notifyListeners();
   }
 
@@ -221,6 +252,13 @@ class ConferenceProvider extends BaseProvider {
       }
     }
   }
+
+  setScanning(bool value) {
+    isScanning = value;
+    notifyListeners();
+  }
+
+
 
   clearFields(){
     organizationCtrl.text = "";

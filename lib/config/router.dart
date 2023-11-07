@@ -17,6 +17,7 @@ import 'package:gc3bapp/screens/landing_screen/landing_sreen.dart';
 import 'package:gc3bapp/screens/login_screen/login_screen.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_screen.dart';
 import 'package:gc3bapp/screens/registration_screen/registration_screen.dart';
+import 'package:gc3bapp/screens/scanning_screen/scanning_screen.dart';
 import 'package:gc3bapp/screens/site/site_detail.dart';
 import 'package:gc3bapp/screens/site/site_screen.dart';
 import 'package:gc3bapp/screens/feeds_and_news/social_and_feed.dart';
@@ -61,6 +62,8 @@ Route<dynamic>  generateRoute(RouteSettings settings) {
       return CupertinoPageRoute(builder: (_)=> HotelBookingDetails(hotel: settings.arguments as Hotel,));
     case AppRoute.conferenceDetailsRoute:
       return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen(conference: settings.arguments as conference.Conference,));
+    case AppRoute.scanning_route:
+      return CupertinoPageRoute(builder: (_)=> const ScanningScreen());
     default:
       return CupertinoPageRoute(builder: (_)=> const SplashScreen());
   }

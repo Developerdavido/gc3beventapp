@@ -21,8 +21,8 @@ class ShowUserQrCode extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(39.r),
         ),
-        child: Consumer<AuthProvider>(
-          builder: (context,authVm, child) {
+        child: Consumer2<AuthProvider, ConferenceProvider>(
+          builder: (context,authVm, confVm, child) {
             return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 30.0.h,),
                 child: Column(
@@ -34,9 +34,10 @@ class ShowUserQrCode extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12.r),
                         color: AppColors.lightPrimaryColor
                       ),
-                      child: QrImageView(
-                        size: 160.h,
-                        data: "${conf!.theme!}${authVm.authModal!.user!.fullName}",
+                      child: SizedBox(
+                        height: 160.h,
+                        width: 160.h,
+                        child: Image.network(confVm.currentUserRegistration!.qrCode!),
                       ),
                     ),
                     Utils.verticalPadding(space: 24.h),

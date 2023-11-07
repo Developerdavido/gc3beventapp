@@ -47,6 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
   // final screens = [
   //   ManageConferences(),
   //   TicketsScreen(),
@@ -66,82 +73,96 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     authVm = context.watch<AuthProvider>();
     return SafeArea(
-        child: Scaffold(
-          body: screens[currentIndex!],
-          bottomNavigationBar: ScrollToHide(
-            scrollController: controller,
+      child: Scaffold(
+        body: screens[currentIndex!],
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            locator<RouterService>().push(AppRoute.incidenceReportRoute);
+          },
+          backgroundColor: AppColors.secondaryColor,
+          foregroundColor: AppColors.onPrimaryColor,
+          child: Center(
+            child: Icon(
+              Icons.chat_outlined,
+              size: 32.sp,
+            ),
+          ),
+        ),
+        bottomNavigationBar: ScrollToHide(
+          scrollController: controller,
+          height: 90.h,
+          child: Container(
+            width: 422.w,
             height: 90.h,
-            child: Container(
-              width: 422.w,
+            color: AppColors.onPrimaryColor,
+            child: NavigationBar(
               height: 90.h,
-              color: AppColors.onPrimaryColor,
-              child: NavigationBar(
-                height: 90.h,
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                indicatorColor: Colors.transparent,
-                surfaceTintColor: AppColors.onPrimaryColor,
-                backgroundColor: AppColors.onPrimaryColor,
-                destinations: [
-                  NavigationDestination(
-                      icon: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)
-                      ),
-                      selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                      label: "Home"),
-                  NavigationDestination(icon:
-                  SizedBox(
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+              indicatorColor: Colors.transparent,
+              surfaceTintColor: AppColors.onPrimaryColor,
+              backgroundColor: AppColors.onPrimaryColor,
+              destinations: [
+                NavigationDestination(
+                    icon: SizedBox(
                       height: 24,
                       width: 24,
-                      child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
-                  selectedIcon: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                  label: "My Feed",),
-                  NavigationDestination(
-                      icon: SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
-                      label: "Saved Events",
-                    selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                  ),
-                  NavigationDestination(
-                    icon: SizedBox(
-                        height: 32.h,
-                        width: 32.h,
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.lightGrey,
-                          radius: 16.r,
-                          child:
-                          authVm!.authModal?.user?.avatar == null?
-                          Center(
-                            child: Icon(Icons.person, size: 32.sp, color: AppColors.grey,),
-                          )
-                              : CircleAvatar(
-                              radius: 16.r,
-                              foregroundImage: NetworkImage(authVm!.authModal?.user?.avatar)
-                          ),
-                        )
+                      child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)
                     ),
-                    label: "Profile",
+                    selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+                    label: "Home"),
+                NavigationDestination(icon:
+                SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
+                selectedIcon: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+                label: "My Feed",),
+                NavigationDestination(
+                    icon: SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
+                    label: "Saved Events",
+                  selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+                ),
+                NavigationDestination(
+                  icon: SizedBox(
+                      height: 32.h,
+                      width: 32.h,
+                      child: CircleAvatar(
+                        backgroundColor: AppColors.lightGrey,
+                        radius: 16.r,
+                        child:
+                        authVm!.authModal?.user?.avatar == null?
+                        Center(
+                          child: Icon(Icons.person, size: 32.sp, color: AppColors.grey,),
+                        )
+                            : CircleAvatar(
+                            radius: 16.r,
+                            foregroundImage: NetworkImage(authVm!.authModal?.user?.avatar)
+                        ),
+                      )
                   ),
+                  label: "Profile",
+                ),
 
-                ],
-                selectedIndex: currentIndex!,
-                onDestinationSelected: (index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                  if (currentIndex == 2) {
-                    if (conferenceVm.meetings.isNotEmpty) {
-                      return;
-                    }
-                    conferenceVm.getYourMeetings();
+              ],
+              selectedIndex: currentIndex!,
+              onDestinationSelected: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+                if (currentIndex == 2) {
+                  if (conferenceVm.meetings.isNotEmpty) {
+                    return;
                   }
-                },
-              ),
+                  conferenceVm.getYourMeetings();
+                }
+              },
             ),
-          )
-        ));
+          ),
+        )
+      ),
+    );
   }
 }

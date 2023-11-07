@@ -75,6 +75,19 @@ class HttpService{
     );
   }
 
+  Future<Response> getWithoutHost(String url,
+      {Map<String, dynamic>? queryParameters, CancelToken? token}) async {
+    String uri = "$url";
+    print(uri);
+    return dio!.get(
+      uri,
+      options: Options(
+        headers: await getHeaders(),
+      ),
+      queryParameters: queryParameters,
+    );
+  }
+
   //get no user
   Future<Response> getNoAuth(String url,
       {Map<String, dynamic>? queryParameters, CancelToken? token}) async {

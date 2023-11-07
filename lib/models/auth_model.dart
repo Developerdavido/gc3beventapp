@@ -26,6 +26,7 @@ class User {
   String? fullName;
   String? email;
   String? phone;
+  bool? isStaff;
   String? country;
 
   User({
@@ -33,6 +34,7 @@ class User {
     this.avatar,
     this.fullName,
     this.email,
+    this.isStaff,
     this.phone,
     this.country,
   });
@@ -42,6 +44,7 @@ class User {
     avatar: json["avatar"],
     fullName: json["full_name"],
     email: json["email"],
+    isStaff: json["is_staff"],
     phone: json["phone"],
     country: json["country"],
   );
@@ -51,6 +54,7 @@ class User {
     "avatar": avatar,
     "full_name": fullName,
     "email": email,
+    "is_staff": isStaff,
     "phone": phone,
     "country": country,
   };

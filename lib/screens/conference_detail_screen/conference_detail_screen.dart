@@ -103,7 +103,7 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                           Positioned(
                             left: 46.w,
                             right: 46.w,
-                            bottom: 82.h,
+                            top: 0.2.sh,
                             child: ConferenceDetailTitleWidget(
                                 conference: widget.conference),
                           )

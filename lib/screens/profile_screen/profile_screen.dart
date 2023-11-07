@@ -29,11 +29,7 @@ class ProfileScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Utils.verticalPadding(space: 50.h),
-            // TopScreen(
-            //   isBackIconVisible: false,
-            //   isAccountIconVisible: false,
-            // ),
+            Utils.verticalPadding(space: 0.1.sh),
             ProfilePictureWidget(
               user: user!,
             ),
@@ -95,13 +91,16 @@ class ProfileScreen extends StatelessWidget {
                       },
 
                     ),
-                    Utils.verticalPadding(space: 22.h),
-                    ProfileScreenElements(
-                      iconData: Icons.report_gmailerrorred,
-                      text: "Report an incident ",
-                      callback: () {
-                        locator<RouterService>().push(AppRoute.incidenceReportRoute);
-                      },
+                    user!.isStaff! ? Utils.verticalPadding(space: 22.h) : Container(),
+                    Visibility(
+                      visible: user!.isStaff!,
+                      child: ProfileScreenElements(
+                        iconData: Icons.qr_code_scanner,
+                        text: "Scan QR Code",
+                        callback: () {
+                          locator<RouterService>().push(AppRoute.scanning_route);
+                        },
+                      ),
                     ),
                     Utils.verticalPadding(space: 22.h),
                     ProfileScreenElements(

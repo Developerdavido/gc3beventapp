@@ -33,6 +33,11 @@ class ConferenceService extends HttpService{
     var response = await post("${Api.meetings}$meetingId/join/", body: body);
     return response;
   }
+  //confirm user in conference
+  confirmUserInConference(String? url) async {
+    var response = await getWithoutHost(url!);
+    return response;
+  }
   //get all meetings
   getMeetings() async {
     var response = await get("${Api.meetings}");

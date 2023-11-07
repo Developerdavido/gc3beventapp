@@ -18,8 +18,7 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: enabled! ? onTap : null,
       child: Container(
-        width: width ?? 379.w,
-        height: 65.h,
+        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 16.h),
         decoration: ShapeDecoration(
           color: enabled! ? btnColor ?? AppColors.primaryColor : AppColors.grey,
           shape: RoundedRectangleBorder(
