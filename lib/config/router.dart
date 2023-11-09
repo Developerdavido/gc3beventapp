@@ -61,7 +61,7 @@ Route<dynamic>  generateRoute(RouteSettings settings) {
     case AppRoute.hotelDetailsRoute:
       return CupertinoPageRoute(builder: (_)=> HotelBookingDetails(hotel: settings.arguments as Hotel,));
     case AppRoute.conferenceDetailsRoute:
-      return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen(conference: settings.arguments as conference.Conference,));
+      return CupertinoPageRoute(builder: (_)=> ConferenceDetailScreen());
     case AppRoute.scanning_route:
       return CupertinoPageRoute(builder: (_)=> const ScanningScreen());
     default:

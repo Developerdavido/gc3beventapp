@@ -75,6 +75,7 @@ class ConferenceProvider extends BaseProvider {
   }
 
   getUserInConference(int? userId){
+    userConferences.clear();
     for(var conference in conferences){
       if (conference.registrations!.any((registration) => registration.attendee!.id == userId)) {
         if(userConferences.isEmpty) userConferences.add(conference);
@@ -85,6 +86,7 @@ class ConferenceProvider extends BaseProvider {
     }
   }
 
+  //join a conference  using the conference id
   joinAConference(String? conferenceId) async {
     setUiState(UIState.loading);
     try {
@@ -92,13 +94,14 @@ class ConferenceProvider extends BaseProvider {
           conferenceId,
           organization: organizationCtrl.text.trim(),
           description: descriptionCtrl.text.trim());
-      log(response.toString());
       var apiResponse = ApiResponse.parse(response);
-      setUiState(UIState.done);
+      //setUiState(UIState.done);
       if (apiResponse.allGood!) {
         log(apiResponse.code.toString());
-
+        int confId = int.parse(conferenceId!);
+        currentConference = await getAConference(confId);
       }
+      setUiState(UIState.done);
       clearFields();
       router.pop();
         dialog.showResponseDialog(
@@ -116,7 +119,7 @@ class ConferenceProvider extends BaseProvider {
   }
 
 
-  //get a single conference
+  //get a single by id of that conference
   Future<Conference>? getAConference(int? conferenceId) async {
     Conference? searchedConference;
     setUiState(UIState.loading);
@@ -169,6 +172,7 @@ class ConferenceProvider extends BaseProvider {
     }
   }
 
+  //get all the meetings associated to a conference
   getYourMeetings({bool backgroundLoad = false, bool refresh = false}) async {
     try {
       if (!backgroundLoad) {
@@ -206,6 +210,7 @@ class ConferenceProvider extends BaseProvider {
     }
   }
 
+  //confirm if a user is in a conference
   confirmUserInConference(String? url) async {
     try{
       setUiState(UIState.loading);
@@ -228,6 +233,12 @@ class ConferenceProvider extends BaseProvider {
           type: AlertDialogType.error);
       return false;
     }
+  }
+
+  //assign a new conference to the conference screen chosen
+  setChosenConference(Conference? conference){
+    currentConference = conference;
+    notifyListeners();
   }
 
 

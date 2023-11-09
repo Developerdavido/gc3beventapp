@@ -22,11 +22,11 @@ import 'package:gc3bapp/screens/conference_screen/conference_widgets/custom_bott
 import 'package:gc3bapp/services/dialog_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class ConferenceDetailScreen extends StatefulWidget {
-  final Conference? conference;
-  const ConferenceDetailScreen({Key? key, this.conference}) : super(key: key);
+  const ConferenceDetailScreen({Key? key,}) : super(key: key);
 
   @override
   State<ConferenceDetailScreen> createState() => _ConferenceDetailScreenState();
@@ -73,7 +73,7 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                                   width: 1.sw,
                                   child: CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageUrl: widget.conference!.banner ?? "",
+                                    imageUrl: conferenceVm.currentConference!.banner ?? "",
                                     progressIndicatorBuilder: (context, url, downloadProgress) =>
                                         Center(child: SizedBox(
                                           height: 40.h,
@@ -105,7 +105,7 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                             right: 46.w,
                             top: 0.2.sh,
                             child: ConferenceDetailTitleWidget(
-                                conference: widget.conference),
+                                conference: conferenceVm.currentConference),
                           )
                         ],
                       ),
@@ -137,28 +137,31 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 26.0.w),
                   child: ConferenceEventDetails(
-                    conference: widget.conference,
+                    conference: conferenceVm.currentConference,
                   ),
                 ),
                 Utils.verticalPadding(space: 10.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 26.0.w),
                   child: ConferenceEventAttendees(
-                    conference: widget.conference,
+                    conference: conferenceVm.currentConference,
                   ),
                 ),
                Utils.verticalPadding(space: 10.h),
                 conferenceVm.isUserPresent ? ProgramItemWidget(
                   conferenceIndicator: ConferenceIndicator.conferenceIndicators[0],
                   onTap: (){
-                    locator<DialogService>().showCustomDialog(context: context, customDialog: ShowUserQrCode(conf: widget.conference,));
+                    locator<DialogService>().showCustomDialog(context: context, customDialog: ShowUserQrCode(conf: conferenceVm.currentConference,));
                   },
-                ) : JoinConferenceWidget(
-                  btnTap: (){
-                        locator<DialogService>().showCustomDialog(context: context, customDialog: AttendAMeeting(
-                          conference: widget.conference,
-                        ));
-                  },
+                ) : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 26.0.w),
+                  child: JoinConferenceWidget(
+                    btnTap: (){
+                          locator<DialogService>().showCustomDialog(context: context, customDialog: AttendAMeeting(
+                            conference: conferenceVm.currentConference,
+                          ));
+                    },
+                  ),
                 ),
                 Utils.verticalPadding(space: 10.h),
                 ProgramItemWidget(
@@ -169,18 +172,18 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                         barrierColor:
                         AppColors.primaryColor.withOpacity(0.8),
                         isScrollControlled:
-                        widget.conference!.sessions!.length < 4
+                        conferenceVm.currentConference!.sessions!.length < 4
                             ? false
                             : true,
                         context: context,
                         customModal: SessionsWidget(
                           height:
-                          widget.conference!.sessions!.length < 4
+                          conferenceVm.currentConference!.sessions!.length < 4
                               ? null
-                              : widget.conference!.sessions!
+                              : conferenceVm.currentConference!.sessions!
                               .length *
                               0.3.sw,
-                          conference: widget.conference,
+                          conference: conferenceVm.currentConference
                         ));
                   },
                 ),
@@ -193,18 +196,18 @@ class _ConferenceDetailScreenState extends State<ConferenceDetailScreen> {
                         barrierColor:
                         AppColors.primaryColor.withOpacity(0.8),
                         isScrollControlled:
-                        widget.conference!.meetings!.length < 4
+                        conferenceVm.currentConference!.meetings!.length < 4
                             ? false
                             : true,
                         context: context,
                         customModal: MeetingsWidget(
                           height:
-                          widget.conference!.meetings!.length < 4
+                          conferenceVm.currentConference!.meetings!.length < 4
                               ? null
-                              : widget.conference!.meetings!
+                              : conferenceVm.currentConference!.meetings!
                               .length *
                               0.3.sw,
-                          conference: widget.conference,
+                          conference: conferenceVm.currentConference,
                         ));
                   },
                 ),

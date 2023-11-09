@@ -77,9 +77,9 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                                           conferenceVm!.conferences[index];
                                       return GestureDetector(
                                         onTap: (){
+                                          conferenceVm!.setChosenConference(conference);
                                           locator<RouterService>().push(
-                                              AppRoute.conferenceDetailsRoute,
-                                              args: conference);
+                                              AppRoute.conferenceDetailsRoute);
                                           conferenceVm?.checkIfUserIsAttendingConference(authVm.authModal!.user!.id!, conference);
                                         },
                                         child: ConferenceCard(

@@ -17,43 +17,15 @@ import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
 
-class ScanningScreen extends StatefulWidget {
-  const ScanningScreen({Key? key}) : super(key: key);
+class ScanningScreen extends StatelessWidget {
+  final ConferenceProvider? confVm;
+  final Function(String)? onCapture;
+  const ScanningScreen({Key? key, this.confVm, this.onCapture}) : super(key: key);
 
-  @override
-  _ScanningScreenState createState() => _ScanningScreenState();
-}
-
-class _ScanningScreenState extends State<ScanningScreen> {
-  ConferenceProvider? confVm;
-  AuthProvider? authVm;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    confVm = context.read<ConferenceProvider>();
-    authVm = context.read<AuthProvider>();
-    confVm!.scannerController = MobileScannerController(
-        detectionSpeed: DetectionSpeed.noDuplicates
-    );
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    if (confVm!.isScanning) {
-      confVm!.scannerController = MobileScannerController(
-          detectionSpeed: DetectionSpeed.noDuplicates
-      );
-    }
-  }
-
-
+  // ConferenceProvider? confVm;
   @override
   Widget build(BuildContext context) {
-    confVm = context.watch<ConferenceProvider>();
+    //confVm = context.watch<ConferenceProvider>();
     var scanQr = Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.w),
       decoration: BoxDecoration(
@@ -63,34 +35,22 @@ class _ScanningScreenState extends State<ScanningScreen> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.r),
         child: SizedBox(
-          height: 0.5.sh,
-          width: 0.5.sh,
-          child: !confVm!.isScanning || confVm!.isLoading ? Center(
-            child: SpinKitCircle(size: 32.sp,
-              color: AppColors.primaryColor,
-            )
-          ) : CaptureQRCode(
+          height: 0.4.sh,
+          width: 0.4.sh,
+          child: CaptureQRCode(
             mobileScannerController: confVm?.scannerController,
             onDetect: (capture) async {
               final List<Barcode>? barcodes = capture.barcodes;
-              confVm!.setScanning(false);
+              //confVm!.setScanning(false);
               if (barcodes != null) {
                 for(var barcode in barcodes){
                  //show that the user is validated hit the endpoint
                   String? url = barcode.displayValue;
-                  bool confirmUser = await confVm!.confirmUserInConference(url);
-                  if (confirmUser) {
-                    locator<DialogService>().showCustomDialog(context: context, customDialog: ConfirmUserAttendance(
-                      iconData: Icons.check_circle_outline,
-                      message: "User confirmed",
-                      onBtnTap: (){
-                        locator<RouterService>().pop();
-                        confVm!.setScanning(true);
-                      },
-                    ));
-                  }if (!confirmUser) {
-                    confVm!.setScanning(true);
-                  }
+                  onCapture!(url!);
+                  locator<RouterService>().pop();
+                  // if (!confirmUser) {
+                  //   confVm!.setScanning(true);
+                  // }
 
                 }
               }
@@ -100,27 +60,29 @@ class _ScanningScreenState extends State<ScanningScreen> {
       ),
     );
 
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 18.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Utils.verticalPadding(space: 0.1.sh),
-            const Center(child: CSALogo()),
-            Utils.verticalPadding(space: 22.h),
-            Text(
-              "Scan the qr-code on the users device to confirm registration for the conference.",
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  fontSize: 22.sp,
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w500),
-              textAlign: TextAlign.center,
-            ),
-            Utils.verticalPadding(space: 0.05.sh),
-            scanQr
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      decoration: BoxDecoration(
+        color: AppColors.onPrimaryColor,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(39.r), topRight: Radius.circular(39.r))
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Utils.verticalPadding(space: 0.05.sh),
+          const Center(child: CSALogo()),
+          Utils.verticalPadding(space: 16.h),
+          Text(
+            "Scan the qr-code on the users device to confirm registration for the conference.",
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                fontSize: 16.sp,
+                color: AppColors.black,
+                fontWeight: FontWeight.w400),
+            textAlign: TextAlign.center,
+          ),
+          Utils.verticalPadding(space: 0.02.sh),
+          scanQr
+        ],
       ),
     );
   }

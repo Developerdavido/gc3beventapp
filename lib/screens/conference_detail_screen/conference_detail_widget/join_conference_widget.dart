@@ -12,10 +12,10 @@ class JoinConferenceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 23.w, vertical: 21.h),
+      padding: EdgeInsets.symmetric(horizontal: 23.w, vertical: 16.h),
       decoration: BoxDecoration(
           color: AppColors.onPrimaryColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r) )),
+          borderRadius: BorderRadius.circular(30.r)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,7 +30,7 @@ class JoinConferenceWidget extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                       height: 0,
                     )),
-                Utils.verticalPadding(space: 12.h),
+                Utils.verticalPadding(space: 14.h),
                 Text(
                   '\$15',
                   style: theme.textTheme.headlineMedium!.copyWith(
@@ -47,8 +47,8 @@ class JoinConferenceWidget extends StatelessWidget {
           GestureDetector(
             onTap: btnTap,
             child: Container(
-              height: 87.h,
-              padding: EdgeInsets.symmetric(horizontal: 72.w, vertical: 29.h),
+              height: 60.h,
+              padding: EdgeInsets.symmetric(horizontal: 72.w, vertical: 16.h),
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(30.r),
@@ -57,7 +57,7 @@ class JoinConferenceWidget extends StatelessWidget {
                 'Attend',
                 style: theme.textTheme.headlineMedium!.copyWith(
                   color: AppColors.onPrimaryColor,
-                  fontSize: 24.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),

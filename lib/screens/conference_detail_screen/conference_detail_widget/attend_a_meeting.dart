@@ -64,12 +64,8 @@ class _AttendAMeetingState extends State<AttendAMeeting> {
                       btnText: "Join Conference",
                       onTap: () async {
                        if ( confVm.conferenceKey.currentState!.validate()) {
-                         bool success = await confVm.joinAConference("${widget.conference!.id}");
-                         if (success) {
-                           setState(() {
-                             widget.conference!.attendees!.length + 1;
-                           });
-                         }
+                         await confVm.joinAConference("${widget.conference!.id}");
+
                        }
                       })
                 ],
