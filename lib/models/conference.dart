@@ -1,5 +1,6 @@
 
 
+import 'package:gc3bapp/models/auth_model.dart';
 import 'package:intl/intl.dart';
 
 class Conference {
@@ -12,9 +13,10 @@ class Conference {
   String? banner;
   ConferenceVenue? conferenceVenue;
   int? seats;
-  List<Attendee>? attendees;
+  List<User>? attendees;
   List<Session>? sessions;
   List<Meeting>? meetings;
+  List<Registration>? registrations;
 
   getConferenceDate(DateTime date) {
     String formattedDate = DateFormat('dd MMM yyyy').format(date);
@@ -39,6 +41,7 @@ class Conference {
     this.endDateTime,
     this.description,
     this.banner,
+    this.registrations,
     this.meetings,
     this.conferenceVenue,
     this.seats,
@@ -56,9 +59,10 @@ class Conference {
     banner: json["banner"],
     conferenceVenue: json["venue"] == null ? null : ConferenceVenue.fromJson(json["venue"]),
     seats: json["seats"],
-    attendees: json["attendees"] == null ? [] : List<Attendee>.from(json["attendees"]!.map((x) => Attendee.fromJson(x))),
+    attendees: json["attendees"] == null ? [] : List<User>.from(json["attendees"]!.map((x) => User.fromJson(x))),
     sessions: json["sessions"] == null ? [] : List<Session>.from(json["sessions"]!.map((x) => Session.fromJson(x))),
     meetings: json["meetings"] == null ? [] : List<Meeting>.from(json["meetings"]!.map((x) => Meeting.fromJson(x))),
+    registrations: json["registrations"] == null ? [] : List<Registration>.from(json["registrations"]!.map((x) => Registration.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -74,44 +78,38 @@ class Conference {
     "attendees": attendees == null ? [] : List<dynamic>.from(attendees!.map((x) => x.toJson())),
     "sessions": sessions == null ? [] : List<dynamic>.from(sessions!.map((x) => x.toJson())),
     "meetings": meetings == null ? [] : List<dynamic>.from(meetings!.map((x) => x.toJson())),
+    "registrations": registrations == null ? [] : List<dynamic>.from(registrations!.map((x) => x.toJson())),
   };
 }
 
-class Attendee {
-  int? id;
-  String? avatar;
-  String? fullName;
-  String? email;
-  String? phone;
-  String? country;
+class Registration {
+  num? id;
+  User? attendee;
+  num? conference;
+  DateTime? dateRegistered;
+  String? qrCode;
 
-  Attendee({
-    this.id,
-    this.avatar,
-    this.fullName,
-    this.email,
-    this.phone,
-    this.country,
-  });
 
-  factory Attendee.fromJson(Map<String, dynamic> json) => Attendee(
-    id: json["id"],
-    avatar: json["avatar"],
-    fullName: json["full_name"],
-    email: json["email"],
-    phone: json["phone"],
-    country: json["country"],
+
+  Registration({this.id, this.attendee, this.conference, this.dateRegistered, this.qrCode});
+
+  factory Registration.fromJson(Map<String, dynamic> json) => Registration(
+    id: json['id'],
+    attendee: json['attendee'] == null ? null : User.fromJson(json['attendee']),
+    conference: json['conference'],
+    dateRegistered: json['date_registered'] == null ? null : DateTime.parse(json['date_registered']),
+    qrCode: json['qr_code']
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "full_name": fullName,
-    "email": email,
-    "phone": phone,
-    "country": country,
+    "id" : id,
+    "attendee": attendee!.toJson(),
+    "conference": conference,
+    "date_registered": dateRegistered!.toUtc().toIso8601String(),
+    "qr_code": qrCode
   };
 }
+
 
 class Session {
   int? id;

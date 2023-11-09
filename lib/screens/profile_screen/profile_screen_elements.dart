@@ -18,7 +18,7 @@ class ProfileScreenElements extends StatelessWidget {
         width: 1.sw,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(28.r),
+          borderRadius: BorderRadius.circular(16.r),
           color: isLogoutElement! ? AppColors.secondaryColor : AppColors.lightPrimaryColor,
         ),
         child: Row(
@@ -28,8 +28,9 @@ class ProfileScreenElements extends StatelessWidget {
             Utils.horizontalPadding(space: 20.w),
             Text(
               text!,
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                fontSize: 18,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w300,
                 color: isLogoutElement! ? AppColors.onPrimaryColor : AppColors.grey
               ),
               textAlign: TextAlign.left,
@@ -37,7 +38,7 @@ class ProfileScreenElements extends StatelessWidget {
             const Spacer(),
             Visibility(
               visible: !isLogoutElement!,
-              child: Icon(Icons.arrow_forward_ios_sharp, color: AppColors.black, size: 22.sp,),)
+              child: Icon(Icons.keyboard_arrow_right_sharp, color: AppColors.black, size: 18.sp,),)
           ],
         ),
       ),
