@@ -10,8 +10,11 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final String? hintText;
   final bool? isPasswordField;
+  final VoidCallback? onTap;
   final TextInputType? keyboardType;
   final Widget? suffix;
+  final String? fontFamily;
+  final Widget? prefix;
   final int? maxLines;
   final int? minLines;
   final bool? enabled;
@@ -21,11 +24,14 @@ class CustomTextField extends StatefulWidget {
     this.inputAction,
     this.isPasswordField = false,
     this.validator,
+    this.onTap,
     this.keyboardType,
     this.maxLines = 1,
     this.minLines = 1,
     this.controller,
     this.hintText,
+    this.fontFamily,
+    this.prefix,
     this.enabled = true,
     this.suffix,
   }) : super(key: key);
@@ -44,59 +50,64 @@ class _CustomTextFieldState extends State<CustomTextField> {
         color:Colors.transparent,
       ), borderRadius: BorderRadius.circular(22.r)
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 1.sw,
-          child: TextFormField(
-            textInputAction: widget.inputAction,
-            autofocus: false,
-            focusNode: widget.focusNode,
-            validator: widget.validator,
-            decoration: InputDecoration(
-              isDense: false,
-              filled: true,
-              fillColor: AppColors.lightGrey,
-              errorMaxLines: 2,
-              hintStyle: theme.textTheme.headlineMedium!.copyWith(
-                  fontSize: 16.sp,
-                  color: AppColors.grey
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 1.sw,
+            child: TextFormField(
+              textInputAction: widget.inputAction,
+              autofocus: false,
+              focusNode: widget.focusNode,
+              validator: widget.validator,
+              decoration: InputDecoration(
+                isDense: false,
+                filled: true,
+                fillColor: AppColors.lightGrey,
+                errorMaxLines: 2,
+                hintStyle: theme.textTheme.headlineMedium!.copyWith(
+                    fontSize: 16.sp,
+                    fontFamily: widget.fontFamily,
+                    color: AppColors.grey
+                ),
+                errorStyle: theme.textTheme.headlineMedium!.copyWith(
+                    fontSize: 16.sp,
+                    color: Colors.red,
+                  fontWeight: FontWeight.w400
+                ),
+                hintText: widget.hintText,
+                focusedBorder: outlineBorder,
+                disabledBorder: outlineBorder,
+                enabledBorder: outlineBorder,
+                border: outlineBorder,
+                prefixIcon: widget.prefix,
+                suffix: widget.isPasswordField!
+                    ? _buildPasswordFieldVisibilityToggle()
+                    : widget.suffix,
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 16.h,
+                  horizontal: 16.w,
+                ),
               ),
-              errorStyle: theme.textTheme.headlineMedium!.copyWith(
-                  fontSize: 16.sp,
-                  color: Colors.red,
-                fontWeight: FontWeight.w400
+              keyboardType: widget.keyboardType,
+              style: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.black,
+                  fontSize: 16.sp
               ),
-              hintText: widget.hintText,
-              focusedBorder: outlineBorder,
-              disabledBorder: outlineBorder,
-              enabledBorder: outlineBorder,
-              border: outlineBorder,
-              suffix: widget.isPasswordField!
-                  ? _buildPasswordFieldVisibilityToggle()
-                  : widget.suffix,
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 16.h,
-                horizontal: 16.w,
-              ),
+              cursorColor: AppColors.black,
+              obscureText: widget.isPasswordField! ? _obscureText : false,
+              controller: widget.controller,
+              maxLines: widget.maxLines,
+              minLines: widget.minLines,
+              enabled: widget.enabled,
             ),
-            keyboardType: widget.keyboardType,
-            style: theme.textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.normal,
-                color: AppColors.black,
-                fontSize: 16.sp
-            ),
-            cursorColor: AppColors.black,
-            obscureText: widget.isPasswordField! ? _obscureText : false,
-            controller: widget.controller,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            enabled: widget.enabled,
           ),
-        ),
-        Utils.verticalPadding(space: 12.h),
-      ],
+          Utils.verticalPadding(space: 12.h),
+        ],
+      ),
     );
   }
   Widget _buildPasswordFieldVisibilityToggle() {

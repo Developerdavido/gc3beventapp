@@ -15,8 +15,7 @@ import 'package:provider/provider.dart';
 import '../hotel_screen/hotel_screen_widgets/hotel_card.dart';
 
 class SiteScreen extends StatefulWidget {
-  final ScrollController? controller;
-  const SiteScreen({Key? key, this.controller}) : super(key: key);
+  const SiteScreen({Key? key,}) : super(key: key);
 
   @override
   State<SiteScreen> createState() => _SiteScreenState();
@@ -64,8 +63,6 @@ class _SiteScreenState extends State<SiteScreen> {
                               siteVm!.getAllSites(refresh: true);
                             },
                             child: ListView.builder(
-                              controller: widget.controller,
-                                reverse: true,
                                 itemCount: siteVm?.sites.length,
                                 itemBuilder: (context, index) {
                                   final site = siteVm?.sites[index];

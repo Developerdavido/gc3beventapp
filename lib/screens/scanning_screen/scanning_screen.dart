@@ -48,9 +48,6 @@ class ScanningScreen extends StatelessWidget {
                   String? url = barcode.displayValue;
                   onCapture!(url!);
                   locator<RouterService>().pop();
-                  // if (!confirmUser) {
-                  //   confVm!.setScanning(true);
-                  // }
 
                 }
               }
