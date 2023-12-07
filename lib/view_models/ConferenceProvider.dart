@@ -87,7 +87,7 @@ class ConferenceProvider extends BaseProvider {
   }
 
   //join a conference  using the conference id
-  joinAConference(String? conferenceId) async {
+  joinAConference(String? conferenceId, {int? userId}) async {
     setUiState(UIState.loading);
     try {
       var response = await conference.registerForAConference(
@@ -100,6 +100,8 @@ class ConferenceProvider extends BaseProvider {
         log(apiResponse.code.toString());
         int confId = int.parse(conferenceId!);
         currentConference = await getAConference(confId);
+        checkIfUserIsAttendingConference(userId!, currentConference!);
+
       }
       setUiState(UIState.done);
       clearFields();

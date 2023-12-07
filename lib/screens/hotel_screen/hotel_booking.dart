@@ -15,8 +15,7 @@ import 'package:gc3bapp/view_models/hotel_provider.dart';
 import 'package:provider/provider.dart';
 
 class HotelScreen extends StatefulWidget {
-  final ScrollController? controller;
-  const HotelScreen({Key? key, this.controller}) : super(key: key);
+  const HotelScreen({Key? key}) : super(key: key);
 
   @override
   State<HotelScreen> createState() => _HotelScreenState();
@@ -63,8 +62,6 @@ class _HotelScreenState extends State<HotelScreen> {
                               await hotelVm!.getHotels(refresh: true);
                             },
                             child: ListView.builder(
-                              controller: widget.controller,
-                            reverse: true,
                             itemCount: hotelVm?.hotels.length,
                             itemBuilder: (context, index) {
                               final hotel = hotelVm?.hotels[index];

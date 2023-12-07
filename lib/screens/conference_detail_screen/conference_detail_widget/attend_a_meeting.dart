@@ -8,6 +8,7 @@ import 'package:gc3bapp/models/conference.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/conference_description.dart';
 import 'package:gc3bapp/screens/conference_detail_screen/conference_detail_widget/conference_organization.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
+import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class AttendAMeeting extends StatefulWidget {
@@ -28,8 +29,8 @@ class _AttendAMeetingState extends State<AttendAMeeting> {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 20.0.w,),
-        child: Consumer<ConferenceProvider>(
-          builder: (context, confVm, child){
+        child: Consumer2<ConferenceProvider, AuthProvider>(
+          builder: (context, confVm,  authVm,child){
             return Form(
               key: confVm.conferenceKey,
               child: Column(
@@ -64,7 +65,7 @@ class _AttendAMeetingState extends State<AttendAMeeting> {
                       btnText: "Join Conference",
                       onTap: () async {
                        if ( confVm.conferenceKey.currentState!.validate()) {
-                         await confVm.joinAConference("${widget.conference!.id}");
+                         await confVm.joinAConference("${widget.conference!.id}", userId: authVm.authModal!.user!.id);
 
                        }
                       })

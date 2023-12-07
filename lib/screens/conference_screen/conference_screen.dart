@@ -17,8 +17,7 @@ import 'package:gc3bapp/view_models/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class ConferenceScreen extends StatefulWidget {
-  final ScrollController? controller;
-  const ConferenceScreen({Key? key, this.controller}) : super(key: key);
+  const ConferenceScreen({Key? key}) : super(key: key);
 
   @override
   State<ConferenceScreen> createState() => _ConferenceScreenState();
@@ -69,8 +68,6 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                                       .getAllConferences(refresh: true);
                                 },
                                 child: ListView.builder(
-                                  controller: widget.controller,
-                                    reverse: true,
                                     itemCount: conferenceVm!.conferences.length,
                                     itemBuilder: (context, index) {
                                       final conference =

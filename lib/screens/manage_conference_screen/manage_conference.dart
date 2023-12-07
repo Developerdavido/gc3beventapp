@@ -26,8 +26,7 @@ import 'package:scroll_to_hide/scroll_to_hide.dart';
 
 
 class ManageConferences extends StatelessWidget {
-  final ScrollController? controller;
-  const ManageConferences({Key? key, this.controller}) : super(key: key);
+  const ManageConferences({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,10 +147,10 @@ class ManageConferences extends StatelessWidget {
               Expanded(
                   child: TabBarView(
                     children: [
-                      ConferenceScreen(controller: controller),
-                      VenuesScreen(controller: controller),
-                      SiteScreen(controller: controller),
-                      HotelScreen(controller: controller)
+                      ConferenceScreen(),
+                      VenuesScreen(),
+                      SiteScreen(),
+                      HotelScreen()
                     ],
                   ))
             ],

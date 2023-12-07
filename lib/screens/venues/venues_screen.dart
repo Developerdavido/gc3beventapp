@@ -15,8 +15,7 @@ import 'package:gc3bapp/view_models/venue_provider.dart';
 import 'package:provider/provider.dart';
 
 class VenuesScreen extends StatefulWidget {
-  final ScrollController? controller;
-  const VenuesScreen({Key? key, this.controller}) : super(key: key);
+  const VenuesScreen({Key? key}) : super(key: key);
 
   @override
   State<VenuesScreen> createState() => _VenuesScreenState();
@@ -64,8 +63,6 @@ class _VenuesScreenState extends State<VenuesScreen> {
                                 await venueVm!.getAllVenues(refresh: true);
                               },
                               child: ListView.builder(
-                                controller: widget.controller,
-                                  reverse: true,
                                   itemCount: venueVm?.venues.length,
                                   itemBuilder: (context, index) {
                                     final venue = venueVm?.venues[index];

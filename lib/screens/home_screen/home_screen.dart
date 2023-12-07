@@ -18,6 +18,7 @@ import 'package:gc3bapp/screens/manage_conference_screen/manage_conference.dart'
 import 'package:gc3bapp/screens/meeting_screen/meeting_screen.dart';
 import 'package:gc3bapp/screens/profile_screen/profile_screen.dart';
 import 'package:gc3bapp/screens/saved_events_screen/saved_events.dart';
+import 'package:gc3bapp/screens/seaech_page/search_page.dart';
 import 'package:gc3bapp/services/router_service.dart';
 import 'package:gc3bapp/view_models/ConferenceProvider.dart';
 import 'package:gc3bapp/view_models/auth_provider.dart';
@@ -35,7 +36,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   VenueProvider? provider;
   AuthProvider? authVm;
-  ScrollController controller = ScrollController();
 
   @override
   void initState() {
@@ -45,13 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     provider?.getLocationOfUser();
     super.initState();
 
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    controller.dispose();
   }
 
   // final screens = [
@@ -66,9 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final conferenceVm = Provider.of<ConferenceProvider>(context);
     final screens = [
-      ManageConferences(controller: controller),
+      ManageConferences(),
+      SearchPage(),
       SocialAndFeed(),
-      MeetingScreen(controller: controller,),
+      MeetingScreen(),
       ProfileScreen(user: authVm!.authModal?.user,)
     ];
     authVm = context.watch<AuthProvider>();
@@ -88,78 +82,82 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: ScrollToHide(
-          scrollController: controller,
-          height: 90.h,
-          child: Container(
-            width: 422.w,
+        bottomNavigationBar: Container(
+          width: 422.w,
+          height: kBottomNavigationBarHeight,
+          color: AppColors.onPrimaryColor,
+          child: NavigationBar(
             height: 90.h,
-            color: AppColors.onPrimaryColor,
-            child: NavigationBar(
-              height: 90.h,
-              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-              indicatorColor: Colors.transparent,
-              surfaceTintColor: AppColors.onPrimaryColor,
-              backgroundColor: AppColors.onPrimaryColor,
-              destinations: [
-                NavigationDestination(
-                    icon: SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)
-                    ),
-                    selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                    label: "Home"),
-                NavigationDestination(icon:
-                SizedBox(
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+            indicatorColor: Colors.transparent,
+            surfaceTintColor: AppColors.onPrimaryColor,
+            backgroundColor: AppColors.onPrimaryColor,
+            destinations: [
+              NavigationDestination(
+                  icon: SizedBox(
                     height: 24,
                     width: 24,
-                    child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
-                selectedIcon: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                label: "My Feed",),
-                NavigationDestination(
-                    icon: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
-                    label: "Saved Events",
-                  selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
-                ),
-                NavigationDestination(
-                  icon: SizedBox(
-                      height: 32.h,
-                      width: 32.h,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.lightGrey,
-                        radius: 16.r,
-                        child:
-                        authVm!.authModal?.user?.avatar == null?
-                        Center(
-                          child: Icon(Icons.person, size: 32.sp, color: AppColors.grey,),
-                        )
-                            : CircleAvatar(
-                            radius: 16.r,
-                            foregroundImage: NetworkImage(authVm!.authModal?.user?.avatar)
-                        ),
-                      )
+                    child: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)
                   ),
-                  label: "Profile",
+                  selectedIcon: SvgPicture.asset("assets/svgs/home.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+                  label: "Home"),
+              NavigationDestination(
+                  icon: SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: Icon(Icons.search, color: Colors.grey,)
+                  ),
+                  selectedIcon: Icon(Icons.search, color: AppColors.secondaryColor,),
+                  label: "Search"),
+              NavigationDestination(icon:
+              SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
+              selectedIcon: SvgPicture.asset("assets/svgs/announcement.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+              label: "My Feed",),
+              NavigationDestination(
+                  icon: SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.grey, BlendMode.srcIn),)),
+                  label: "Saved Events",
+                selectedIcon: SvgPicture.asset("assets/svgs/bookmark.svg", colorFilter: ColorFilter.mode(AppColors.secondaryColor, BlendMode.srcIn),),
+              ),
+              NavigationDestination(
+                icon: SizedBox(
+                    height: 32.h,
+                    width: 32.h,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.lightGrey,
+                      radius: 16.r,
+                      child:
+                      authVm!.authModal?.user?.avatar == null?
+                      Center(
+                        child: Icon(Icons.person, size: 32.sp, color: AppColors.grey,),
+                      )
+                          : CircleAvatar(
+                          radius: 16.r,
+                          foregroundImage: NetworkImage(authVm!.authModal?.user?.avatar)
+                      ),
+                    )
                 ),
+                label: "Profile",
+              ),
 
-              ],
-              selectedIndex: currentIndex!,
-              onDestinationSelected: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-                if (currentIndex == 2) {
-                  if (conferenceVm.meetings.isNotEmpty) {
-                    return;
-                  }
-                  conferenceVm.getYourMeetings();
+            ],
+            selectedIndex: currentIndex!,
+            onDestinationSelected: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+              if (currentIndex == 2) {
+                if (conferenceVm.meetings.isNotEmpty) {
+                  return;
                 }
-              },
-            ),
+                conferenceVm.getYourMeetings();
+              }
+            },
           ),
         )
       ),

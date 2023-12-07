@@ -113,26 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 iconData: Icons.qr_code_scanner,
                                 text: "Scan QR Code",
                                 callback: () {
-                                  confVm.scannerController = MobileScannerController(
-                                      detectionSpeed: DetectionSpeed.noDuplicates);
-                                  locator<DialogService>().showCustomModal(
-                                      barrierColor: AppColors.grey.withOpacity(0.3),
-                                      context: context,
-                                      customModal: ScanningScreen(confVm: confVm,
-                                        onCapture: (url) async {
-                                          bool confirmUser = await confVm.confirmUserInConference(url);
-                                          if (confirmUser) {
-                                            locator<DialogService>().showCustomDialog(context: context, customDialog: ConfirmUserAttendance(
-                                              iconData: Icons.check_circle_outline,
-                                              message: "User confirmed",
-                                              onBtnTap: (){
-                                                locator<RouterService>().pop();
-                                                // confVm!.setScanning(true);
-                                              },
-                                            ));
-                                          }
-                                        },
-                                      ));
+                                  _showScannerAndScanQrCode(confVm, authVm);
                                 },
                               );
                             }
@@ -188,5 +169,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+
+  //scan the code and rescan
+  _showScannerAndScanQrCode(ConferenceProvider confVm, AuthProvider authVm){
+    confVm.scannerController = MobileScannerController(
+        detectionSpeed: DetectionSpeed.noDuplicates);
+    locator<DialogService>().showCustomModal(
+        barrierColor: AppColors.grey.withOpacity(0.3),
+        context: context,
+        customModal: ScanningScreen(confVm: confVm,
+          onCapture: (url) async {
+            bool confirmUser = await confVm.confirmUserInConference(url);
+            if (confirmUser) {
+              locator<DialogService>().showCustomDialog(context: context, barrierDismissible: false, customDialog: ConfirmUserAttendance(
+                iconData: Icons.check_circle_outline,
+                message: "User confirmed",
+                onBtnTap: (){
+                  locator<RouterService>().pop();
+                  // confVm!.setScanning(true);
+                  _showScannerAndScanQrCode(confVm, authVm);
+                },
+              ));
+            }
+            if (!confirmUser) {
+            _showScannerAndScanQrCode(confVm, authVm);
+            }
+          },
+        ));
   }
 }
